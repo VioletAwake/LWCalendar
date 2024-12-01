@@ -99,7 +99,7 @@ function checkAnswer(selected, correct, index, quizContainer) {
     const check = document.createElement('div');
     check.classList.add('check');
     if (selected === correct) {
-        check.textContent = 'Correct!';
+        check.textContent = 'Correct !';
         check.style.color = 'green';
         quizContainer.appendChild(check);
 
@@ -112,7 +112,7 @@ function checkAnswer(selected, correct, index, quizContainer) {
             }
         }, 2000);
     } else {
-        check.textContent = 'Incorrect!';
+        check.textContent = 'Incorrect !';
         check.style.color = 'red';
         quizContainer.appendChild(check);
 
