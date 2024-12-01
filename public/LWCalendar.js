@@ -48,19 +48,19 @@ const quizData = [
         question: "And we keep driving into the night...",
         choices: ["It's a late goodbye, such a late goodbye", "It's a fade goodbye, such a fade goodbye", "It's a damn goodbye, such a damn goodbye"],
         correctAnswer: "It's a late goodbye, such a late goodbye",
-        audioSrc: "/audio1stDec/LateGoodbye.ogg",
+        audioSrc: "./audio1stDec/LateGoodbye.ogg",
     },
     {
         question: "When I thought than I fought this war alone...",
         choices: ["you were them on the side all the whole time", "you were there by my side through the hard times", "you were there by my side on the front line."],
         correctAnswer: "you were there by my side on the front line.",
-        audioSrc: "/audio1stDec/War.ogg",
+        audioSrc: "./audio1stDec/War.ogg",
     },
     {
         question: "So I want to run to your shelter tonight, run to the shelter tonight...",
         choices: ["United in silent resistance, Of bowing to false kings.", "United in quiet defiance, Of kneeling to false kings.", "United in solemn persistence, Of serving false kings"],
         correctAnswer: "United in silent resistance, Of bowing to false kings.",
-        audioSrc: "/audio1stDec/FalseKings.ogg",
+        audioSrc: "./audio1stDec/FalseKings.ogg",
     }
     // Ajoutez d'autres questions ici
 ];
