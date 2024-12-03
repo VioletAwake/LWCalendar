@@ -2,173 +2,240 @@
 @media screen and (min-width: 1441px) {
   body {
     background-color: black;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     width: 100%;
     height: 100vh;
+    margin: 0;
+    padding: 0;
   }
 
   #calendar {
+    width: 100%;
+    height: 100%;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    align-items: center;
+    grid-template-columns: repeat(7, 2fr);
     justify-content: center;
-    width: 80%;
-    height: auto;
-    gap: 10px;
+    align-items: center;
   }
 
-  .day {
+  .case {
+    border: 3px solid purple;
     color: purple;
     text-align: center;
-    font-size: 2rem;
-    border: 3px solid purple;
-    width: 8rem;
-    height: 7rem;
-    line-height: normal;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-size: 2.5rem;
+    width: 10rem;
+    height: 8rem;
+    line-height: 7.5rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: 0.5s ease;
   }
 
-  .day:hover {
+  .case:hover {
     background-color: purple;
-    color: black;
-  }
-
-  .day.locked {
-    color: red;
-    border: 3px solid red;
-    cursor: not-allowed;
-  }
-
-  .day.locked:hover {
-    background-color: red;
     color: black;
   }
 
   #popUp {
     position: fixed;
-    width: 90%;
-    height: 85%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 4px solid purple;
-    background-color: black;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    z-index: 9999;
-    text-align: center;
-    font-size: 2rem;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
     color: purple;
   }
 
-  #closeBtn {
+  #popup-content {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 3rem;
+    top: 5%;
+    left: 10%;
+    background: black;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    height: 90%;
+    align-items: center;
+    justify-items: center;
+    overflow: auto;
+    text-align: center;
+    position: relative;
+    border: 5px solid purple;
     color: purple;
-    padding: 5px 10px;
-    border-radius: 5px;
   }
 
+  #game-container {
+    color: purple;
+    width: 100%;
+    height: 100%;
+  }
 
   .quiz-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 30px;
-    height: 100%;
-  }
-
-  .check {
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 2rem;
-  }
-
-  .answer-btn {
-    display: flex;
-    flex-direction: column;
     gap: 20px;
-    align-items: center;
+    font-size: 20px;
   }
 
-  .answer-btn button {
-    padding: 10px 20px;
+  .quiz-container button {
     background-color: black;
+    border: 3px solid purple;
     color: purple;
-    border: 4px solid purple;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 1.5rem;
-    text-align: center;
-    transition: 0.3s ease;
-  }
-
-  .answer-btn button:hover {
-    background-color: purple;
-    color: black;
-  }
-
-  .typewriter {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    font-size: 30px;
-    color: purple;
-    animation: fadeIn 2s ease-in-out;
-    gap: 20px;
-  }
-
-  .typewriter a {
-    color: purple;
-    text-decoration: none;
-    border: 4px solid purple;
-    padding: 5px 10px;
-    border-radius: 5px;
+    font-size: 25px;
+    padding: 10px;
     transition: 0.5s ease;
-    margin-bottom: 50px;
+    cursor: pointer;
   }
 
-  .typewriter a:hover {
+  .quiz-container button:hover {
     background-color: purple;
     color: black;
   }
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+  .quiz-container h3 {
+    font-size: 40px;
   }
 
   audio {
-    width: 30%;
+    width: 40%;
+  }
+
+  .choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .choices-container button {
+    background-color: black;
+    border: 4px solid purple;
+    color: purple;
+    font-size: 25px;
+    padding: 5px;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  .choices-container button:hover {
+    background-color: purple;
+    color: black;
   }
 
   audio::-webkit-media-controls-panel {
     background-color: purple;
   }
+
+  #closeBtn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: black;
+    color: purple;
+    font-size: 3rem;
+    padding: 10px;
+    border: 3px solid purple;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  #closeBtn:hover {
+    background-color: purple;
+    color: black;
+  }
+
+  .riddles-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: 30px;
+  }
+
+  .riddles-container button {
+    background-color: black;
+    border: 3px solid purple;
+    color: purple;
+    font-size: 25px;
+    padding: 10px;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  .riddles-container button:hover {
+    background-color: purple;
+    color: black;
+  }
+
+  #riddle-answer {
+    width: 20rem;
+    height: 2rem;
+  }
+
+  #validate-answer {
+    background-color: black;
+    border: 3px solid purple;
+    color: purple;
+    font-size: 25px;
+    padding: 5px;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  #validate-answer:hover {
+    background-color: purple;
+    color: black;
+  }
+
+  .anagram-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: 30px;
+  }
+
+  .anagram-game-container button {
+    background-color: black;
+    border: 3px solid purple;
+    color: purple;
+    font-size: 25px;
+    padding: 10px;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  .anagram-game-container button:hover {
+    background-color: purple;
+    color: black;
+  }
+
+
+  #user-input {
+    width: 20rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+
+  #submit-btn {
+    background-color: black;
+    border: 3px solid purple;
+    color: purple;
+    font-size: 25px;
+    padding: 5px;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  #submit-btn:hover {
+    background-color: purple;
+    color: black;
+  }
+
 }
 
 /* VERSION DESKTOP */
@@ -255,7 +322,6 @@
     padding: 5px 10px;
     border-radius: 5px;
   }
-
 
   .quiz-container {
     display: flex;
@@ -506,7 +572,6 @@
   audio::-webkit-media-controls-panel {
     background-color: purple;
   }
-
 }
 
 /* VERSION MOBILE */
@@ -514,80 +579,71 @@
 @media screen and (max-width: 600px) {
   body {
     background-color: black;
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: auto;
+    width: 100%;
     height: 100vh;
+    margin: 0;
+    padding: 0;
   }
 
   #calendar {
+    width: 100%;
+    height: 100%;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    align-items: center;
     justify-content: center;
-    width: auto;
-    gap: 5px;
+    align-items: center;
   }
 
-  .day {
+  .case {
+    border: 3px solid purple;
     color: purple;
     text-align: center;
-    font-size: 1.2rem;
-    border: 3px solid purple;
-    width: 2.5rem;
-    height: 2.5rem;
-    line-height: normal;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-size: 1.5rem;
+    width: 2rem;
+    height: 3rem;
+    line-height: 3rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: 0.5s ease;
   }
 
-  .day:active {
+  .case:active {
     background-color: purple;
-    color: black;
-  }
-
-  .day.locked {
-    color: red;
-    border: 3px solid red;
-    cursor: not-allowed;
-  }
-
-  .day.locked:active {
-    background-color: red;
     color: black;
   }
 
   #popUp {
     position: fixed;
-    width: 80%;
-    height: auto;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 4px solid purple;
-    background-color: black;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    z-index: 9999;
-    text-align: center;
-    font-size: 20px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
     color: purple;
   }
 
-  #closeBtn {
+  #popup-content {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
-    font-size: 1.5rem;
+    background: black;
+    padding: 20px;
+    border-radius: 8px;
+    width: auto;
+    height: 100%;
+    overflow: auto;
+    text-align: center;
+    border: 5px solid purple;
     color: purple;
+  }
+
+  #game-container {
+    color: purple;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
   }
 
   .quiz-container {
@@ -595,79 +651,168 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 30px;
-    height: auto;
-  }
-
-  .check {
+    gap: 20px;
     font-size: 20px;
   }
 
-  .answer-btn {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-  }
-
-  .answer-btn button {
-    padding: 5px;
+  .quiz-container button {
     background-color: black;
+    border: 3px solid purple;
     color: purple;
-    border: 4px solid purple;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 1.2rem;
-    text-align: center;
-    transition: 0.3s ease;
-  }
-
-  .answer-btn button:active {
-    background-color: purple;
-    color: black;
-  }
-
-  .typewriter {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    font-size: 1.1rem;
-    color: purple;
-    animation: fadeIn 2s ease-in-out;
-    gap: 10px;
-  }
-
-  .typewriter a {
-    color: purple;
-    text-decoration: none;
-    border: 4px solid purple;
-    padding: 5px 10px;
-    border-radius: 5px;
+    font-size: 20px;
+    padding: 10px;
     transition: 0.5s ease;
+    cursor: pointer;
   }
 
-  .typewriter a:active {
+  .quiz-container button:active {
     background-color: purple;
     color: black;
   }
 
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+  .quiz-container h3 {
+    font-size: 25px;
   }
 
   audio {
     width: 100%;
   }
 
+  .choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .choices-container button {
+    background-color: black;
+    border: 4px solid purple;
+    color: purple;
+    font-size: 20px;
+    padding: 5px;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  .choices-container button:hover {
+    background-color: purple;
+    color: black;
+  }
+
+  .answerPoetsQuiz p {
+    font-size: 10px;
+  }
+
   audio::-webkit-media-controls-panel {
     background-color: purple;
+  }
+
+  #closeBtn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: black;
+    color: purple;
+    font-size: 2rem;
+    padding: 5px;
+    border: 3px solid purple;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  #closeBtn:active {
+    background-color: purple;
+    color: black;
+  }
+
+  .riddles-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: 20px;
+  }
+
+  .riddles-container button {
+    background-color: black;
+    border: 3px solid purple;
+    color: purple;
+    font-size: 20px;
+    padding: 10px;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  .riddles-container button:active {
+    background-color: purple;
+    color: black;
+  }
+
+  #riddle-answer {
+    width: 20rem;
+    height: 2rem;
+    font-size: 15px;
+  }
+
+  #validate-answer {
+    background-color: black;
+    border: 3px solid purple;
+    color: purple;
+    font-size: 25px;
+    padding: 5px;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  #validate-answer:hover {
+    background-color: purple;
+    color: black;
+  }
+
+  .anagram-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: 20px;
+  }
+
+  .anagram-game-container button {
+    background-color: black;
+    border: 3px solid purple;
+    color: purple;
+    font-size: 20px;
+    padding: 10px;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  .anagram-game-container button:hover {
+    background-color: purple;
+    color: black;
+  }
+
+
+  #user-input {
+    width: 20rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+
+  #submit-btn {
+    background-color: black;
+    border: 3px solid purple;
+    color: purple;
+    font-size: 25px;
+    padding: 5px;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  #submit-btn:hover {
+    background-color: purple;
+    color: black;
   }
 }
