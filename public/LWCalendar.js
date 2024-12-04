@@ -370,7 +370,7 @@ function simonGame(callback) {
   let sequence = [];
   let userSequence = [];
   let level = 0;
-  const maxLevels = 2;
+  const maxLevels = 5;
   let wyattSong; // Déclaration sans initialisation ici
 
   function initializeSound() {
