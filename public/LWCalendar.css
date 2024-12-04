@@ -236,6 +236,87 @@
     color: black;
   }
 
+  .simon-buttons-container {
+    display: grid;
+    grid-template-columns: repeat(2, 25rem);
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .simon-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: 30px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .simon-game-container button {
+    background-color: black;
+    border: 3px solid purple;
+    color: purple;
+    font-size: 25px;
+    padding: 10px;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  .simon-game-container button:hover {
+    background-color: purple;
+    color: black;
+  }
+
+  .fiend {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    pointer-events: none;
+    z-index: 1500;
+  }
+  
+  .simon-button {
+    width: 20rem;
+    height: 20rem;
+    border: none;
+    border-radius: 50%;
+    opacity: 0.5;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    margin: 0 auto;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .simon-button:hover {
+    background-color: black !important;
+  }
+
+  .simon-button.active {
+    transform: scale(1.2);
+    opacity: 1;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  
+
+  .simon-image {
+    width: 15rem;
+    height: 18rem;
+    border-radius: 50%;
+    object-fit: contain;
+  }
+
+  .simon-button:hover {
+    opacity: 1;
+  }
 }
 
 /* VERSION DESKTOP */
@@ -575,11 +656,10 @@
 }
 
 /* VERSION MOBILE */
-
 @media screen and (max-width: 600px) {
   body {
     background-color: black;
-    width: 100%;
+    width: auto;
     height: 100vh;
     margin: 0;
     padding: 0;
@@ -623,14 +703,15 @@
     justify-content: center;
     z-index: 1000;
     color: purple;
+    width: 100%;
+    height: 100%;
   }
 
   #popup-content {
     position: absolute;
     background: black;
-    padding: 20px;
     border-radius: 8px;
-    width: auto;
+    width: 100%;
     height: 100%;
     overflow: auto;
     text-align: center;
@@ -815,4 +896,89 @@
     background-color: purple;
     color: black;
   }
+
+  .simon-buttons-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 100%;
+  }
+
+  .simon-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+  }
+
+  .simon-game-container button {
+    background-color: black;
+    border: 3px solid purple;
+    color: purple;
+    font-size: 1.5rem;
+    transition: 0.5s ease;
+    cursor: pointer;
+    width: auto;
+  }
+
+  .simon-game-container button:hover {
+    background-color: purple;
+    color: black;
+  }
+
+  .fiend {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    pointer-events: none;
+    z-index: 1500;
+  }
+  
+  .simon-button {
+    width: 10rem;
+    height: 10rem;
+    border: none;
+    border-radius: 50%;
+    opacity: 0.5;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    margin: 0 auto;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .simon-button:hover {
+    background-color: black !important;
+  }
+
+  .simon-button.active {
+    transform: scale(1.2);
+    opacity: 1;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  
+
+  .simon-image {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    object-fit: contain;
+  }
+
+  .simon-button:hover {
+    opacity: 1;
+  }
+
 }

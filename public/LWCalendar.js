@@ -19,6 +19,11 @@ const games = [
     endContent:
       "À travers \"Return\", Alan réfléchit à la notion de pouvoir créatif : comment l'écrivain peut-il contrôler son œuvre ? Et si ses créations échappaient à son contrôle, devenant des entités vivantes et incontrôlables ? Le roman se concentre sur la lutte interne du protagoniste, qui tente désespérément de briser un cycle, une boucle, sans savoir s'il en est capable.\n\n\"Return\" se distingue par son atmosphère tendue et sa réflexion sur l'art de l'écriture, où chaque mot a un poids, et chaque création peut devenir une arme, un fardeau, ou même une malédiction. Le protagoniste, tout comme Alan Wake, est un écrivain qui se confronte aux conséquences de son imagination, où ses peurs, ses angoisses et ses démons prennent forme.",
   },
+  {
+    game: simonGame,
+    endContent: `Fear is not real. The only place that fear can exist is in our thoughts of the future. It is a product of our imagination, causing us to fear things that do not at present and may not ever exist. <br/>
+- Bray Wyatt -`,
+  },
   // Ajoutez d'autres jeux ici...
 ];
 
@@ -351,15 +356,187 @@ function anagramGame(callback) {
   // Démarre le jeu
   showAnagramGame();
 }
+function simonGame(callback) {
+
+  const simonGameContainer = document.getElementById("game-container");
+  simonGameContainer.className = "simon-game-container";
+  const colors = ["red", "blue", "green", "yellow"];
+  const images = [
+    "./WyattLogos/WyattLogo01.png", // Image pour "red"
+    "./WyattLogos/WyattLogo02.png", // Image pour "blue"
+    "./WyattLogos/WyattLogo03.png", // Image pour "green"
+    "./WyattLogos/WyattSicks.png",  // Image pour "yellow"
+  ];
+  let sequence = [];
+  let userSequence = [];
+  let level = 0;
+  const maxLevels = 2;
+  let wyattSong; // Déclaration sans initialisation ici
+
+  function initializeSound() {
+    // Crée le son uniquement lors de l'initialisation du jeu
+    wyattSong = new Audio("./WyattLogos/Wyatt.ogg"); // Remplacer par le bon chemin du fichier audio
+  }
+
+  function getRandomColor() {
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  function playSequence() {
+    userSequence = [];
+    const simonGameContainer = document.getElementById("game-container");
+    simonGameContainer.innerHTML = `
+      <h3>Niveau ${level + 1} / 5</h3>
+      <div class="simon-buttons-container">
+        ${colors
+          .map(
+            (color, index) => `
+          <button class="simon-button ${color}" id="${color}" style="border: 5px solid ${color};">
+            <img src="${images[index]}" alt="${color}" class="simon-image" />
+          </button>`
+          )
+          .join("")}
+      </div>
+      <p id="simon-feedback">Suivez la séquence !</p>
+    `;
+
+    let index = 0;
+    const interval = setInterval(() => {
+      const color = sequence[index];
+      const button = document.getElementById(color);
+
+      // Animation visuelle
+      button.classList.add("active");
+      wyattSong.currentTime = 0; // Remettre le son au début pour le rejouer
+      wyattSong.play(); // Jouer le son à chaque passage d'une couleur
+
+      setTimeout(() => button.classList.remove("active"), 500);
+
+      index++;
+      if (index >= sequence.length) {
+        clearInterval(interval);
+        setTimeout(() => {
+          document.getElementById("simon-feedback").textContent =
+            "C'est à vous de jouer !";
+          enableButtons();
+        }, 1000);
+      }
+    }, 1500);
+  }
+
+  function enableButtons() {
+    const buttons = document.querySelectorAll(".simon-button");
+    buttons.forEach((button) => {
+      button.style.pointerEvents = "auto";
+      button.addEventListener("click", handleUserClick);
+    });
+  }
+
+  function disableButtons() {
+    const buttons = document.querySelectorAll(".simon-button");
+    buttons.forEach((button) => {
+      button.style.pointerEvents = "none";
+      button.removeEventListener("click", handleUserClick);
+    });
+  }
+
+  function handleUserClick(event) {
+    const clickedElement = event.target;
+    const clickedColor =
+      clickedElement.classList.contains("simon-button")
+        ? clickedElement.id
+        : clickedElement.parentElement.id;
+
+    userSequence.push(clickedColor);
+
+    // Animation visuelle pour le clic utilisateur
+    const button = document.getElementById(clickedColor);
+    button.classList.add("active");
+    wyattSong.currentTime = 0; // Remettre le son au début pour le rejouer
+    wyattSong.play(); // Jouer le son à chaque clic
+
+    setTimeout(() => button.classList.remove("active"), 500);
+
+    const currentIndex = userSequence.length - 1;
+
+    if (userSequence[currentIndex] !== sequence[currentIndex]) {
+      // Perdu ! Affiche le message et ferme le jeu
+      alert("Perdu ! Recommencez !"); // true pour fermer la fenêtre
+      simonGameContainer.innerHTML = "";
+      startSimonGame();
+      return;
+    }
+
+    if (userSequence.length === sequence.length) {
+      disableButtons();
+      level++;
+
+
+      if (level === maxLevels) {
+        // Victoire ! Si on atteint le niveau max, on affiche la victoire
+        const endMessage = games[3].endContent;
+        setTimeout(() => {
+          showEndContent(endMessage, callback, false);
+        }, 1000);
+        setTimeout(() => {
+          letMeIn()
+        }, 3000);
+      } else {
+        setTimeout(nextLevel, 1000);
+      }
+    }
+  }
+
+  function letMeIn() {
+    const fiend = document.createElement("div")
+    fiend.className = "fiend";
+    document.body.appendChild(fiend);
+
+   const fiendVideo = document.createElement("video");
+   fiendVideo.src = "./WyattLogos/BrayWyatt.mp4";
+   fiendVideo.style.width = "100%";
+   fiendVideo.style.height = "100%";
+   fiendVideo.style.objectFit = "cover";
+   fiendVideo.style.position = "fixed";
+   fiendVideo.style.top = "0";
+   fiendVideo.style.left = "0";
+   fiend.appendChild(fiendVideo);
+
+   fiendVideo.play();
+   fiendVideo.addEventListener("ended", () => {
+     fiend.style.display = "none";
+   })
+  }
+
+  function nextLevel() {
+    sequence.push(getRandomColor());
+    playSequence();
+  }
+
+
+
+  function startSimonGame() {
+    initializeSound(); // Initialise le son uniquement quand le jeu commence
+    sequence = [getRandomColor()];
+    userSequence = [];
+    level = 0;
+    playSequence();
+  }
+
+  startSimonGame();
+}
+
+
+
 
 // Fonction pour afficher le contenu final (quand le jeu est terminé)
-function showEndContent(content, callback) {
+function showEndContent(content) {
   const popupContent = document.getElementById("game-container");
   popupContent.innerHTML = `
     <p>${content}</p>
   `;
   const finishButton = document.createElement("button");
   finishButton.textContent = "Continuer";
-  finishButton.addEventListener("click", () => callback());
+  finishButton.addEventListener("click", () => popup.style.display = "none");
   popupContent.appendChild(finishButton);
 }
