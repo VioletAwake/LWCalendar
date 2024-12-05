@@ -24,6 +24,10 @@ const games = [
     endContent: `Fear is not real. The only place that fear can exist is in our thoughts of the future. It is a product of our imagination, causing us to fear things that do not at present and may not ever exist. <br/>
 - Bray Wyatt -`,
   },
+  {
+    game: japaneseColorBox,
+    endContent: `Dante Violet n’est pas japonais, mais une partie de cette culture, de cette langue, il la porte en lui, héritée de l’amour inconditionnel de la femme qui devint sa mère adoptive, la compagne de son père. Après la mort brutale de cette dernière, il passa plusieurs années au Japon, sous la tutelle d’un oncle qui ne cessait de lui rappeler qu'il était responsable du décès de sa sœur. Dante revint alors à Solaris, plus sombre que jamais, façonné par les blessures profondes des trahisons, des pertes et de la solitude. Pourtant, au milieu de cette nuit noire, il pouvait encore compter sur la présence de sa seule amie, bien qu'il ne le lui montre jamais.`,
+  },
   // Ajoutez d'autres jeux ici...
 ];
 
@@ -357,7 +361,6 @@ function anagramGame(callback) {
   showAnagramGame();
 }
 function simonGame(callback) {
-
   const simonGameContainer = document.getElementById("game-container");
   simonGameContainer.className = "simon-game-container";
   const colors = ["red", "blue", "green", "yellow"];
@@ -365,7 +368,7 @@ function simonGame(callback) {
     "./WyattLogos/WyattLogo01.png", // Image pour "red"
     "./WyattLogos/WyattLogo02.png", // Image pour "blue"
     "./WyattLogos/WyattLogo03.png", // Image pour "green"
-    "./WyattLogos/WyattSicks.png",  // Image pour "yellow"
+    "./WyattLogos/WyattSicks.png", // Image pour "yellow"
   ];
   let sequence = [];
   let userSequence = [];
@@ -442,10 +445,9 @@ function simonGame(callback) {
 
   function handleUserClick(event) {
     const clickedElement = event.target;
-    const clickedColor =
-      clickedElement.classList.contains("simon-button")
-        ? clickedElement.id
-        : clickedElement.parentElement.id;
+    const clickedColor = clickedElement.classList.contains("simon-button")
+      ? clickedElement.id
+      : clickedElement.parentElement.id;
 
     userSequence.push(clickedColor);
 
@@ -471,7 +473,6 @@ function simonGame(callback) {
       disableButtons();
       level++;
 
-
       if (level === maxLevels) {
         // Victoire ! Si on atteint le niveau max, on affiche la victoire
         const endMessage = games[3].endContent;
@@ -479,7 +480,7 @@ function simonGame(callback) {
           showEndContent(endMessage, callback, false);
         }, 1000);
         setTimeout(() => {
-          letMeIn()
+          letMeIn();
         }, 3000);
       } else {
         setTimeout(nextLevel, 1000);
@@ -488,32 +489,30 @@ function simonGame(callback) {
   }
 
   function letMeIn() {
-    const fiend = document.createElement("div")
+    const fiend = document.createElement("div");
     fiend.className = "fiend";
     document.body.appendChild(fiend);
 
-   const fiendVideo = document.createElement("video");
-   fiendVideo.src = "./WyattLogos/BrayWyatt.mp4";
-   fiendVideo.style.width = "100%";
-   fiendVideo.style.height = "100%";
-   fiendVideo.style.objectFit = "cover";
-   fiendVideo.style.position = "fixed";
-   fiendVideo.style.top = "0";
-   fiendVideo.style.left = "0";
-   fiend.appendChild(fiendVideo);
+    const fiendVideo = document.createElement("video");
+    fiendVideo.src = "./WyattLogos/BrayWyatt.mp4";
+    fiendVideo.style.width = "100%";
+    fiendVideo.style.height = "100%";
+    fiendVideo.style.objectFit = "cover";
+    fiendVideo.style.position = "fixed";
+    fiendVideo.style.top = "0";
+    fiendVideo.style.left = "0";
+    fiend.appendChild(fiendVideo);
 
-   fiendVideo.play();
-   fiendVideo.addEventListener("ended", () => {
-     fiend.style.display = "none";
-   })
+    fiendVideo.play();
+    fiendVideo.addEventListener("ended", () => {
+      fiend.style.display = "none";
+    });
   }
 
   function nextLevel() {
     sequence.push(getRandomColor());
     playSequence();
   }
-
-
 
   function startSimonGame() {
     initializeSound(); // Initialise le son uniquement quand le jeu commence
@@ -526,7 +525,98 @@ function simonGame(callback) {
   startSimonGame();
 }
 
+function japaneseColorBox(callback) {
+  const japaneseColor = [
+    { color: "red", couleur: "rouge", iro: "aka", colorKanji: "赤" },
+    { color: "green", couleur: "vert", iro: "midori", colorKanji: "緑" },
+    { color: "blue", couleur: "bleu", iro: "ao", colorKanji: "青" },
+    { color: "yellow", couleur: "jaune", iro: "kiiro", colorKanji: "黄" },
+    { color: "purple", couleur: "violet", iro: "murasaki", colorKanji: "紫" },
+  ];
 
+  const japaneseColorContainer = document.getElementById("game-container");
+  japaneseColorContainer.className = "japanese-color-container";
+
+  let displayedColor; // Couleur du carré
+  let currentColor; // Couleur mentionnée dans le texte
+  let level = 1;
+  const maxLevel = 5;
+  let timeoutId; // Timeout global pour contrôler les changements de couleur
+
+  function displayColorBox() {
+    // Efface l'ancien carré de couleur
+    japaneseColorContainer.querySelector(".color-box")?.remove();
+
+    // Sélectionne une couleur aléatoire pour le carré
+    displayedColor =
+      japaneseColor[Math.floor(Math.random() * japaneseColor.length)];
+
+    // Affiche le carré de couleur
+    const colorBox = document.createElement("div");
+    colorBox.className = "color-box";
+    colorBox.style.backgroundColor = displayedColor.color;
+    japaneseColorContainer.appendChild(colorBox);
+
+
+    // Ajoute l'écouteur d'événement sur le carré
+    colorBox.addEventListener("click", handleClick);
+
+    // Annule le timeout précédent avant d'en démarrer un nouveau
+    clearTimeout(timeoutId);
+
+    // Passe à une nouvelle couleur après 2,5 secondes
+    timeoutId = setTimeout(() => {
+      colorBox.removeEventListener("click", handleClick);
+      displayColorBox();
+    }, 2500);
+  }
+
+  function handleClick() {
+    // Vérifie si la couleur du carré correspond à l'énoncé
+    if (displayedColor.color === currentColor.color) {
+      alert("Bravo !");
+      level++;
+
+      if (level > maxLevel) {
+        const endMessage = games[4].endContent;
+        setTimeout(() => {
+          showEndContent(endMessage, callback, false);
+          clearTimeout(timeoutId);
+          colorBox.style.display = "none";
+        }, 1000);
+      } else {
+        displayNextLevel(); // Passe au niveau suivant
+      }
+    } else {
+      alert("Mauvaise réponse ! Essayez encore.");
+      level = 1;
+      displayNextLevel(); // Redémarre au niveau 1
+    }
+  }
+
+  function displayNextLevel() {
+    japaneseColorContainer.innerHTML = ""; // Réinitialise le conteneur
+    currentColor =
+      japaneseColor[Math.floor(Math.random() * japaneseColor.length)];
+
+    // Affiche le texte de la nouvelle couleur cible
+    const colorText = document.createElement("h3");
+    colorText.innerHTML = `<p>Round ${level} / 5 : ${currentColor.couleur} = ${currentColor.iro}</p><p style="color: ${currentColor.color};">(${currentColor.colorKanji})</p>`;
+    japaneseColorContainer.appendChild(colorText);
+
+    const textGame = document.createElement("div");
+    textGame.className = "textGame";
+    textGame.innerHTML = "Si le carré n'est de la bonne couleur, veuillez patienter jusqu'à trouver la bonne.";
+    japaneseColorContainer.appendChild(textGame);
+
+    // Lance une nouvelle séquence de carrés
+    displayColorBox();
+  }
+
+
+  // Démarre le jeu
+  displayNextLevel();
+}
 
 
 // Fonction pour afficher le contenu final (quand le jeu est terminé)
@@ -537,6 +627,6 @@ function showEndContent(content) {
   `;
   const finishButton = document.createElement("button");
   finishButton.textContent = "Continuer";
-  finishButton.addEventListener("click", () => popup.style.display = "none");
+  finishButton.addEventListener("click", () => (popup.style.display = "none"));
   popupContent.appendChild(finishButton);
 }
