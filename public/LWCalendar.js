@@ -30,19 +30,127 @@ const games = [
   },
   {
     game: geekQuiz,
-    endContent: `Le Chevalier de l'Obsidienne est un super-héros fictif originaire de l'imaginaire d'un habitant de Black Peaks, qui l’a créé dans son enfance après avoir été fasciné par les pierres d’obsidienne découvertes suite au tremblement de terre de 1914. Ce personnage incarne la résilience et la force, symbolisées par l'obsidienne elle-même. Aujourd'hui, son créateur est devenu une figure emblématique, jouant même le rôle de ce héros dans une célèbre adaptation cinématographique. Le Chevalier de l'Obsidienne est perçu comme un protecteur sombre mais juste, portant les cicatrices de son passé tout en luttant pour l'espoir et la justice.`
+    endContent: `Le Chevalier de l'Obsidienne est un super-héros fictif originaire de l'imaginaire d'un habitant de Black Peaks, qui l’a créé dans son enfance après avoir été fasciné par les pierres d’obsidienne découvertes suite au tremblement de terre de 1914. Ce personnage incarne la résilience et la force, symbolisées par l'obsidienne elle-même. Aujourd'hui, son créateur est devenu une figure emblématique, jouant même le rôle de ce héros dans une célèbre adaptation cinématographique. Le Chevalier de l'Obsidienne est perçu comme un protecteur sombre mais juste, portant les cicatrices de son passé tout en luttant pour l'espoir et la justice.`,
+  },
+  {
+    game: intrudersHillGame,
+    endContent: `<em>Dans mes rêves agités,
+je vois cette ville.
+
+Silent Hill.
+
+Tu m'avais promis que tu m'y emmènerais
+un jour, mais tu ne l'as jamais fait.
+
+Eh bien, je suis seule là-bas maintenant...
+Dans notre 'endroit spécial'...
+Je t'attends...
+
+Je t'attends pour que tu viennes me voir.
+
+Mais tu ne viens jamais.
+
+Et donc j'attends, enveloppée dans mon
+cocon de douleur et de solitude.
+
+Je sais que j'ai fait une chose terrible pour toi. Quelque chose que tu
+ne me pardonneras jamais.
+
+J'aimerais pouvoir changer cela, mais je ne peux pas.
+
+Je me sens tellement pathétique et moche
+allongée ici, en t'attendant...
+
+Chaque jour, je regarde les fissures
+au plafond et tout ce que je peux penser,
+c'est à quel point tout cela est injuste...
+
+Le docteur est venu aujourd'hui.
+Il m'a dit que je pourrais rentrer
+à la maison pour un court séjour.
+
+Ce n'est pas que je vais mieux.
+C'est juste que c'est peut-être
+ma dernière chance...
+
+Je pense que tu sais ce que je veux dire...
+
+Même ainsi, je suis contente de revenir à la maison.
+Tu m'as tellement manqué.
+
+Mais j'ai peur, James.
+J'ai peur que tu ne veuilles pas vraiment
+que je rentre à la maison.
+
+Chaque fois que tu viens me voir,
+je peux voir combien cela te coûte...
+
+Je ne sais pas si tu
+me détestes ou me plains...
+Ou peut-être que je te dégoûte...
+
+Je suis désolée pour cela.
+
+Quand j'ai appris que
+j'allais mourir, je n'ai tout simplement
+pas voulu l'accepter.
+
+J'étais toujours en colère et je
+me suis en prise avec tous ceux que j'aimais le plus.
+Surtout toi, James.
+
+C'est pourquoi je comprends
+si tu me détestes.
+
+Mais je veux que tu saches cela, James.
+
+Je t'aimerai toujours.
+
+Même si notre vie ensemble a dû
+se terminer comme ça, je ne l'échangerais pour rien au monde. Nous avons eu
+de merveilleuses années ensemble.
+
+Eh bien, cette lettre est trop longue, alors je vais dire au revoir.
+
+J'ai dit à l'infirmière de te la donner
+après ma mort.
+
+Cela signifie qu'en lisant ceci, je suis déjà morte.
+
+Je ne peux pas te demander de te souvenir de moi,
+mais je ne peux pas supporter que tu
+m'oublies.
+
+Ces dernières années, depuis que je suis tombée malade...
+Je suis tellement désolée pour
+ce que je t'ai fait, ce que nous avons fait...
+
+Tu m'as donné tellement de choses et
+je n'ai rien pu te rendre.
+
+C'est pourquoi je veux que tu vives
+pour toi maintenant.
+Fais ce qui est meilleur pour toi, James.
+
+James...
+
+Tu m'as rendue heureuse.</em>`,
   },
   // Ajoutez d'autres jeux ici...
 ];
 
 // Initialisation du calendrier
 const calendar = document.getElementById("calendar");
+
+// const unlockLimit = 12;
+
 for (let day = 1; day <= 31; day++) {
   const cell = document.createElement("div");
   cell.classList.add("case");
   cell.textContent = `${day}`;
 
   if (currentMonth === 11) {
+    // if (day > unlockLimit) {
     if (day > currentDay) {
       cell.style.color = "red";
       cell.style.border = "3px solid red";
@@ -561,7 +669,6 @@ function japaneseColorBox(callback) {
     colorBox.style.backgroundColor = displayedColor.color;
     japaneseColorContainer.appendChild(colorBox);
 
-
     // Ajoute l'écouteur d'événement sur le carré
     colorBox.addEventListener("click", handleClick);
 
@@ -610,13 +717,13 @@ function japaneseColorBox(callback) {
 
     const textGame = document.createElement("div");
     textGame.className = "textGame";
-    textGame.innerHTML = "Si le carré n'est de la bonne couleur, veuillez patienter jusqu'à trouver la bonne.";
+    textGame.innerHTML =
+      "Si le carré n'est de la bonne couleur, veuillez patienter jusqu'à trouver la bonne.";
     japaneseColorContainer.appendChild(textGame);
 
     // Lance une nouvelle séquence de carrés
     displayColorBox();
   }
-
 
   // Démarre le jeu
   displayNextLevel();
@@ -628,19 +735,26 @@ function geekQuiz(callback) {
 
   const questions = [
     {
-      question: "Je dirais qu'il faut beaucoup de bravoure pour affronter ses ennemis mais qu'il en faut encore plus pour affronter ses amis.",
+      question:
+        "Je dirais qu'il faut beaucoup de bravoure pour affronter ses ennemis mais qu'il en faut encore plus pour affronter ses amis.",
       answers: ["Albus Dumbledore", "Obi-Wan Kenobi", "Ben Parker"],
       correctAnswer: "Albus Dumbledore",
       video: "./answersGeekQuiz/Answer01.mp4",
     },
     {
-      question: "- Vous jouez au dur sous votre armure, mais si on vous l'enlève, vous êtes quoi ? <br/> - Un génie, play-box, philanthrope, milliardaire.",
-      answers: ["Clark Kent & Bruce Wayne", "Soldier Boy & Tek Knight", "Steve Rogers & Tony Stark"],
+      question:
+        "- Vous jouez au dur sous votre armure, mais si on vous l'enlève, vous êtes quoi ? <br/> - Un génie, play-box, philanthrope, milliardaire.",
+      answers: [
+        "Clark Kent & Bruce Wayne",
+        "Soldier Boy & Tek Knight",
+        "Steve Rogers & Tony Stark",
+      ],
       correctAnswer: "Steve Rogers & Tony Stark",
       video: "./answersGeekQuiz/Answer02.mp4",
     },
     {
-      question: "Ce gars a une proportion à qui fait les génocides, il file le cancer à des gosses, et la seule idée qu'il a eu pour sauver l'humanité, c'est de clouer son propre fils sur une planche... ",
+      question:
+        "Ce gars a une proportion à qui fait les génocides, il file le cancer à des gosses, et la seule idée qu'il a eu pour sauver l'humanité, c'est de clouer son propre fils sur une planche... ",
       answers: ["Homelander", "William Butcher", "Frenchie"],
       correctAnswer: "William Butcher",
       video: "./answersGeekQuiz/Answer03.mp4",
@@ -653,7 +767,11 @@ function geekQuiz(callback) {
     },
     {
       question: "- Après tout ce temps ? <br/> - A jamais !",
-      answers: ["Albus Dumbledore & Severus Rogue", "Thanos & Steve Rogers", "Darkseid & Superman"],
+      answers: [
+        "Albus Dumbledore & Severus Rogue",
+        "Thanos & Steve Rogers",
+        "Darkseid & Superman",
+      ],
       correctAnswer: "Albus Dumbledore & Severus Rogue",
       video: "./answersGeekQuiz/Answer05.mp4",
     },
@@ -726,19 +844,125 @@ function playVideo(videoSrc, onEnd) {
   geekQuizContainer.appendChild(videoElement);
 
   videoElement.addEventListener("ended", function () {
-    onEnd(); videoElement.remove();
+    onEnd();
+    videoElement.remove();
   }); // Passe à la prochaine question après la vidéo
+}
+
+function intrudersHillGame(callback) {
+  const intrudersContainer = document.getElementById("game-container");
+  intrudersContainer.className = "intruders-container";
+
+  const intrudersList = [
+    {
+      objects: [
+        "Le lac Toluca",
+        "L'école élémentaire Midwich",
+        "L'hôpital Saint-Martin de Beauzac",
+      ],
+      intruder: "L'hôpital Saint-Martin de Beauzac",
+    },
+    {
+      objects: [
+        "La fiole du professeur",
+        "Le couteau d'Angela",
+        "La lettre de Mary",
+      ],
+      intruder: "La fiole du professeur",
+    },
+    {
+      objects: ["Heather Mason", "Sofia Mandula", "Alessa Gillespie"],
+      intruder: "Sofia Mandula",
+    },
+  ];
+
+  let currentIntruderGuess = 0;
+
+  function displayIntrudersHill() {
+    intrudersContainer.innerHTML = ""; // Réinitialise le conteneur
+
+    const intruder = intrudersList[currentIntruderGuess];
+    const intruderElement = document.createElement("p");
+    intruderElement.innerHTML = `Quel est l'intrus ?`;
+    intrudersContainer.appendChild(intruderElement);
+
+    const intruderAnswer = document.createElement("div");
+    intruderAnswer.className = "intruder-answers";
+    intruder.objects.forEach((object) => {
+      const objectButton = document.createElement("button");
+      objectButton.textContent = object;
+      objectButton.addEventListener("click", () => checkIntruderAnswer(object));
+      intruderAnswer.appendChild(objectButton);
+    });
+    intrudersContainer.appendChild(intruderAnswer);
+  }
+
+  function checkIntruderAnswer(selectedObject) {
+    const mary = new Audio("silentHillMary.mp3");
+    const intruder = intrudersList[currentIntruderGuess];
+    if (selectedObject === intruder.intruder) {
+      // Bonne sélection : progression et message
+      currentIntruderGuess++;
+      showRetryMessage(true); // Bonne réponse
+      if (currentIntruderGuess < intrudersList.length) {
+        setTimeout(() => {
+          displayIntrudersHill(); // Afficher le prochain jeu
+        }, 2000);
+      } else {
+        const endMessage = games[6]?.endContent;
+        if (endMessage) {
+          setTimeout(() => {
+            showEndContent(endMessage, callback, false);
+            mary.play();
+          }, 1000);
+        } else {
+          console.log("Message de fin non trouvé.");
+        }
+      }
+    } else {
+      // Mauvaise sélection : afficher un message et permettre de retenter
+      showRetryMessage(false); // Mauvaise réponse
+    }
+  }
+
+  function showRetryMessage(isCorrect) {
+    const retryMessage = document.createElement("p");
+    retryMessage.className = ("retry-message");
+  
+    if (isCorrect) {
+      // Bonne réponse
+      retryMessage.innerHTML = "Très bien !";
+      retryMessage.style.color = "green";
+    } else {
+      // Mauvaise réponse
+      retryMessage.innerHTML = "Mauvaise sélection. Essayez encore !";
+      retryMessage.style.color = "red";
+      setTimeout(() => retryMessage.remove(), 2000); // Retirer le message après 2 secondes
+    }
+  
+    retryMessage.style.fontSize = "25px";
+    intrudersContainer.appendChild(retryMessage);
+  }
+
+  // Lancement du jeu
+  displayIntrudersHill();
 }
 
 
 // Fonction pour afficher le contenu final (quand le jeu est terminé)
-function showEndContent(content) {
-  const popupContent = document.getElementById("game-container");
-  popupContent.innerHTML = `
+function showEndContent(content, callback) {
+  const ending = document.getElementById("game-container");
+  ending.className = "ending";
+  ending.innerHTML = `
     <p>${content}</p>
   `;
   const finishButton = document.createElement("button");
   finishButton.textContent = "Continuer";
-  finishButton.addEventListener("click", () => (popup.style.display = "none"));
+  finishButton.addEventListener("click", function () {
+    ending.style.display = "none";
+    ending.innerHTML = "";
+    popupContent.innerHTML = "";
+    popup.style.display = "none";
+  });
   popupContent.appendChild(finishButton);
 }
