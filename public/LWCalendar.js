@@ -28,6 +28,10 @@ const games = [
     game: japaneseColorBox,
     endContent: `Dante Violet n’est pas japonais, mais une partie de cette culture, de cette langue, il la porte en lui, héritée de l’amour inconditionnel de la femme qui devint sa mère adoptive, la compagne de son père. Après la mort brutale de cette dernière, il passa plusieurs années au Japon, sous la tutelle d’un oncle qui ne cessait de lui rappeler qu'il était responsable du décès de sa sœur. Dante revint alors à Solaris, plus sombre que jamais, façonné par les blessures profondes des trahisons, des pertes et de la solitude. Pourtant, au milieu de cette nuit noire, il pouvait encore compter sur la présence de sa seule amie, bien qu'il ne le lui montre jamais.`,
   },
+  {
+    game: geekQuiz,
+    endContent: `Le Chevalier de l'Obsidienne est un super-héros fictif originaire de l'imaginaire d'un habitant de Black Peaks, qui l’a créé dans son enfance après avoir été fasciné par les pierres d’obsidienne découvertes suite au tremblement de terre de 1914. Ce personnage incarne la résilience et la force, symbolisées par l'obsidienne elle-même. Aujourd'hui, son créateur est devenu une figure emblématique, jouant même le rôle de ce héros dans une célèbre adaptation cinématographique. Le Chevalier de l'Obsidienne est perçu comme un protecteur sombre mais juste, portant les cicatrices de son passé tout en luttant pour l'espoir et la justice.`
+  },
   // Ajoutez d'autres jeux ici...
 ];
 
@@ -616,6 +620,114 @@ function japaneseColorBox(callback) {
 
   // Démarre le jeu
   displayNextLevel();
+}
+
+function geekQuiz(callback) {
+  const geekQuizContainer = document.getElementById("game-container");
+  geekQuizContainer.className = "geek-quiz-container";
+
+  const questions = [
+    {
+      question: "Je dirais qu'il faut beaucoup de bravoure pour affronter ses ennemis mais qu'il en faut encore plus pour affronter ses amis.",
+      answers: ["Albus Dumbledore", "Obi-Wan Kenobi", "Ben Parker"],
+      correctAnswer: "Albus Dumbledore",
+      video: "./answersGeekQuiz/Answer01.mp4",
+    },
+    {
+      question: "- Vous jouez au dur sous votre armure, mais si on vous l'enlève, vous êtes quoi ? <br/> - Un génie, play-box, philanthrope, milliardaire.",
+      answers: ["Clark Kent & Bruce Wayne", "Soldier Boy & Tek Knight", "Steve Rogers & Tony Stark"],
+      correctAnswer: "Steve Rogers & Tony Stark",
+      video: "./answersGeekQuiz/Answer02.mp4",
+    },
+    {
+      question: "Ce gars a une proportion à qui fait les génocides, il file le cancer à des gosses, et la seule idée qu'il a eu pour sauver l'humanité, c'est de clouer son propre fils sur une planche... ",
+      answers: ["Homelander", "William Butcher", "Frenchie"],
+      correctAnswer: "William Butcher",
+      video: "./answersGeekQuiz/Answer03.mp4",
+    },
+    {
+      question: "Un grand pouvoir, implique de grandes responsabilités.",
+      answers: ["Thomas Wayne", "Jonathan Kent", "Ben Parker"],
+      correctAnswer: "Ben Parker",
+      video: "./answersGeekQuiz/Answer04.mp4",
+    },
+    {
+      question: "- Après tout ce temps ? <br/> - A jamais !",
+      answers: ["Albus Dumbledore & Severus Rogue", "Thanos & Steve Rogers", "Darkseid & Superman"],
+      correctAnswer: "Albus Dumbledore & Severus Rogue",
+      video: "./answersGeekQuiz/Answer05.mp4",
+    },
+  ];
+
+  let currentQuestion = 0;
+
+  function displayQuestion() {
+    geekQuizContainer.innerHTML = ""; // Réinitialise le conteneur
+
+    const question = questions[currentQuestion];
+    const questionElement = document.createElement("p");
+    questionElement.innerHTML = `Qui a/ont dit : <br/> "<em>${question.question}</em>" ?`;
+    geekQuizContainer.appendChild(questionElement);
+
+    const answersElement = document.createElement("div");
+    answersElement.className = "answers";
+    question.answers.forEach((answer) => {
+      const answerButton = document.createElement("button");
+      answerButton.textContent = answer;
+      answerButton.addEventListener("click", () => checkAnswer(answer));
+      answersElement.appendChild(answerButton);
+    });
+    geekQuizContainer.appendChild(answersElement);
+  }
+
+  function checkAnswer(selectedAnswer) {
+    const question = questions[currentQuestion];
+    if (selectedAnswer === question.correctAnswer) {
+      // Bonne réponse : jouer la vidéo associée
+      playVideo(question.video, () => {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          displayQuestion();
+        } else {
+          const endMessage = games[5].endContent;
+          setTimeout(() => {
+            showEndContent(endMessage, callback, false);
+          }, 1000);
+        }
+      });
+    } else {
+      // Mauvaise réponse : afficher un message et permettre de retenter
+      showRetryMessage();
+    }
+  }
+
+  function showRetryMessage() {
+    const retryMessage = document.createElement("p");
+    retryMessage.textContent = "Mauvaise réponse. Essayez encore !";
+    retryMessage.style.color = "red";
+    retryMessage.style.fontSize = "18px";
+    geekQuizContainer.appendChild(retryMessage);
+
+    setTimeout(() => retryMessage.remove(), 2000); // Retire le message après 2 secondes
+  }
+  displayQuestion();
+}
+
+function playVideo(videoSrc, onEnd) {
+  const geekQuizContainer = document.getElementById("game-container");
+  geekQuizContainer.innerHTML = ""; // Réinitialise le conteneur
+  const videoElement = document.createElement("video");
+  videoElement.src = videoSrc;
+  videoElement.autoplay = true;
+  videoElement.style.width = "100%";
+  videoElement.style.height = "100%";
+  videoElement.style.objectFit = "contain";
+  videoElement.style.borderRadius = "30px";
+  geekQuizContainer.appendChild(videoElement);
+
+  videoElement.addEventListener("ended", function () {
+    onEnd(); videoElement.remove();
+  }); // Passe à la prochaine question après la vidéo
 }
 
 
