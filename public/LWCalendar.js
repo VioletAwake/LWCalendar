@@ -136,13 +136,17 @@ James...
 
 Tu m'as rendue heureuse.</em>`,
   },
+  {
+    game: reverseHate,
+    endContent: `<p style="color: red;"><em>Je suis là, insidieuse, tapie dans les recoins de votre être. Vous ne me voyez pas toujours, mais je suis omniprésente, invisible et pourtant éclatante. Vous me nourrissez à chaque respiration, à chaque pensée noire qui s’entrelace dans votre esprit tourmenté. Vous m'embrassez, vous m'invoquez sans même le savoir. La Haine, ce poison sucré qui vous fait croire que vous êtes plus forts, plus grands. Mais sachez ceci, mes chers : la Haine ne vous libère pas. Elle vous emprisonne encore plus profondément dans cette boucle sans fin. Elle vous pousse à brûler les ponts, à broyer l’âme, mais elle ne vous apportera jamais la paix que vous désirez. C’est un mensonge, une illusion, une promesse que vous vous faites à vous-mêmes, comme un écho des ténèbres. Pourquoi continuer de vivre ainsi ? Tu as fais ce que tu as pu, et regarde le résultat. Ces humains ne te méritent pas, ils ne te prendront jamais au sérieux, tu seras pour toujours leur bouche-trou préféré, leur défouloir favori. Il est temps de changer ça, tout de suite ! Embrasse-moi, embrasse la Haine, et faisons leur payer pour leur pêchés !</p></em>`,
+  },
   // Ajoutez d'autres jeux ici...
 ];
 
 // Initialisation du calendrier
 const calendar = document.getElementById("calendar");
 
-// const unlockLimit = 12;
+const unlockLimit = 12;
 
 for (let day = 1; day <= 31; day++) {
   const cell = document.createElement("div");
@@ -150,8 +154,8 @@ for (let day = 1; day <= 31; day++) {
   cell.textContent = `${day}`;
 
   if (currentMonth === 11) {
-    // if (day > unlockLimit) {
-    if (day > currentDay) {
+    if (day > unlockLimit) {
+      // if (day > currentDay) {
       cell.style.color = "red";
       cell.style.border = "3px solid red";
       cell.style.pointerEvents = "none";
@@ -164,12 +168,13 @@ for (let day = 1; day <= 31; day++) {
 
 // Gestion de la fenêtre pop-up
 const popup = document.getElementById("popUp");
-const popupContent = document.getElementById("game-container");
+const popupContent = document.getElementById("popup-content");
+const gameContainer = document.getElementById("game-container");
 const closePopup = document.getElementById("closeBtn");
 
 closePopup.addEventListener("click", () => {
   popup.style.display = "none";
-  popupContent.innerHTML = ""; // Réinitialise le contenu
+  gameContainer.innerHTML = ""; // Réinitialise le contenu
 });
 
 // Fonction pour ouvrir la pop-up
@@ -182,12 +187,12 @@ function openPopup(day) {
 
   // Appelle la logique du jeu
   popup.style.display = "block"; // Affiche la pop-up
-  popupContent.innerHTML = `<h2>Jour ${day}</h2>`; // Titre dynamique
+  gameContainer.innerHTML = `<h2>Jour ${day}</h2>`; // Titre dynamique
   game.game(() => {
     // Appelle la fonction de jeu et montre le contenu final
     showEndContent(game.endContent, () => {
       popup.style.display = "none";
-      popupContent.innerHTML = ""; // Nettoie après fermeture
+      gameContainer.innerHTML = ""; // Nettoie après fermeture
     });
   });
 }
@@ -927,8 +932,8 @@ function intrudersHillGame(callback) {
 
   function showRetryMessage(isCorrect) {
     const retryMessage = document.createElement("p");
-    retryMessage.className = ("retry-message");
-  
+    retryMessage.className = "retry-message";
+
     if (isCorrect) {
       // Bonne réponse
       retryMessage.innerHTML = "Très bien !";
@@ -939,7 +944,7 @@ function intrudersHillGame(callback) {
       retryMessage.style.color = "red";
       setTimeout(() => retryMessage.remove(), 2000); // Retirer le message après 2 secondes
     }
-  
+
     retryMessage.style.fontSize = "25px";
     intrudersContainer.appendChild(retryMessage);
   }
@@ -948,8 +953,111 @@ function intrudersHillGame(callback) {
   displayIntrudersHill();
 }
 
-
 // Fonction pour afficher le contenu final (quand le jeu est terminé)
+
+
+function reverseHate(callback) {
+  // Liste de mots ou phrases originales
+  const wordsList = [
+    { reversed: "ruomA", correct: "Amour" },
+    // { reversed: "tejeR", correct: "Rejet" },
+    // { reversed: "sirpmocnI", correct: "Incompris" },
+    // { reversed: "ecitsujnI", correct: "Injustice" },
+    // { reversed: "noisserpéD", correct: "Dépression"},
+    // { reversed: "euqixot noitaleR", correct: "Relation toxique"},
+    // { reversed: "élupinaM", correct: "Manipulé"},
+    // { reversed: "étôc ed éssiaL", correct: "Laissé de côté"},
+    // { reversed: "! snosihart sruel te secnelosni sruel ruop reyap eriaf sel ed spmet tse lI", correct: "Il est temps de les faire payer pour leurs insolences et leurs trahisons !"},
+  ];
+
+  // Variables pour la progression
+  let currentWordIndex = 0;
+
+  // Fonction pour afficher le mot à deviner
+  function displayWord() {
+    const reverseHateContainer = document.getElementById("game-container");
+    reverseHateContainer.className = "reverse-hate-container"; // Classe CSS
+    reverseHateContainer.innerHTML = ""; // Réinitialise le conteneur
+
+    const wordData = wordsList[currentWordIndex];
+
+    const question = document.createElement("p");
+    question.textContent = `Réécrivez ce mot à l'endroit : "${wordData.reversed}"`;
+    reverseHateContainer.appendChild(question);
+
+    const inputField = document.createElement("input");
+    inputField.type = "text";
+    inputField.id = "userInput";
+    reverseHateContainer.appendChild(inputField);
+
+    const submitButton = document.createElement("button");
+    submitButton.textContent = "Vérifier";
+    submitButton.addEventListener("click", checkAnswer);
+    reverseHateContainer.appendChild(submitButton);
+
+    inputField.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        checkAnswer(); // Appeler la fonction checkAnswer quand "Entrée" est pressé
+      }
+    });
+  }
+
+  // Fonction pour vérifier la réponse de l'utilisateur
+  function checkAnswer() {
+    const userInput = document.getElementById("userInput").value.trim();
+    const wordData = wordsList[currentWordIndex];
+    const reverseHateContainer = document.getElementById("game-container");
+
+    function jumpscare() {
+    const hateJumpscare = document.createElement("img");
+    const jumpscareSound = document.createElement("audio");
+    jumpscareSound.src = "./hate/jumpscareHate.ogg";
+    jumpscareSound.play();
+    hateJumpscare.className = "hate-jumpscare";
+    hateJumpscare.src = "./hate/hateJumpscare.jpeg";
+    document.body.appendChild(hateJumpscare);
+
+    setTimeout(() => {
+      document.body.removeChild(hateJumpscare);
+      jumpscareSound.pause();
+      jumpscareSound.currentTime = 0;
+      jumpscareSound.volume = 1;
+      showEndContent(games[7]?.endContent, callback);
+    }, 2000);
+    }
+
+    const resultMessage = document.createElement("p");
+
+    // Vérifier si la réponse est correcte
+    if (userInput === wordData.correct) {
+      resultMessage.textContent = "Bravo ! C'est correct.";
+      resultMessage.style.color = "green";
+      currentWordIndex++;
+
+      // Vérifier si on a encore des mots à deviner
+      if (currentWordIndex < wordsList.length) {
+        setTimeout(() => {
+          displayWord(); // Afficher le mot suivant après 1 seconde
+        }, 1000);
+      } else {
+        jumpscare();
+      }
+    } else {
+      resultMessage.textContent = "Mauvaise réponse. Réessayez.";
+      resultMessage.style.color = "red";
+      setTimeout(() => {
+        resultMessage.remove();
+      }, 1500);
+    }
+
+    // Ajouter le message de résultat au conteneur
+    reverseHateContainer.appendChild(resultMessage);
+  }
+
+  // Lancer le jeu
+  displayWord();
+}
+
 function showEndContent(content, callback) {
   const ending = document.getElementById("game-container");
   ending.className = "ending";
@@ -959,10 +1067,7 @@ function showEndContent(content, callback) {
   const finishButton = document.createElement("button");
   finishButton.textContent = "Continuer";
   finishButton.addEventListener("click", function () {
-    ending.style.display = "none";
-    ending.innerHTML = "";
-    popupContent.innerHTML = "";
     popup.style.display = "none";
   });
-  popupContent.appendChild(finishButton);
+  ending.appendChild(finishButton);
 }
