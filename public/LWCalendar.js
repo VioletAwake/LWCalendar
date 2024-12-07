@@ -146,7 +146,7 @@ Tu m'as rendue heureuse.</em>`,
 // Initialisation du calendrier
 const calendar = document.getElementById("calendar");
 
-const unlockLimit = 12;
+// const unlockLimit = 12;
 
 for (let day = 1; day <= 31; day++) {
   const cell = document.createElement("div");
@@ -154,8 +154,8 @@ for (let day = 1; day <= 31; day++) {
   cell.textContent = `${day}`;
 
   if (currentMonth === 11) {
-    if (day > unlockLimit) {
-      // if (day > currentDay) {
+    // if (day > unlockLimit) {
+      if (day > currentDay) {
       cell.style.color = "red";
       cell.style.border = "3px solid red";
       cell.style.pointerEvents = "none";
@@ -960,14 +960,14 @@ function reverseHate(callback) {
   // Liste de mots ou phrases originales
   const wordsList = [
     { reversed: "ruomA", correct: "Amour" },
-    // { reversed: "tejeR", correct: "Rejet" },
-    // { reversed: "sirpmocnI", correct: "Incompris" },
-    // { reversed: "ecitsujnI", correct: "Injustice" },
-    // { reversed: "noisserpéD", correct: "Dépression"},
-    // { reversed: "euqixot noitaleR", correct: "Relation toxique"},
-    // { reversed: "élupinaM", correct: "Manipulé"},
-    // { reversed: "étôc ed éssiaL", correct: "Laissé de côté"},
-    // { reversed: "! snosihart sruel te secnelosni sruel ruop reyap eriaf sel ed spmet tse lI", correct: "Il est temps de les faire payer pour leurs insolences et leurs trahisons !"},
+    { reversed: "tejeR", correct: "Rejet" },
+    { reversed: "sirpmocnI", correct: "Incompris" },
+    { reversed: "ecitsujnI", correct: "Injustice" },
+    { reversed: "noisserpéD", correct: "Dépression"},
+    { reversed: "euqixot noitaleR", correct: "Relation toxique"},
+    { reversed: "élupinaM", correct: "Manipulé"},
+    { reversed: "étôc ed éssiaL", correct: "Laissé de côté"},
+    { reversed: "! snosihart sruel te secnelosni sruel ruop reyap eriaf sel ed spmet tse lI", correct: "Il est temps de les faire payer pour leurs insolences et leurs trahisons !"},
   ];
 
   // Variables pour la progression
