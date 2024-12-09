@@ -140,6 +140,10 @@ Tu m'as rendue heureuse.</em>`,
     game: reverseHate,
     endContent: `<p style="color: red;"><em>Je suis là, insidieuse, tapie dans les recoins de votre être. Vous ne me voyez pas toujours, mais je suis omniprésente, invisible et pourtant éclatante. Vous me nourrissez à chaque respiration, à chaque pensée noire qui s’entrelace dans votre esprit tourmenté. Vous m'embrassez, vous m'invoquez sans même le savoir. La Haine, ce poison sucré qui vous fait croire que vous êtes plus forts, plus grands. Mais sachez ceci, mes chers : la Haine ne vous libère pas. Elle vous emprisonne encore plus profondément dans cette boucle sans fin. Elle vous pousse à brûler les ponts, à broyer l’âme, mais elle ne vous apportera jamais la paix que vous désirez. C’est un mensonge, une illusion, une promesse que vous vous faites à vous-mêmes, comme un écho des ténèbres. Pourquoi continuer de vivre ainsi ? Tu as fais ce que tu as pu, et regarde le résultat. Ces humains ne te méritent pas, ils ne te prendront jamais au sérieux, tu seras pour toujours leur bouche-trou préféré, leur défouloir favori. Il est temps de changer ça, tout de suite ! Embrasse-moi, embrasse la Haine, et faisons leur payer pour leur pêchés !</p></em>`,
   },
+  {
+    game: phoneGame,
+    endContent: `<em>J'ai mis un temps fou pour construire ce téléphone, je ne compte plus le nombre de fois où j'étais à deux doigts de l'abandon et de l'acceptation de mon sort. Mais j'ai enfin réussi, j'ai réussi à le communiquer, à avoir un premier contact avec Jonas LEVEIL. Cela n'a pas duré longtemps, le téléphone ose faire des siennes, et je n'ai plus de ressources pour l'améliorer ou le réparer. J'ignore combien de temps il me reste, mais pas assez, c'est sûr. Maintenant c'est quitte ou double, Jonas, fais vite s'il te plaît.</em>`,
+  },
   // Ajoutez d'autres jeux ici...
 ];
 
@@ -155,7 +159,7 @@ for (let day = 1; day <= 31; day++) {
 
   if (currentMonth === 11) {
     // if (day > unlockLimit) {
-      if (day > currentDay) {
+    if (day > currentDay) {
       cell.style.color = "red";
       cell.style.border = "3px solid red";
       cell.style.pointerEvents = "none";
@@ -177,6 +181,8 @@ closePopup.addEventListener("click", () => {
   gameContainer.innerHTML = ""; // Réinitialise le contenu
 });
 
+const debugMode = true;
+
 // Fonction pour ouvrir la pop-up
 function openPopup(day) {
   const game = games[day - 1]; // Corrige l'index du jour
@@ -185,16 +191,65 @@ function openPopup(day) {
     return;
   }
 
+  const now = new Date();
+  const targetTime = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    day,
+    20,
+    0,
+    0
+  );
+
   // Appelle la logique du jeu
   popup.style.display = "block"; // Affiche la pop-up
   gameContainer.innerHTML = `<h2>Jour ${day}</h2>`; // Titre dynamique
-  game.game(() => {
-    // Appelle la fonction de jeu et montre le contenu final
-    showEndContent(game.endContent, () => {
-      popup.style.display = "none";
-      gameContainer.innerHTML = ""; // Nettoie après fermeture
+
+  if (debugMode || now >= targetTime) {
+    game.game(() => {
+      // Appelle la fonction de jeu et montre le contenu final
+      showEndContent(game.endContent, () => {
+        popup.style.display = "none";
+        gameContainer.innerHTML = ""; // Nettoie après fermeture
+      });
     });
-  });
+  } else {
+    const timerDiv = document.createElement("div");
+    timerDiv.id = "timer";
+    popupContent.appendChild(timerDiv);
+
+    updateTimer(timerDiv, targetTime);
+
+    const interval = setInterval(() => {
+      const remaining = updateTimer(timerDiv, targetTime);
+      if (remaining <= 0) {
+        clearInterval(interval);
+        openPopup(day);
+      }
+    }, 1000);
+  }
+}
+
+function updateTimer(timerDiv, targetTime) {
+  const now = new Date();
+  const timeDifference = targetTime - now;
+
+  if (timeDifference > 0) {
+    const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+    const seconds = Math.floor((timeDifference / 1000) % 60);
+
+    timerDiv.innerHTML = `
+        <h2>Contenu disponible à 20h</h2>
+        <p>Temps restant : ${hours.toString().padStart(2, "0")}h :
+          ${minutes.toString().padStart(2, "0")}m :
+          ${seconds.toString().padStart(2, "0")}s</p>
+      `;
+  } else {
+    timerDiv.innerHTML = "<p>Chargement...</p>";
+  }
+
+  return timeDifference;
 }
 
 // Fonction pour afficher le contenu final
@@ -955,7 +1010,6 @@ function intrudersHillGame(callback) {
 
 // Fonction pour afficher le contenu final (quand le jeu est terminé)
 
-
 function reverseHate(callback) {
   // Liste de mots ou phrases originales
   const wordsList = [
@@ -963,11 +1017,16 @@ function reverseHate(callback) {
     { reversed: "tejeR", correct: "Rejet" },
     { reversed: "sirpmocnI", correct: "Incompris" },
     { reversed: "ecitsujnI", correct: "Injustice" },
-    { reversed: "noisserpéD", correct: "Dépression"},
-    { reversed: "euqixot noitaleR", correct: "Relation toxique"},
-    { reversed: "élupinaM", correct: "Manipulé"},
-    { reversed: "étôc ed éssiaL", correct: "Laissé de côté"},
-    { reversed: "! snosihart sruel te secnelosni sruel ruop reyap eriaf sel ed spmet tse lI", correct: "Il est temps de les faire payer pour leurs insolences et leurs trahisons !"},
+    { reversed: "noisserpéD", correct: "Dépression" },
+    { reversed: "euqixot noitaleR", correct: "Relation toxique" },
+    { reversed: "élupinaM", correct: "Manipulé" },
+    { reversed: "étôc ed éssiaL", correct: "Laissé de côté" },
+    {
+      reversed:
+        "! snosihart sruel te secnelosni sruel ruop reyap eriaf sel ed spmet tse lI",
+      correct:
+        "Il est temps de les faire payer pour leurs insolences et leurs trahisons !",
+    },
   ];
 
   // Variables pour la progression
@@ -1009,21 +1068,21 @@ function reverseHate(callback) {
     const reverseHateContainer = document.getElementById("game-container");
 
     function jumpscare() {
-    const hateJumpscare = document.createElement("img");
-    const jumpscareSound = document.createElement("audio");
-    jumpscareSound.src = "./hate/jumpscareHate.ogg";
-    jumpscareSound.play();
-    hateJumpscare.className = "hate-jumpscare";
-    hateJumpscare.src = "./hate/hateJumpscare.jpeg";
-    document.body.appendChild(hateJumpscare);
+      const hateJumpscare = document.createElement("img");
+      const jumpscareSound = document.createElement("audio");
+      jumpscareSound.src = "./hate/jumpscareHate.ogg";
+      jumpscareSound.play();
+      hateJumpscare.className = "hate-jumpscare";
+      hateJumpscare.src = "./hate/hateJumpscare.jpeg";
+      document.body.appendChild(hateJumpscare);
 
-    setTimeout(() => {
-      document.body.removeChild(hateJumpscare);
-      jumpscareSound.pause();
-      jumpscareSound.currentTime = 0;
-      jumpscareSound.volume = 1;
-      showEndContent(games[7]?.endContent, callback);
-    }, 2000);
+      setTimeout(() => {
+        document.body.removeChild(hateJumpscare);
+        jumpscareSound.pause();
+        jumpscareSound.currentTime = 0;
+        jumpscareSound.volume = 1;
+        showEndContent(games[7]?.endContent, callback);
+      }, 2000);
     }
 
     const resultMessage = document.createElement("p");
@@ -1056,6 +1115,189 @@ function reverseHate(callback) {
 
   // Lancer le jeu
   displayWord();
+}
+
+function phoneGame(callback) {
+  const phoneGameContainer = document.getElementById("game-container");
+  phoneGameContainer.className = "phone-game-container";
+
+  const phoneModel = document.createElement("div");
+  phoneModel.className = "phone-model";
+  phoneGameContainer.appendChild(phoneModel);
+
+  const phoneScreen = document.createElement("div");
+  phoneScreen.className = "phone-screen";
+  phoneModel.appendChild(phoneScreen);
+
+  const phoneCluesScreen = document.createElement("div");
+  phoneCluesScreen.className = "phone-clues-screen";
+  phoneModel.appendChild(phoneCluesScreen);
+
+  const phoneButtons = document.createElement("div");
+  phoneButtons.className = "phone-buttons";
+  phoneModel.appendChild(phoneButtons);
+
+  const phoneTouch = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", ""];
+
+  // Ajout des boutons
+  for (let i = 0; i < phoneTouch.length; i++) {
+    const phoneButton = document.createElement("button");
+    phoneButton.className = "phoneButton";
+    phoneButton.textContent = phoneTouch[i];
+    phoneButtons.appendChild(phoneButton);
+
+    if (phoneTouch[i] === "") {
+      phoneButton.classList.add("emptyTouch");
+    }
+
+    phoneButton.addEventListener("click", function () {
+      if (phoneScreen.textContent.length < 2) {
+        // Limiter à 2 chiffres
+        phoneScreen.textContent += phoneTouch[i];
+        phoneScreen.style.fontSize = "25px";
+      }
+    });
+  }
+
+  const phoneNumberText = [
+    {
+      phoneNumber: "06",
+      phoneTexts: [
+        "Le diable",
+        "Samedi",
+        "Bruce Willis et l'enfant qui voit des morts",
+      ],
+      phoneNumberIndices: [
+        "Qu'est ce qu'un héxagone ?",
+        "Une guitare a deux cordes : Vrai ou faux ?",
+        "30 ÷ 5 = ",
+      ],
+    },
+    {
+      phoneNumber: "94",
+      phoneTexts: ["Pulp Fiction", "Kurt Cobain", "Jodelle Ferland"],
+      phoneNumberIndices: [
+        "L'une commence une vie, l'autre met un terme.",
+        "Pendant une naissance, il y a un mort, pendant un mort, il y a une naissance.",
+        "Pulp Fiction est sorti en 19XX",
+      ],
+    },
+    {
+      phoneNumber: "39",
+      phoneTexts: ["Dole", "Batman", "Un film d'Alfred Hitchcock"],
+      phoneNumberIndices: [
+        "L'indicatif téléphonique de la France est +33. Celui d'Italie ?",
+        "L'Allemagne envahit la Pologne en 19**",
+        "13 x 3",
+      ],
+    },
+    {
+      phoneNumber: "12",
+      phoneTexts: [
+        "La fin du monde",
+        "Le zodiac chinois",
+        "Hercule et ses travaux",
+      ],
+      phoneNumberIndices: [
+        "Quand célébrer les noces de soie ?",
+        "Combien de syllabes en total dans un alexandrin trimètre ?",
+        "Quel est le numéro atomique du Magnésium ?",
+      ],
+    },
+    {
+      phoneNumber: "30",
+      phoneTexts: ["Les noces de perle", "Playstation", "XXX"],
+      phoneNumberIndices: [
+        "Dans un film d'horreur en Alaska, il y a un nombre important de jours de nuit.",
+        "Cette année, Gandhi a organisé la Marche du sel.",
+        "Le premier film parlant de Greta Garbo.",
+      ],
+    },
+  ];
+
+  // Compteur pour les erreurs et indices
+  let errors = 0;
+  let indexCount = 0;
+  let currentPhoneIndex = 0; // Par exemple, "94"
+  let currentPhoneText = phoneNumberText[currentPhoneIndex];
+  const phoneDial = new Audio("./phoneDialing.mp3");
+
+  function checkPhoneNumber(input) {
+    const currentPhoneNumber = currentPhoneText.phoneNumber;
+
+    // Vérifier si l'entrée correspond au numéro attendu
+    if (input === currentPhoneNumber) {
+      phoneScreen.textContent = "Correct!";
+      errors = 0; // Réinitialiser les erreurs
+      indexCount = 0; // Réinitialiser les indices
+      setTimeout(() => {
+        currentPhoneIndex++;
+        if (currentPhoneIndex < phoneNumberText.length) {
+          currentPhoneText = phoneNumberText[currentPhoneIndex];
+          displayPhoneText();
+        } else {
+          phoneScreen.textContent = "06.94.39.12.30";
+          phoneDial.play();
+          phoneDial.addEventListener("ended", () => {
+            setTimeout(() => {
+              showEndContent(games[8]?.endContent, callback);
+            }, 2000);
+          });
+        }
+      }, 1000);
+    } else {
+      errors++;
+      phoneScreen.textContent = "Incorrect, essayez encore !";
+      phoneScreen.style.fontSize = "17px";
+      setTimeout(() => {
+        phoneScreen.textContent = "";
+      }, 1000);
+      if (
+        errors >= 3 &&
+        indexCount < currentPhoneText.phoneNumberIndices.length
+      ) {
+        // Afficher un indice
+        phoneCluesScreen.textContent =
+          currentPhoneText.phoneNumberIndices[indexCount];
+        indexCount++; // Passer au prochain indice
+        errors = 0; // Réinitialiser les erreurs après un indice
+      }
+    }
+  }
+
+  function clearPhoneTextContainer() {
+    const phoneTextContainer = document.querySelector(".phone-texts-container");
+    if (phoneTextContainer) {
+      phoneTextContainer.remove(); // Supprimer le conteneur existant
+      phoneScreen.textContent = "";
+      phoneCluesScreen.textContent = "";
+    }
+  }
+
+  function displayPhoneText() {
+    clearPhoneTextContainer();
+    const phoneTextContainer = document.createElement("div");
+    phoneTextContainer.className = "phone-texts-container";
+    phoneGameContainer.appendChild(phoneTextContainer);
+
+    for (let i = 0; i < currentPhoneText.phoneTexts.length; i++) {
+      const phoneText = document.createElement("p");
+      phoneText.textContent = currentPhoneText.phoneTexts[i];
+      phoneTextContainer.appendChild(phoneText);
+    }
+  }
+
+  // Fonction d'initialisation du jeu
+  displayPhoneText();
+
+  // Vérification du numéro après la saisie
+  setInterval(() => {
+    const input = phoneScreen.textContent;
+    if (input.length === 2) {
+      // Si l'utilisateur a saisi deux chiffres
+      checkPhoneNumber(input);
+    }
+  }, 100);
 }
 
 function showEndContent(content, callback) {
