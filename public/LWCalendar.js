@@ -144,6 +144,14 @@ Tu m'as rendue heureuse.</em>`,
     game: phoneGame,
     endContent: `<em>J'ai mis un temps fou pour construire ce téléphone, je ne compte plus le nombre de fois où j'étais à deux doigts de l'abandon et de l'acceptation de mon sort. Mais j'ai enfin réussi, j'ai réussi à le communiquer, à avoir un premier contact avec Jonas LEVEIL. Cela n'a pas duré longtemps, le téléphone ose faire des siennes, et je n'ai plus de ressources pour l'améliorer ou le réparer. J'ignore combien de temps il me reste, mais pas assez, c'est sûr. Maintenant c'est quitte ou double, Jonas, fais vite s'il te plaît.</em>`,
   },
+  {
+    game: wordsCategoryGame,
+    endContent: `En 1914, un tremblement de terre dévastateur frappe la région de Black Peaks, révélant dans ses entrailles des veines d’obsidienne auparavant enfouies. Un jeune médecin et chercheur, alors étudiant à l’université locale, saisit l’occasion pour explorer cette découverte inédite. Fasciné par les propriétés uniques de cette pierre volcanique, il consacre des années de sa vie à étudier ses effets potentiels sur le bien-être humain, la santé mentale, et même l’équilibre émotionnel.
+
+Ses travaux, bien que controversés à l’époque, captivent l’attention de la communauté scientifique et locale, faisant de lui une figure respectée, mais énigmatique. Sa passion pour l’obsidienne dépasse la science : il la voit comme un symbole de résilience et de transformation, évoquant la capacité des humains à renaître après les épreuves.
+
+Aujourd’hui, son héritage perdure à travers le festival de l’Obsidienne, une célébration annuelle organisée le dernier week-end de novembre, mêlant histoire, science, et spiritualité. Ce chercheur reste une figure mythique dans l’histoire de Black Peaks, et ses études sur l'obsidienne continuent d’alimenter des débats sur les liens entre la science et la psychologie humaine.`,
+  },
   // Ajoutez d'autres jeux ici...
 ];
 
@@ -1299,6 +1307,117 @@ function phoneGame(callback) {
     }
   }, 100);
 }
+
+function wordsCategoryGame(callback) {
+  const wordsCategoryContainer = document.getElementById("game-container");
+  wordsCategoryContainer.className = "words-category-container";
+
+  // Catégories et mots
+  const wordsCategories = {
+    Etudiant: ["Enseignement", "Cours", "Devoirs", "Professeurs", "Diplôme"],
+    Pierres: ["Obsidienne", "Améthyste", "Jade", "Topaze", "Onyx"],
+    Télévision: [
+      "Emissions",
+      "Diffusions",
+      "Spectateurs",
+      "Audiences",
+      "Feuilletons",
+    ],
+    Détective: ["Enquêtes", "Indices", "Preuves", "Crimes", "Coupable"],
+    Psychologie: [
+      "Mental",
+      "Traumatismes",
+      "Thérapies",
+      "Comportements",
+      "Troubles",
+    ],
+    Réalités: ["Monde", "Illusion", "Vérité", "Univers", "Multiverse"],
+  };
+
+  const shuffledWords = Object.values(wordsCategories)
+    .flat()
+    .sort(() => Math.random() - 0.5);
+  let currentCategory = Object.keys(wordsCategories)[0];
+  let selectedWords = [];
+
+  function renderGame() {
+    wordsCategoryContainer.innerHTML = "";
+
+    const categoryTitle = document.createElement("div");
+    categoryTitle.className = "category-title";
+    categoryTitle.textContent = `Catégorie : ${currentCategory}`;
+    wordsCategoryContainer.appendChild(categoryTitle);
+
+    const wordsContainer = document.createElement("div");
+    wordsContainer.className = "words-container";
+    wordsCategoryContainer.appendChild(wordsContainer);
+
+    shuffledWords.forEach((word) => {
+      const wordElement = document.createElement("div");
+      wordElement.className = "word";
+      wordElement.textContent = word;
+
+      wordElement.addEventListener("click", () => {
+        if (selectedWords.length < 5 && !selectedWords.includes(word)) {
+          wordElement.classList.add("selected");
+          selectedWords.push(word);
+        }
+        if (selectedWords.length === 5) checkWords();
+      });
+
+      wordsContainer.appendChild(wordElement);
+    });
+  }
+
+  function checkWords() {
+    let hasIncorrect = false;
+    const correctWords = wordsCategories[currentCategory];
+
+    selectedWords.forEach((word) => {
+      const wordElements = Array.from(document.querySelectorAll(".word"));
+      const wordElement = wordElements.find((el) => el.textContent === word);
+      if (wordElement) {
+        if (correctWords.includes(word)) {
+          wordElement.classList.add("found");
+        } else {
+          wordElement.classList.add("incorrect");
+          hasIncorrect = true;
+        }
+      }
+    });
+
+    if (hasIncorrect) {
+      setTimeout(() => {
+        alert("Un ou plusieurs mots sont incorrects. Recommencez !");
+        selectedWords = [];
+        renderGame();
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        alert("Bien joué ! Passons à la prochaine catégorie.");
+        goToNextCategory();
+      }, 1000);
+    }
+  }
+
+  function goToNextCategory() {
+    const categories = Object.keys(wordsCategories);
+    const currentIndex = categories.indexOf(currentCategory);
+
+    if (currentIndex < categories.length - 1) {
+      currentCategory = categories[currentIndex + 1];
+      selectedWords = [];
+      renderGame();
+    } else {
+      alert("Félicitations, tu as terminé toutes les catégories !");
+      if (callback) callback();
+    }
+  }
+
+  renderGame();
+}
+
+// Lancer le jeu
 
 function showEndContent(content, callback) {
   const ending = document.getElementById("game-container");
