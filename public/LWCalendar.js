@@ -166,7 +166,7 @@ Le festival comprend également une cérémonie au sommet de Black Peaks, où le
 // Initialisation du calendrier
 const calendar = document.getElementById("calendar");
 
-const unlockLimit = 12;
+// const unlockLimit = 12;
 
 for (let day = 1; day <= 31; day++) {
   const cell = document.createElement("div");
@@ -174,8 +174,8 @@ for (let day = 1; day <= 31; day++) {
   cell.textContent = `${day}`;
 
   if (currentMonth === 11) {
-    if (day > unlockLimit) {
-      // if (day > currentDay) {
+    // if (day > unlockLimit) {
+      if (day > currentDay) {
       cell.style.color = "red";
       cell.style.border = "3px solid red";
       cell.style.pointerEvents = "none";
@@ -197,7 +197,7 @@ closePopup.addEventListener("click", () => {
   gameContainer.innerHTML = ""; // Réinitialise le contenu
 });
 
-const debugMode = true;
+const debugMode = false;
 
 // Fonction pour ouvrir la pop-up
 function openPopup(day) {
