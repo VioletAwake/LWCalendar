@@ -146,11 +146,19 @@ Tu m'as rendue heureuse.</em>`,
   },
   {
     game: wordsCategoryGame,
-    endContent: `En 1914, un tremblement de terre dévastateur frappe la région de Black Peaks, révélant dans ses entrailles des veines d’obsidienne auparavant enfouies. Un jeune médecin et chercheur, alors étudiant à l’université locale, saisit l’occasion pour explorer cette découverte inédite. Fasciné par les propriétés uniques de cette pierre volcanique, il consacre des années de sa vie à étudier ses effets potentiels sur le bien-être humain, la santé mentale, et même l’équilibre émotionnel.
+    endContent: `<em>En 1914, un tremblement de terre dévastateur frappe la région de Black Peaks, révélant dans ses entrailles des veines d’obsidienne auparavant enfouies. Un jeune médecin et chercheur, alors étudiant à l’université locale, saisit l’occasion pour explorer cette découverte inédite. Fasciné par les propriétés uniques de cette pierre volcanique, il consacre des années de sa vie à étudier ses effets potentiels sur le bien-être humain, la santé mentale, et même l’équilibre émotionnel.
 
 Ses travaux, bien que controversés à l’époque, captivent l’attention de la communauté scientifique et locale, faisant de lui une figure respectée, mais énigmatique. Sa passion pour l’obsidienne dépasse la science : il la voit comme un symbole de résilience et de transformation, évoquant la capacité des humains à renaître après les épreuves.
 
-Aujourd’hui, son héritage perdure à travers le festival de l’Obsidienne, une célébration annuelle organisée le dernier week-end de novembre, mêlant histoire, science, et spiritualité. Ce chercheur reste une figure mythique dans l’histoire de Black Peaks, et ses études sur l'obsidienne continuent d’alimenter des débats sur les liens entre la science et la psychologie humaine.`,
+Aujourd’hui, son héritage perdure à travers le festival de l’Obsidienne, une célébration annuelle organisée le dernier week-end de novembre, mêlant histoire, science, et spiritualité. Ce chercheur reste une figure mythique dans l’histoire de Black Peaks, et ses études sur l'obsidienne continuent d’alimenter des débats sur les liens entre la science et la psychologie humaine.</em>`,
+  },
+  {
+    game: memoryCrystal,
+    endContent: `<em>Le Festival de l'Obsidienne est un événement annuel emblématique de la ville fictive de Black Peaks, célébré le dernier week-end de novembre. Ce festival rend hommage à la découverte historique de l’obsidienne en 1914, survenue après un tremblement de terre qui révéla les veines de cette pierre volcanique. Inspiré par les travaux d’un jeune médecin et chercheur de l’époque, le festival a évolué pour mêler science, histoire, spiritualité et art.
+
+Durant trois jours, la ville plonge dans une atmosphère mystérieuse et envoûtante. Des conférences explorent les propriétés symboliques et scientifiques de l’obsidienne, notamment ses supposés effets apaisants sur l’esprit humain. Des artistes exposent des sculptures et bijoux faits à partir de cette pierre noire, tandis que des spectacles nocturnes utilisent la lumière pour créer des illusions hypnotiques rappelant l’éclat de l’obsidienne.
+
+Le festival comprend également une cérémonie au sommet de Black Peaks, où les habitants et visiteurs participent à un rituel symbolique pour "laisser derrière eux" leurs fardeaux émotionnels, incarnant l’idée de transformation et de renouveau. Le Festival de l’Obsidienne est devenu plus qu’une simple célébration locale : c’est un rappel annuel de la force et de la résilience humaine face aux épreuves.</em>`,
   },
   // Ajoutez d'autres jeux ici...
 ];
@@ -158,7 +166,7 @@ Aujourd’hui, son héritage perdure à travers le festival de l’Obsidienne, u
 // Initialisation du calendrier
 const calendar = document.getElementById("calendar");
 
-// const unlockLimit = 12;
+const unlockLimit = 12;
 
 for (let day = 1; day <= 31; day++) {
   const cell = document.createElement("div");
@@ -166,8 +174,8 @@ for (let day = 1; day <= 31; day++) {
   cell.textContent = `${day}`;
 
   if (currentMonth === 11) {
-    // if (day > unlockLimit) {
-    if (day > currentDay) {
+    if (day > unlockLimit) {
+      // if (day > currentDay) {
       cell.style.color = "red";
       cell.style.border = "3px solid red";
       cell.style.pointerEvents = "none";
@@ -1417,7 +1425,124 @@ function wordsCategoryGame(callback) {
   renderGame();
 }
 
-// Lancer le jeu
+function memoryCrystal(callback) {
+  const memoryCrystalContainer = document.getElementById("game-container");
+  memoryCrystalContainer.className = "memory-crystal-container";
+
+  const stones = [
+    {
+      name: "Obsidienne",
+      image: "./crystals/Obsidienne.png",
+    },
+    {
+      name: "Onyx",
+      image: "./crystals/Onyx.png",
+    },
+    {
+      name: "Jade",
+      image: "./crystals/Jade.png",
+    },
+    {
+      name: "Topaze",
+      image: "./crystals/topaze.png",
+    },
+  ];
+
+  const cards = [...stones, ...stones]
+    .sort(() => Math.random() - 0.5)
+    .map((stone) => ({ ...stone, isFlipped: false, isMatched: false }));
+
+  let flippedCards = [];
+  let matchedPairs = 0;
+
+  function renderGame() {
+    memoryCrystalContainer.innerHTML = ""; // Corrigé : utilisation du bon conteneur
+
+    cards.forEach((card, index) => {
+      const cardElement = document.createElement("div");
+      cardElement.className = `card ${card.isFlipped ? "flipped" : ""}`;
+      cardElement.dataset.index = index;
+
+      const cardFront = document.createElement("div");
+      cardFront.className = "card-front";
+      cardFront.style.backgroundImage = `url(${card.image})`; // Corrigé : utilisation de card.image
+
+      const cardBack = document.createElement("div");
+      cardBack.className = "card-back";
+      cardBack.style.backgroundImage = `url("./crystals/versoCrystalCard.jpeg")`;
+
+      cardElement.appendChild(cardFront);
+      cardElement.appendChild(cardBack);
+      memoryCrystalContainer.appendChild(cardElement);
+
+      // Gérer le clic sur une carte
+      cardElement.addEventListener("click", () => flipCard(index));
+    });
+  }
+
+  function flipCard(index) {
+    const card = cards[index];
+
+    // Empêche toute action si la carte est déjà retournée ou appariée
+    if (card.isFlipped || card.isMatched || flippedCards.length === 2) return;
+
+    card.isFlipped = true;
+    flippedCards.push(index);
+
+    const cardElement = document.querySelector(`.card[data-index="${index}"]`);
+    cardElement.classList.add("flipped");
+
+    // Vérifie les paires une fois deux cartes retournées
+    if (flippedCards.length === 2) {
+      setTimeout(checkMatch, 500); // Attendre que l'animation (1.5s) soit terminée
+    }
+  }
+
+  function checkMatch() {
+    const [index1, index2] = flippedCards;
+    const card1 = cards[index1];
+    const card2 = cards[index2];
+
+    const cardElement1 = document.querySelector(
+      `.card[data-index="${index1}"]`
+    );
+    const cardElement2 = document.querySelector(
+      `.card[data-index="${index2}"]`
+    );
+
+    if (card1.name === card2.name) {
+      // Marque les cartes comme appariées
+      card1.isMatched = true;
+      card2.isMatched = true;
+
+      cardElement1.classList.add("matched");
+      cardElement2.classList.add("matched");
+
+      matchedPairs++;
+
+      // Vérifie si le jeu est terminé
+      if (matchedPairs === stones.length) {
+        setTimeout(() => {
+          showEndContent(games[10].endContent, callback);
+        }, 1000);
+      }
+    } else {
+      // Retourne les cartes après un délai si elles ne correspondent pas
+      setTimeout(() => {
+        card1.isFlipped = false;
+        card2.isFlipped = false;
+
+        cardElement1.classList.remove("flipped");
+        cardElement2.classList.remove("flipped");
+      }, 500);
+    }
+
+    // Réinitialise la liste des cartes retournées
+    flippedCards = [];
+  }
+
+  renderGame();
+}
 
 function showEndContent(content, callback) {
   const ending = document.getElementById("game-container");
