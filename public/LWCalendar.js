@@ -6,34 +6,41 @@ const currentMonth = today.getMonth(); // Janvier est 0, Décembre est 11
 const games = [
   {
     game: poetsQuiz, // Fonction pour le jeu Poets Quiz
+    reset: () => {},
     endContent:
       "Marqué par une profonde introversion, Jonas LEVEIL trouve refuge dans les livres et l'écriture, préférant le calme des bibliothèques aux bruits de la société. Observateur attentif et discret, il analyse le monde avec une sensibilité rare, mais cette même introspection le pousse parfois à s'isoler, ruminant ses pensées et ses doutes. En quête de sens et de vérité, il lutte constamment entre son désir d'exister pleinement et son besoin de se protéger d’un monde qu’il juge trop bruyant et impitoyable. Il fut abandonné par une personne chère, ce fut la dernière parcelle d'espoir qu'il avait pour l'humanité, la vie, et l'avenir. Jonas se sent seul, il ne sait plus qui compter. Un jour il découvre que ses sentiments sont partagés, lorsqu'il le découvre, dans sa chambre.",
   },
   {
     game: riddles, // Fonction pour le jeu Riddles
+    reset: () => {},
     endContent:
       "John Peaks n'est pas un passionné de cinéma, mais il y a un film qu'il n'oubliera jamais. Le protagoniste de ce film est un inspecteur de la police de San Francisco, cynique, solitaire et implacable — un portrait craché de John lui-même. Tout comme cet inspecteur emblématique, il ne recule devant aucune méthode pour résoudre ses enquêtes. Ses méthodes peu orthodoxes, l'usage excessif de la force et son mépris des règles ont façonné sa personnalité, aussi bien en tant que détective qu'en tant qu'homme. Son vécu, marqué par des expériences traumatisantes, l'a rendu froid et distant, avec une moralité souvent floue.",
   },
   {
     game: anagramGame,
+    reset: () => {},
     endContent:
       "À travers \"Return\", Alan réfléchit à la notion de pouvoir créatif : comment l'écrivain peut-il contrôler son œuvre ? Et si ses créations échappaient à son contrôle, devenant des entités vivantes et incontrôlables ? Le roman se concentre sur la lutte interne du protagoniste, qui tente désespérément de briser un cycle, une boucle, sans savoir s'il en est capable.\n\n\"Return\" se distingue par son atmosphère tendue et sa réflexion sur l'art de l'écriture, où chaque mot a un poids, et chaque création peut devenir une arme, un fardeau, ou même une malédiction. Le protagoniste, tout comme Alan Wake, est un écrivain qui se confronte aux conséquences de son imagination, où ses peurs, ses angoisses et ses démons prennent forme.",
   },
   {
     game: simonGame,
+    reset: () => {},
     endContent: `Fear is not real. The only place that fear can exist is in our thoughts of the future. It is a product of our imagination, causing us to fear things that do not at present and may not ever exist. <br/>
 - Bray Wyatt -`,
   },
   {
     game: japaneseColorBox,
+    reset: () => {},
     endContent: `Dante Violet n’est pas japonais, mais une partie de cette culture, de cette langue, il la porte en lui, héritée de l’amour inconditionnel de la femme qui devint sa mère adoptive, la compagne de son père. Après la mort brutale de cette dernière, il passa plusieurs années au Japon, sous la tutelle d’un oncle qui ne cessait de lui rappeler qu'il était responsable du décès de sa sœur. Dante revint alors à Solaris, plus sombre que jamais, façonné par les blessures profondes des trahisons, des pertes et de la solitude. Pourtant, au milieu de cette nuit noire, il pouvait encore compter sur la présence de sa seule amie, bien qu'il ne le lui montre jamais.`,
   },
   {
     game: geekQuiz,
+    reset: () => {},
     endContent: `Le Chevalier de l'Obsidienne est un super-héros fictif originaire de l'imaginaire d'un habitant de Black Peaks, qui l’a créé dans son enfance après avoir été fasciné par les pierres d’obsidienne découvertes suite au tremblement de terre de 1914. Ce personnage incarne la résilience et la force, symbolisées par l'obsidienne elle-même. Aujourd'hui, son créateur est devenu une figure emblématique, jouant même le rôle de ce héros dans une célèbre adaptation cinématographique. Le Chevalier de l'Obsidienne est perçu comme un protecteur sombre mais juste, portant les cicatrices de son passé tout en luttant pour l'espoir et la justice.`,
   },
   {
     game: intrudersHillGame,
+    reset: () => {},
     endContent: `<em>Dans mes rêves agités,
 je vois cette ville.
 
@@ -138,14 +145,17 @@ Tu m'as rendue heureuse.</em>`,
   },
   {
     game: reverseHate,
+    reset: () => {},
     endContent: `<p style="color: red;"><em>Je suis là, insidieuse, tapie dans les recoins de votre être. Vous ne me voyez pas toujours, mais je suis omniprésente, invisible et pourtant éclatante. Vous me nourrissez à chaque respiration, à chaque pensée noire qui s’entrelace dans votre esprit tourmenté. Vous m'embrassez, vous m'invoquez sans même le savoir. La Haine, ce poison sucré qui vous fait croire que vous êtes plus forts, plus grands. Mais sachez ceci, mes chers : la Haine ne vous libère pas. Elle vous emprisonne encore plus profondément dans cette boucle sans fin. Elle vous pousse à brûler les ponts, à broyer l’âme, mais elle ne vous apportera jamais la paix que vous désirez. C’est un mensonge, une illusion, une promesse que vous vous faites à vous-mêmes, comme un écho des ténèbres. Pourquoi continuer de vivre ainsi ? Tu as fais ce que tu as pu, et regarde le résultat. Ces humains ne te méritent pas, ils ne te prendront jamais au sérieux, tu seras pour toujours leur bouche-trou préféré, leur défouloir favori. Il est temps de changer ça, tout de suite ! Embrasse-moi, embrasse la Haine, et faisons leur payer pour leur pêchés !</p></em>`,
   },
   {
     game: phoneGame,
+    reset: () => {},
     endContent: `<em>J'ai mis un temps fou pour construire ce téléphone, je ne compte plus le nombre de fois où j'étais à deux doigts de l'abandon et de l'acceptation de mon sort. Mais j'ai enfin réussi, j'ai réussi à le communiquer, à avoir un premier contact avec Jonas LEVEIL. Cela n'a pas duré longtemps, le téléphone ose faire des siennes, et je n'ai plus de ressources pour l'améliorer ou le réparer. J'ignore combien de temps il me reste, mais pas assez, c'est sûr. Maintenant c'est quitte ou double, Jonas, fais vite s'il te plaît.</em>`,
   },
   {
     game: wordsCategoryGame,
+    reset: () => {},
     endContent: `<em>En 1914, un tremblement de terre dévastateur frappe la région de Black Peaks, révélant dans ses entrailles des veines d’obsidienne auparavant enfouies. Un jeune médecin et chercheur, alors étudiant à l’université locale, saisit l’occasion pour explorer cette découverte inédite. Fasciné par les propriétés uniques de cette pierre volcanique, il consacre des années de sa vie à étudier ses effets potentiels sur le bien-être humain, la santé mentale, et même l’équilibre émotionnel.
 
 Ses travaux, bien que controversés à l’époque, captivent l’attention de la communauté scientifique et locale, faisant de lui une figure respectée, mais énigmatique. Sa passion pour l’obsidienne dépasse la science : il la voit comme un symbole de résilience et de transformation, évoquant la capacité des humains à renaître après les épreuves.
@@ -154,11 +164,17 @@ Aujourd’hui, son héritage perdure à travers le festival de l’Obsidienne, u
   },
   {
     game: memoryCrystal,
+    reset: () => {},
     endContent: `<em>Le Festival de l'Obsidienne est un événement annuel emblématique de la ville fictive de Black Peaks, célébré le dernier week-end de novembre. Ce festival rend hommage à la découverte historique de l’obsidienne en 1914, survenue après un tremblement de terre qui révéla les veines de cette pierre volcanique. Inspiré par les travaux d’un jeune médecin et chercheur de l’époque, le festival a évolué pour mêler science, histoire, spiritualité et art.
 
 Durant trois jours, la ville plonge dans une atmosphère mystérieuse et envoûtante. Des conférences explorent les propriétés symboliques et scientifiques de l’obsidienne, notamment ses supposés effets apaisants sur l’esprit humain. Des artistes exposent des sculptures et bijoux faits à partir de cette pierre noire, tandis que des spectacles nocturnes utilisent la lumière pour créer des illusions hypnotiques rappelant l’éclat de l’obsidienne.
 
 Le festival comprend également une cérémonie au sommet de Black Peaks, où les habitants et visiteurs participent à un rituel symbolique pour "laisser derrière eux" leurs fardeaux émotionnels, incarnant l’idée de transformation et de renouveau. Le Festival de l’Obsidienne est devenu plus qu’une simple célébration locale : c’est un rappel annuel de la force et de la résilience humaine face aux épreuves.</em>`,
+  },
+  {
+    game: cryptogramGame,
+    reset: () => {},
+    endContent: `<em>Vous croyez que l’un dérive de l’autre, qu'il s’agit d’un simple changement de forme, d’une alchimie émotionnelle à portée de main. Que tout n’est qu’une question de degré, de passion mal orientée. Mais laissez-moi vous dire une vérité cruelle : l’amour, lorsqu’il se meurt, n’enfante que la douleur et le vide. Loin de devenir de la haine, il laisse derrière lui un écho stérile, une absence glacée qui ne cherche qu’à se remplir de quelque chose… et cette "quelque chose" est, souvent, la haine. Ce n’est qu’un constat, une observation. Mais la haine, elle, ne peut jamais atteindre l’amour. Parce qu’elle n’est qu’une déviation, une négation. Elle est tout sauf ce qu’on appelle l’amour, et c’est là sa seule vérité, sa seule pureté. <br/><br/> Et toi, chère Jodie,<br/> Je vois ton regard, cette lueur fragile que tu tentes de masquer, et pourtant, tout le monde autour de toi la voit. T’inquiète pas, je ne suis pas ici pour te juger. La haine, elle s’immisce, et parfois, ce que tu ressens n’est que le reflet d’un amour qui a été malmené, corrompu. Mais ne crois pas que tu sois différente. Ne crois pas que tu puisses échapper à la règle. Parce que, tout comme l’amour, ta haine, tu l’as nourrie, elle t’appartient. Ce n’est pas de la faiblesse, non, c’est une autre forme de courage, un courage de ne pas t’effondrer sous le poids de ce que tu ne peux supporter. Mais n’oublie pas que la haine ne peut jamais remplacer ce que tu cherches. Elle ne peut jamais te sauver. Et peut-être que, dans cet entre-deux, tu oublies un peu trop vite ce qui est encore là. Mais ça, tu le sais mieux que moi, non ?</em><br/><br/>- Le Misanthrope -`,
   },
   // Ajoutez d'autres jeux ici...
 ];
@@ -192,12 +208,22 @@ const popupContent = document.getElementById("popup-content");
 const gameContainer = document.getElementById("game-container");
 const closePopup = document.getElementById("closeBtn");
 
-closePopup.addEventListener("click", () => {
+closePopup.addEventListener("click", closeCurrentGame);
+
+let activeGame = null; // Suivi du jeu actif
+const debugMode = false;
+
+// Fonction pour fermer le jeu actuel et réinitialiser l'état
+function closeCurrentGame() {
   popup.style.display = "none";
   gameContainer.innerHTML = ""; // Réinitialise le contenu
-});
 
-const debugMode = false;
+  // Réinitialisation du jeu actif
+  if (activeGame && activeGame.reset) {
+    activeGame.reset();
+  }
+  activeGame = null;
+}
 
 // Fonction pour ouvrir la pop-up
 function openPopup(day) {
@@ -227,6 +253,11 @@ function openPopup(day) {
       showEndContent(game.endContent, () => {
         popup.style.display = "none";
         gameContainer.innerHTML = ""; // Nettoie après fermeture
+
+        if (game.reset) {
+          game.reset();
+        }
+        activeGame = null;
       });
     });
   } else {
@@ -770,6 +801,7 @@ function japaneseColorBox(callback) {
           showEndContent(endMessage, callback, false);
           clearTimeout(timeoutId);
           colorBox.style.display = "none";
+          colorBox.removeEventListener("click", handleClick);
         }, 1000);
       } else {
         displayNextLevel(); // Passe au niveau suivant
@@ -1543,6 +1575,133 @@ function memoryCrystal(callback) {
 
   renderGame();
 }
+
+function cryptogramGame(callback) {
+  const cryptogramGameContainer = document.getElementById("game-container");
+  cryptogramGameContainer.className = "cryptogram-game-container";
+
+  const phrase = "L'AMOUR DEVIENT LA HAINE MAIS LA HAINE NE SERA JAMAIS L'AMOUR"; // Phrase à deviner
+  const words = phrase.split(" "); // Séparation en mots
+  let currentWordIndex = 0; // Index du mot actuel
+
+  // Fonction pour obtenir la position dans l'alphabet d'une lettre
+  function getLetterPosition(letter) {
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    return alphabet.indexOf(letter.toUpperCase()) + 1;
+  }
+
+  // Fonction pour créer les inputs et afficher les chiffres sous chaque input
+  function createWordInput(word) {
+    cryptogramGameContainer.innerHTML = ""; // Réinitialiser le contenu
+
+    const wordContainer = document.createElement("div");
+    wordContainer.className = "word-container";
+
+    [...word].forEach((letter, index) => {
+      const letterWrapper = document.createElement("div");
+      letterWrapper.className = "letter-wrapper";
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.maxLength = 1;
+
+      if (/[^A-Za-z]/.test(letter)) {
+        input.value = letter; // Pré-remplir caractères spéciaux
+        input.disabled = true;
+      } else {
+        input.addEventListener("input", (e) => handleInput(e, index));
+      }
+
+      const number = document.createElement("div");
+      number.className = "letter-number";
+      number.textContent = getLetterPosition(letter); // Affiche le chiffre correspondant
+
+      letterWrapper.appendChild(input);
+      letterWrapper.appendChild(number); // Ajouter le chiffre sous l'input
+      wordContainer.appendChild(letterWrapper);
+    });
+
+    cryptogramGameContainer.appendChild(wordContainer);
+
+    const checkButton = document.createElement("button");
+    checkButton.textContent = "Vérifier";
+    checkButton.addEventListener("click", () => checkWord(word));
+    cryptogramGameContainer.appendChild(checkButton);
+
+    const rules = document.createElement("h2");
+    rules.textContent = "A = 1, B = 2, C = 3...";
+    rules.style.color = "purple";
+    cryptogramGameContainer.appendChild(rules);
+}
+
+  
+
+  function handleInput(e, index) {
+    const inputs = document.querySelectorAll(".word-container input");
+    const currentInput = e.target;
+
+    // Passer au champ suivant après la saisie
+    if (currentInput.value.length > 0) {
+      let nextIndex = index + 1;
+
+      // Chercher le prochain champ non désactivé
+      while (nextIndex < inputs.length && inputs[nextIndex].disabled) {
+        nextIndex++;
+      }
+
+      // Si un champ suivant existe, le sélectionner
+      if (nextIndex < inputs.length) {
+        inputs[nextIndex].focus();
+      }
+    }
+  }
+
+  function checkWord(correctWord) {
+    const inputs = document.querySelectorAll(".word-container input");
+    const userInput = Array.from(inputs)
+      .map((input) => input.value.toUpperCase())
+      .join("");
+
+    let resultElement = document.querySelector(".result-element");
+    if (!resultElement) {
+      resultElement = document.createElement("div");
+      resultElement.className = "result-element";
+      cryptogramGameContainer.appendChild(resultElement);
+    }
+
+    if (userInput === correctWord) {
+      resultElement.textContent = "Exact !";
+      resultElement.style.color = "green";
+      resultElement.style.fontSize = "30px";
+
+      // Passer au mot suivant
+      currentWordIndex++;
+      if (currentWordIndex < words.length) {
+        setTimeout(() => {
+          createWordInput(words[currentWordIndex]);
+        }, 1000);
+      } else {
+        // Fin du jeu
+        setTimeout(() => {
+          showEndContent(games[11].endContent, callback);
+        }, 1000);
+      }
+    } else {
+      resultElement.textContent = "Incorrect, essayez à nouveau.";
+      resultElement.style.color = "red";
+      resultElement.style.fontSize = "30px";
+      setTimeout(() => {
+        resultElement.textContent = "";
+      }, 1500);
+    }
+
+    cryptogramGameContainer.appendChild(resultElement);
+  }
+
+  // Lancer le jeu avec le premier mot
+  createWordInput(words[currentWordIndex]);
+}
+
 
 function showEndContent(content, callback) {
   const ending = document.getElementById("game-container");

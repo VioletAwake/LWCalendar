@@ -646,88 +646,147 @@
     width: 100%;
     height: auto;
   }
-}
 
-.word {
-  display: inline-block;
-  border: 3px solid purple;
-  cursor: pointer;
-  user-select: none;
-  padding: 10px;
-}
-
-.word.selected {
-  background-color: purple;
-  color: black;
-}
-
-.word.found {
-  background-color: green;
-  color: white;
-}
-
-.word.incorrect {
-  background-color: red;
-  color: black;
-}
-
-.memory-crystal-container {
-  display: grid !important;
-  grid-template-columns: repeat(4, 200px); /* Ajuste les colonnes */
-  gap: 30px;
-  justify-content: center;
-}
-
-.card {
-  width: 200px;
-  height: 300px;
-  position: relative;
-  transform-style: preserve-3d; /* Permet de garder les éléments 3D */
-  cursor: pointer;
-  border: 4px solid purple;
-  transform: rotateY(0deg);
-}
-
-@keyframes cardFlip {
-  0% {
+  .word {
+    display: inline-block;
+    border: 3px solid purple;
+    cursor: pointer;
+    user-select: none;
+    padding: 10px;
+  }
+  
+  .word.selected {
+    background-color: purple;
+    color: black;
+  }
+  
+  .word.found {
+    background-color: green;
+    color: white;
+  }
+  
+  .word.incorrect {
+    background-color: red;
+    color: black;
+  }
+  
+  .memory-crystal-container {
+    display: grid !important;
+    grid-template-columns: repeat(4, 200px); /* Ajuste les colonnes */
+    gap: 30px;
+    justify-content: center;
+  }
+  
+  .card {
+    width: 200px;
+    height: 300px;
+    position: relative;
+    transform-style: preserve-3d; /* Permet de garder les éléments 3D */
+    cursor: pointer;
+    border: 4px solid purple;
     transform: rotateY(0deg);
   }
-  100% {
-    transform: rotateY(540deg);
+  
+  @keyframes cardFlip {
+    0% {
+      transform: rotateY(0deg);
+    }
+    100% {
+      transform: rotateY(540deg);
+    }
   }
-}
+  
+  .card-front,
+  .card-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden; /* Cache la face arrière lorsqu'elle est tournée */
+    border-radius: 8px;
+  }
+  
+  .card-front {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: rotateY(180deg); /* Face avant visible au départ */
+  }
+  
+  .card-back {
+    background-color: #333;
+    background-image: url("./crystals/versoCrystalCard.jpeg"); /* Image pour le verso */
+    background-size: contain;
+    transform: rotateY(0deg); /* Face arrière invisible au départ */
+  }
+  
+  .card.flipped:not(.matched) {
+    animation: cardFlip 0.5s ease; /* Applique l'animation uniquement pour les cartes non appariées */
+    animation-fill-mode: forwards; /* Maintient l'état final après l'animation */
+  }
+  
+  .card.matched {
+    transform: rotateY(180deg); /* Reste stable une fois appariée */
+    cursor: default; /* Désactive le clic pour éviter des actions supplémentaires */
+  }
 
-.card-front,
-.card-back {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  backface-visibility: hidden; /* Cache la face arrière lorsqu'elle est tournée */
-  border-radius: 8px;
-}
+  .cryptogram-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .word-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
 
-.card-front {
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  transform: rotateY(180deg); /* Face avant visible au départ */
-}
+  .letter-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  input[type="text"] {
+    width: 60px;
+    height: 50px;
+    text-align: center;
+    font-size: 30px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #fafafa;
+  }
+  
+  input[type="text"]:disabled {
+    background-color: #e9ecef;
+  }
 
-.card-back {
-  background-color: #333;
-  background-image: url("./crystals/versoCrystalCard.jpeg"); /* Image pour le verso */
-  background-size: contain;
-  transform: rotateY(0deg); /* Face arrière invisible au départ */
-}
-
-.card.flipped:not(.matched) {
-  animation: cardFlip 0.5s ease; /* Applique l'animation uniquement pour les cartes non appariées */
-  animation-fill-mode: forwards; /* Maintient l'état final après l'animation */
-}
-
-.card.matched {
-  transform: rotateY(180deg); /* Reste stable une fois appariée */
-  cursor: default; /* Désactive le clic pour éviter des actions supplémentaires */
+  .letter-number {
+    font-size: 2rem;
+    text-align: center;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: black;
+    color: purple;
+    font-size: 25px;
+    border: 3px solid purple;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s ease;
+  }
+  
+  button:hover {
+    background-color: purple;
+    color: black;
+  }
+    
+  
 }
 
 /* VERSION DESKTOP */
@@ -1769,6 +1828,64 @@
   .card.matched {
     transform: rotateY(180deg); /* Reste stable une fois appariée */
     cursor: default; /* Désactive le clic pour éviter des actions supplémentaires */
+  }
+
+  .cryptogram-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    height: auto;
+  }
+  
+  .word-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .letter-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  input[type="text"] {
+    width: 25px;
+    height: 35px;
+    text-align: center;
+    font-size: 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #fafafa;
+  }
+  
+  input[type="text"]:disabled {
+    background-color: #e9ecef;
+  }
+
+  .letter-number {
+    font-size: 2rem;
+    text-align: center;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: black;
+    border: 3px solid purple;
+    color: purple;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: 0.5s ease;
+  }
+  
+  button:active {
+    background-color: purple;
+    color: black;
   }
 
   .ending {
