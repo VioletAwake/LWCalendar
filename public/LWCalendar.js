@@ -184,7 +184,7 @@ Le festival comprend également une cérémonie au sommet de Black Peaks, où le
   {
     game: hangedGame,
     reset: () => {},
-    endContent: `Es-tu sûr de continuer ainsi ?`,
+    endContent: `<em>Tu t'es vaillament battu, mais ça ne sera jamais assez pour eux. Ne regrette pas la délivrance que je t'offre, ce n'est pas quelque chose de mal, bien au contraire. Tu seras apaisé, libéré de toutes tes souffrances, tes craintes, tes angoisses, n'aie pas honte de ça. En mettant un terme, tu te libéreras de toutes ses chaines, tu seras enfin sauvé, par toi-même. Les autres ne comprendront pas, mais c'est parce qu'ils ne connaissent pas ce que tu as vécu. Ils ne vivront jamais le malheur puisqu'ils sont très souvent de l'autre côté du miroir. Bénis ta délivrance, mets un terme à tes souffrances, appuie sur la détente, saute dans le vide.</em><br/><br/> - La Délivrance -` ,
   },
   // Ajoutez d'autres jeux ici...
 ];
@@ -192,7 +192,7 @@ Le festival comprend également une cérémonie au sommet de Black Peaks, où le
 // Initialisation du calendrier
 const calendar = document.getElementById("calendar");
 
-// const unlockLimit = 15;
+const unlockLimit = 15;
 
 for (let day = 1; day <= 31; day++) {
   const cell = document.createElement("div");
@@ -306,6 +306,11 @@ function updateTimer(timerDiv, targetTime) {
     timerDiv.innerHTML = "<p>Chargement...</p>";
   }
 
+  gameContainer.appendChild(timerDiv);
+  gameContainer.style.justifyContent = "center";
+  gameContainer.style.alignItems = "center";
+  gameContainer.style.display = "flex";
+  gameContainer.style.flexDirection = "column";
   return timeDifference;
 }
 
@@ -1979,70 +1984,113 @@ function hangedGame(callback) {
   hangedGameContainer.className = "hanged-game-container";
   hangedGameContainer.innerHTML = "";
 
-  let selectedWord = "délivrance";
+  // Mot à deviner et initialisation
+  const selectedWord = "delivrance".toUpperCase();
   let maskedWord = selectedWord.replace(/./g, "_");
   let remainingGuesses = 6;
 
+  // Affichage des lettres sous forme de traits individuels
   const wordToGuess = document.createElement("div");
   wordToGuess.className = "word-to-guess";
-  wordToGuess.textContent = maskedWord;
+  for (let i = 0; i < selectedWord.length; i++) {
+    const letterSpan = document.createElement("span");
+    letterSpan.textContent = "_";
+    letterSpan.className = "letter";
+    wordToGuess.appendChild(letterSpan);
+  }
   hangedGameContainer.appendChild(wordToGuess);
 
-  const guess = document.createElement("input");
-  guess.className = "guess";
-  hangedGameContainer.appendChild(guess);
+  // Clavier virtuel
+  const keyboardContainer = document.createElement("div");
+  keyboardContainer.className = "keyboard-container";
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  for (const char of alphabet) {
+    const button = document.createElement("button");
+    button.textContent = char;
+    button.className = "keyboard-button";
+    button.addEventListener("click", () => handleGuess(char));
+    keyboardContainer.appendChild(button);
+  }
+  hangedGameContainer.appendChild(keyboardContainer);
 
-  const guessBtn = document.createElement("button");
-  guessBtn.className = "guess-btn";
-  guessBtn.addEventListener("click", guessLetter);
-  guessBtn.textContent = "Tenter";
-  hangedGameContainer.appendChild(guessBtn);
+  // Affichage des tentatives restantes
+  const remainingGuessesDisplay = document.createElement("p");
+  remainingGuessesDisplay.className = "remaining-guess";
+  remainingGuessesDisplay.textContent = `Nombre de tentatives restantes : ${remainingGuesses}`;
+  remainingGuessesDisplay.style.fontSize = "25px";
+  hangedGameContainer.appendChild(remainingGuessesDisplay);
 
-  function guessLetter() {
-    guess.value = ""; // Clear input after guess
-    if (guess) {
-      let isCorrect = false;
-      let tempWord = maskedWord.split("");
+  // Affichage des messages
+  const message = document.createElement("p");
+  message.className = "hanged-message";
+  message.style.fontSize = "30px";
+  hangedGameContainer.appendChild(message);
 
-      for (let i = 0; i < selectedWord.length; i++) {
-        if (selectedWord[i] === guess) {
-          tempWord[i] = guess;
-          isCorrect = true;
-        }
+  function handleGuess(letter) {
+    if (!/^[A-Z]$/.test(letter)) {
+      message.textContent = "Veuillez entrer une lettre valide.";
+      return;
+    }
+
+    let isCorrect = false;
+    const letterSpans = wordToGuess.querySelectorAll(".letter");
+
+    // Met à jour le mot masqué si la lettre est correcte
+    for (let i = 0; i < selectedWord.length; i++) {
+      if (selectedWord[i] === letter) {
+        letterSpans[i].textContent = letter;
+        isCorrect = true;
       }
+    }
 
-      maskedWord = tempWord.join("");
-      wordToGuess.textContent = maskedWord;
+    maskedWord = Array.from(letterSpans).map(span => span.textContent).join("");
 
-      if (!isCorrect) {
-        remainingGuesses--;
-        const remainGuess = document.createElement("p");
-        remainGuess.className = "remaining-guess";
-        remainGuess.textContent = `Nombre de tentatives restantes : ${remainingGuesses}`;
-        hangedGameContainer.appendChild(remainGuess);
-      }
+    if (!isCorrect) {
+      remainingGuesses--;
+      remainingGuessesDisplay.textContent = `Nombre de tentatives restantes : ${remainingGuesses}`;
+    }
 
-      if (remainingGuesses <= 0) {
-        const hangedMessage = document.createElement("p");
-        hangedMessage.className = "hanged-message";
-        hangedMessage.textContent = "Dommage !";
-        setTimeout(() => {
-          popup.style.display = "none";
-        }, 2000);
-        hangedGameContainer.appendChild(hangedMessage);
+    checkGameStatus();
+  }
 
-        document.getElementById("letters").style.display = "none";
-      } else if (maskedWord === selectedWord) {
-        hangedMessage.textContent = "Félicitations ! Vous avez trouvé le mot !";
-        setTimeout(() => {
-          showEndContent(games[13].endContent, callback);
-        }, 2000);
-      }
+  function checkGameStatus() {
+    if (maskedWord === selectedWord) {
+      message.textContent = "Félicitations ! Vous avez trouvé le mot !";
+      endGame();
+    } else if (remainingGuesses <= 0) {
+      message.textContent = `Dommage !`;
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 2000);
     }
   }
 
-  guessLetter();
+  function endGame() {
+    const buttons = keyboardContainer.querySelectorAll("button");
+    buttons.forEach(button => button.disabled = true);
+    setTimeout(() => {
+      showEndContent(games[13].endContent, callback);
+    }, 1500);
+    setTimeout(() => {
+      release();
+    }, 4000);
+  }
+
+  function release() {
+    const releaseImg = document.createElement("img");
+    releaseImg.src = "delivrance.jpg";
+    releaseImg.className = "releaseImg";
+    document.body.appendChild(releaseImg);
+
+    const releaseTheme = document.createElement("audio");
+    releaseTheme.src = "releaseThemeSong.ogg";
+    releaseTheme.play();
+    releaseTheme.addEventListener("ended", () => {
+      document.body.removeChild(releaseImg);
+    });
+  }
 }
+
 
 function showEndContent(content, callback) {
   const ending = document.getElementById("game-container");
