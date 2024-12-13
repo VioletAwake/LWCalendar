@@ -176,13 +176,23 @@ Le festival comprend également une cérémonie au sommet de Black Peaks, où le
     reset: () => {},
     endContent: `<em>Vous croyez que l’un dérive de l’autre, qu'il s’agit d’un simple changement de forme, d’une alchimie émotionnelle à portée de main. Que tout n’est qu’une question de degré, de passion mal orientée. Mais laissez-moi vous dire une vérité cruelle : l’amour, lorsqu’il se meurt, n’enfante que la douleur et le vide. Loin de devenir de la haine, il laisse derrière lui un écho stérile, une absence glacée qui ne cherche qu’à se remplir de quelque chose… et cette "quelque chose" est, souvent, la haine. Ce n’est qu’un constat, une observation. Mais la haine, elle, ne peut jamais atteindre l’amour. Parce qu’elle n’est qu’une déviation, une négation. Elle est tout sauf ce qu’on appelle l’amour, et c’est là sa seule vérité, sa seule pureté. <br/><br/> Et toi, chère Jodie,<br/> Je vois ton regard, cette lueur fragile que tu tentes de masquer, et pourtant, tout le monde autour de toi la voit. T’inquiète pas, je ne suis pas ici pour te juger. La haine, elle s’immisce, et parfois, ce que tu ressens n’est que le reflet d’un amour qui a été malmené, corrompu. Mais ne crois pas que tu sois différente. Ne crois pas que tu puisses échapper à la règle. Parce que, tout comme l’amour, ta haine, tu l’as nourrie, elle t’appartient. Ce n’est pas de la faiblesse, non, c’est une autre forme de courage, un courage de ne pas t’effondrer sous le poids de ce que tu ne peux supporter. Mais n’oublie pas que la haine ne peut jamais remplacer ce que tu cherches. Elle ne peut jamais te sauver. Et peut-être que, dans cet entre-deux, tu oublies un peu trop vite ce qui est encore là. Mais ça, tu le sais mieux que moi, non ?</em><br/><br/>- Le Misanthrope -`,
   },
+  {
+    game: blackJackGame,
+    reset: () => {},
+    endContent: `<em>Mon père, qu'est ce que je ne peux pas blairer cet espèce de salopard, je ne sais pas pourquoi je ne l'ai pas encore mis mon poing dans la gueule. Son obsession pour la religion était la source de mes nombreux traumatrismes. Quand j'étais ado, je voulais avoir un tatouage, une rose, la fleur préférée de ma mère. Quand ce con l'a appris, il m'a fait un tatouage, mais pas comme je le souhaite, il a marqué mon bras droit au fer rouge, en forme de croix. Je me souviens très bien ce qu'il a dit : "Je t'en foutrais de l'amour pour une salope, comme ta mère !". Il a également cru que j'étais amoureux de quelqu'un, il m'a surpris un soir en train de me branler. Une manière à lui de dire que l'amour rend les gens faibles, et que les femmes étaient, selon lui, toutes des salopes. La seule que j'avais pour m'échapper de lui et de tout ce merdier, c'était le barbier qui avait son salon en bas de chez moi. Tous les mercredis, à la fermeture, on faisait des parties de cartes, du BlackJack, surtout du BlackJack. Il était comme un père pour moi. Quand mon père l'a appris, il l'a égorgé la gorge de ce pauvre barbier. Bon, au départ, il voulait juste le menacer avec le vieux rasoir, j'ai voulu lui faire face, et à la fin c'était son pied qui a fait face à ma gueule. Le vieux barbier n'a pas appécié, alors une bagarre s'est enclenché, et par accident, le rasoir s'est planté dans sa gorge. Et à la fin, mon père s'en ait vanté, il a dit que c'est une leçon à apprendre. Je t'en foutrais des leçons, vieux sac à merde !</em>`,
+  },
+  {
+    game: hangedGame,
+    reset: () => {},
+    endContent: `Es-tu sûr de continuer ainsi ?`,
+  },
   // Ajoutez d'autres jeux ici...
 ];
 
 // Initialisation du calendrier
 const calendar = document.getElementById("calendar");
 
-// const unlockLimit = 12;
+// const unlockLimit = 15;
 
 for (let day = 1; day <= 31; day++) {
   const cell = document.createElement("div");
@@ -1580,7 +1590,8 @@ function cryptogramGame(callback) {
   const cryptogramGameContainer = document.getElementById("game-container");
   cryptogramGameContainer.className = "cryptogram-game-container";
 
-  const phrase = "L'AMOUR DEVIENT LA HAINE MAIS LA HAINE NE SERA JAMAIS L'AMOUR"; // Phrase à deviner
+  const phrase =
+    "L'AMOUR DEVIENT LA HAINE MAIS LA HAINE NE SERA JAMAIS L'AMOUR"; // Phrase à deviner
   const words = phrase.split(" "); // Séparation en mots
   let currentWordIndex = 0; // Index du mot actuel
 
@@ -1632,9 +1643,7 @@ function cryptogramGame(callback) {
     rules.textContent = "A = 1, B = 2, C = 3...";
     rules.style.color = "purple";
     cryptogramGameContainer.appendChild(rules);
-}
-
-  
+  }
 
   function handleInput(e, index) {
     const inputs = document.querySelectorAll(".word-container input");
@@ -1702,6 +1711,338 @@ function cryptogramGame(callback) {
   createWordInput(words[currentWordIndex]);
 }
 
+function blackJackGame(callback) {
+  const blackJackGameContainer = document.getElementById("game-container");
+  blackJackGameContainer.className = "blackjack-game-container";
+  blackJackGameContainer.innerHTML = "";
+
+  // Initialisation des éléments de l'interface
+  const blackJackScore = document.createElement("div");
+  blackJackScore.className = "blackjack-score";
+  blackJackGameContainer.appendChild(blackJackScore);
+
+  const blackJack = document.createElement("h2");
+  blackJack.textContent = "Blackjack";
+  blackJack.style.fontSize = "40px";
+  blackJackGameContainer.appendChild(blackJack);
+
+  const blackJackRules = document.createElement("div");
+  blackJackRules.className = "blackjack-rules";
+  blackJackRules.innerHTML = `<h2>Règles du Blackjack</h2>
+      <p>- Le but est de se rapprocher le plus possible de 21 sans le dépasser.</p>
+      <p>- Les cartes J, Q et K valent 10 points. L'As vaut 1 ou 11.</p>
+      <p>- Le joueur joue en premier. S'il dépasse 21, il perd automatiquement.</p>
+      <p>- Le croupier doit tirer jusqu'à atteindre un score d'au moins 17.</p>
+      <p>- Meilleur des 3 manches remporte le jeu !</p>`;
+  blackJackGameContainer.appendChild(blackJackRules);
+
+  const blackJackScoreBoard = document.createElement("div");
+  blackJackScoreBoard.className = "blackjack-scoreboard";
+  blackJackGameContainer.appendChild(blackJackScoreBoard);
+
+  const blackJackMessage = document.createElement("div");
+  blackJackMessage.className = "blackjack-message";
+  blackJackGameContainer.appendChild(blackJackMessage);
+
+  const blackJackField = document.createElement("div");
+  blackJackField.className = "blackjack-field";
+  blackJackGameContainer.appendChild(blackJackField);
+
+  const blackJackPlayer = document.createElement("div");
+  blackJackPlayer.className = "blackjack-player";
+  blackJackField.appendChild(blackJackPlayer);
+
+  const playerScoreSpan = document.createElement("div");
+  playerScoreSpan.className = "player-score";
+  playerScoreSpan.textContent = "Player";
+  blackJackPlayer.appendChild(playerScoreSpan);
+
+  const playerCardsDiv = document.createElement("div");
+  playerCardsDiv.className = "player-cards";
+  blackJackPlayer.appendChild(playerCardsDiv);
+
+  const blackJackControls = document.createElement("div");
+  blackJackControls.className = "blackjack-controls";
+  blackJackGameContainer.appendChild(blackJackControls);
+
+  const blackJackHitButton = document.createElement("button");
+  blackJackHitButton.textContent = "Hit";
+  blackJackControls.appendChild(blackJackHitButton);
+
+  const blackJackStandButton = document.createElement("button");
+  blackJackStandButton.textContent = "Stand";
+  blackJackControls.appendChild(blackJackStandButton);
+
+  const blackJackDealer = document.createElement("div");
+  blackJackDealer.className = "blackjack-dealer";
+  blackJackField.appendChild(blackJackDealer);
+
+  const dealerScoreSpan = document.createElement("div");
+  dealerScoreSpan.className = "dealer-score";
+  dealerScoreSpan.textContent = "Dealer";
+  blackJackDealer.appendChild(dealerScoreSpan);
+
+  const dealerCardsDiv = document.createElement("div");
+  dealerCardsDiv.className = "dealer-cards";
+  blackJackDealer.appendChild(dealerCardsDiv);
+
+  // Initialisation du jeu
+  let deck = [];
+  let playerCards = [];
+  let dealerCards = [];
+  let playerScore = 0;
+  let dealerScore = 0;
+  let playerWins = 0;
+  let dealerWins = 0;
+  let roundsPlayed = 0;
+
+  const playerScoreBoard = document.createElement("div");
+  playerScoreBoard.className = "player-victory";
+  playerScoreBoard.innerHTML = `<p>John Peaks<br/>${playerWins}</p>`;
+  blackJackScoreBoard.appendChild(playerScoreBoard);
+
+  const dealerScoreBoard = document.createElement("div");
+  dealerScoreBoard.className = "dealer-victory";
+  dealerScoreBoard.innerHTML = `<p>Dealer<br/>${dealerWins}</p>`;
+  blackJackScoreBoard.appendChild(dealerScoreBoard);
+
+  // Fonctions pour gérer le jeu
+  function initializeDeck() {
+    const suits = ["♥", "♦", "♠", "♣"];
+    const values = [
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "J",
+      "Q",
+      "K",
+      "A",
+    ];
+    deck = [];
+    for (let suit of suits) {
+      for (let value of values) {
+        deck.push({ suit, value });
+      }
+    }
+    deck.sort(() => Math.random() - 0.5);
+  }
+
+  function getCardValue(card) {
+    if (["J", "Q", "K"].includes(card.value)) return 10;
+    if (card.value === "A") return 11;
+    return parseInt(card.value);
+  }
+
+  function calculateScore(cards) {
+    let score = cards.reduce((sum, card) => sum + getCardValue(card), 0);
+    let aceCount = cards.filter((card) => card.value === "A").length;
+    while (score > 21 && aceCount > 0) {
+      score -= 10;
+      aceCount--;
+    }
+    return score;
+  }
+
+  function dealCard(target) {
+    target.push(deck.pop());
+  }
+
+  function renderCards() {
+    playerCardsDiv.innerHTML = "";
+    dealerCardsDiv.innerHTML = "";
+    playerCards.forEach((card) => createCard(card, playerCardsDiv));
+    dealerCards.forEach((card) => createCard(card, dealerCardsDiv));
+
+    playerScore = calculateScore(playerCards);
+    dealerScore = calculateScore(dealerCards);
+
+    playerScoreSpan.textContent = `John Peaks: ${playerScore}`;
+    dealerScoreSpan.textContent = `Dealer: ${dealerScore}`;
+  }
+
+  function createCard(card, targetDiv) {
+    const cardDiv = document.createElement("div");
+    cardDiv.className = "card";
+    cardDiv.textContent = `${card.value}${card.suit}`;
+    targetDiv.appendChild(cardDiv);
+  }
+
+  function updateScores() {
+    const playerScoreBoard = document.querySelector(".player-victory");
+    const dealerScoreBoard = document.querySelector(".dealer-victory");
+
+    if (playerScoreBoard && dealerScoreBoard) {
+      playerScoreBoard.innerHTML = `John Peaks <br/> ${playerWins}`;
+      dealerScoreBoard.innerHTML = `Dealer <br/> ${dealerWins}`;
+    } else {
+      console.error("Scoreboard elements not found in the DOM");
+    }
+
+    // Vérification des conditions de victoire
+    checkGameEnd();
+  }
+
+  function checkGameEnd() {
+    if (playerWins === 3) {
+      blackJackMessage.textContent = "Vous remportez, John Peaks !";
+      setTimeout(() => {
+        showEndContent(games[12].endContent, callback);
+      }, 1500);
+      return; // Assurez-vous de sortir de la fonction après la fin du jeu
+    } else if (dealerWins === 3) {
+      blackJackMessage.textContent = "Vous perdez, John Peaks!";
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 1500);
+      return; // Assurez-vous de sortir de la fonction après la fin du jeu
+    }
+  }
+
+  function startGame() {
+    playerCards = [];
+    dealerCards = [];
+    initializeDeck();
+
+    dealCard(playerCards);
+    dealCard(playerCards);
+    dealCard(dealerCards);
+
+    blackJackMessage.textContent = "";
+
+    renderCards();
+  }
+
+  function newRound() {
+    if (playerWins === 3) {
+      blackJackMessage.textContent = "Vous remportez, John Peaks !";
+      setTimeout(() => {
+        showEndContent(games[12].endContent, callback);
+      }, 1500);
+      return; // Assurez-vous de sortir de la fonction après la fin du jeu
+    } else if (dealerWins === 3) {
+      blackJackMessage.textContent = "Vous perdez, John Peaks !";
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 1500);
+      return; // Assurez-vous de sortir de la fonction après la fin du jeu
+    }
+
+    // Si aucune des conditions de fin de jeu n'est remplie, préparez une nouvelle manche
+    blackJackMessage.textContent = "Nouvelle manche !";
+    setTimeout(startGame, 1500);
+  }
+
+  function dealerPlay() {
+    while (dealerScore < 17) {
+      dealCard(dealerCards);
+      dealerScore = calculateScore(dealerCards);
+    }
+
+    if (playerScore > 21 || (dealerScore >= playerScore && dealerScore <= 21)) {
+      dealerWins++;
+      blackJackMessage.textContent = "Dealer l'emporte !";
+    } else {
+      playerWins++;
+      blackJackMessage.textContent = "John Peaks l'emporte !";
+    }
+
+    updateScores(); // Mise à jour des scores après le tour du croupier
+
+    setTimeout(() => {
+      roundsPlayed++;
+      if (playerWins < 3 && dealerWins < 3) {
+        newRound();
+      }
+    }, 1500);
+  }
+
+  // Boutons
+  blackJackHitButton.addEventListener("click", () => {
+    dealCard(playerCards);
+    renderCards();
+    if (playerScore > 21) dealerPlay();
+  });
+
+  blackJackStandButton.addEventListener("click", dealerPlay);
+
+  startGame();
+}
+
+function hangedGame(callback) {
+  const hangedGameContainer = document.getElementById("game-container");
+  hangedGameContainer.className = "hanged-game-container";
+  hangedGameContainer.innerHTML = "";
+
+  let selectedWord = "délivrance";
+  let maskedWord = selectedWord.replace(/./g, "_");
+  let remainingGuesses = 6;
+
+  const wordToGuess = document.createElement("div");
+  wordToGuess.className = "word-to-guess";
+  wordToGuess.textContent = maskedWord;
+  hangedGameContainer.appendChild(wordToGuess);
+
+  const guess = document.createElement("input");
+  guess.className = "guess";
+  hangedGameContainer.appendChild(guess);
+
+  const guessBtn = document.createElement("button");
+  guessBtn.className = "guess-btn";
+  guessBtn.addEventListener("click", guessLetter);
+  guessBtn.textContent = "Tenter";
+  hangedGameContainer.appendChild(guessBtn);
+
+  function guessLetter() {
+    guess.value = ""; // Clear input after guess
+    if (guess) {
+      let isCorrect = false;
+      let tempWord = maskedWord.split("");
+
+      for (let i = 0; i < selectedWord.length; i++) {
+        if (selectedWord[i] === guess) {
+          tempWord[i] = guess;
+          isCorrect = true;
+        }
+      }
+
+      maskedWord = tempWord.join("");
+      wordToGuess.textContent = maskedWord;
+
+      if (!isCorrect) {
+        remainingGuesses--;
+        const remainGuess = document.createElement("p");
+        remainGuess.className = "remaining-guess";
+        remainGuess.textContent = `Nombre de tentatives restantes : ${remainingGuesses}`;
+        hangedGameContainer.appendChild(remainGuess);
+      }
+
+      if (remainingGuesses <= 0) {
+        const hangedMessage = document.createElement("p");
+        hangedMessage.className = "hanged-message";
+        hangedMessage.textContent = "Dommage !";
+        setTimeout(() => {
+          popup.style.display = "none";
+        }, 2000);
+        hangedGameContainer.appendChild(hangedMessage);
+
+        document.getElementById("letters").style.display = "none";
+      } else if (maskedWord === selectedWord) {
+        hangedMessage.textContent = "Félicitations ! Vous avez trouvé le mot !";
+        setTimeout(() => {
+          showEndContent(games[13].endContent, callback);
+        }, 2000);
+      }
+    }
+  }
+
+  guessLetter();
+}
 
 function showEndContent(content, callback) {
   const ending = document.getElementById("game-container");
