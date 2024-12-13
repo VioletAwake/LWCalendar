@@ -306,11 +306,6 @@ function updateTimer(timerDiv, targetTime) {
     timerDiv.innerHTML = "<p>Chargement...</p>";
   }
 
-  gameContainer.appendChild(timerDiv);
-  gameContainer.style.justifyContent = "center";
-  gameContainer.style.alignItems = "center";
-  gameContainer.style.display = "flex";
-  gameContainer.style.flexDirection = "column";
   return timeDifference;
 }
 
