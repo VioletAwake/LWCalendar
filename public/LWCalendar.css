@@ -1318,13 +1318,12 @@
     align-items: center;
     color: purple;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     width: 2rem;
     height: 2rem;
-    line-height: 2rem;
     cursor: pointer;
     transition: 0.5s ease;
-    padding: 2px;
+    padding: 2px !important;
   }
 
   .case:active {
@@ -1751,8 +1750,8 @@
   }
 
   .reverse-hate-container input {
-    width: 20rem;
-    height: 2rem;
+    width: 10rem !important;
+    height: 0.5rem !important;
     font-size: 15px;
     text-align: center;
     background-color: black;
@@ -2151,11 +2150,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 25px;
-    padding: 10px;
+    gap: 20px;
   }
 
   .hanged-message {
+    font-size: 20px !important;
+  }
+
+  .remaining-guess {
     font-size: 20px !important;
   }
 
@@ -2166,6 +2168,11 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+  }
+
+  .keyboard-container button {
+    font-size: 1rem;
+    font-weight: bold;
   }
 
   .word-to-guess {

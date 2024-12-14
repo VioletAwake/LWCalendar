@@ -2090,7 +2090,7 @@ function hangedGame(callback) {
 
   function checkGameStatus() {
     if (maskedWord === selectedWord) {
-      message.textContent = "Félicitations ! Vous avez trouvé le mot !";
+      message.textContent = "Je sais ce que tu ressens !";
       endGame();
     } else if (remainingGuesses <= 0) {
       message.textContent = `Dommage !`;
