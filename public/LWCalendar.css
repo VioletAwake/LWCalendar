@@ -1937,14 +1937,15 @@
 
   .memory-crystal-container {
     display: grid !important;
-    grid-template-columns: repeat(2, auto); /* Ajuste les colonnes */
+    grid-template-columns: repeat(4, auto); /* Ajuste les colonnes */
+    gap: 10px;
     justify-content: center;
     align-items: center;
   }
 
   .card {
-    width: 100px;
-    height: 150px;
+    width: 70px !important;
+    height: 100px !important;
     position: relative;
     transform-style: preserve-3d; /* Permet de garder les éléments 3D */
     cursor: pointer;
@@ -1981,6 +1982,7 @@
     background-color: #333;
     background-image: url("./crystals/versoCrystalCard.jpeg"); /* Image pour le verso */
     background-size: contain;
+    background-repeat: no-repeat;
     transform: rotateY(0deg); /* Face arrière invisible au départ */
   }
 
