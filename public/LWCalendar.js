@@ -220,6 +220,8 @@ const closePopup = document.getElementById("closeBtn");
 
 closePopup.addEventListener("click", closeCurrentGame);
 
+popup.appendChild(closePopup);
+
 let activeGame = null; // Suivi du jeu actif
 const debugMode = false;
 
@@ -228,6 +230,11 @@ function closeCurrentGame() {
   popup.style.display = "none";
   gameContainer.innerHTML = ""; // Réinitialise le contenu
 
+  if (popup.dataset.timer) {
+    clearInterval(popup.dataset.timer);
+    delete popup.dataset.timer;
+  }
+
   // Réinitialisation du jeu actif
   if (activeGame && activeGame.reset) {
     activeGame.reset();
@@ -235,7 +242,6 @@ function closeCurrentGame() {
   activeGame = null;
 }
 
-// Fonction pour ouvrir la pop-up
 function openPopup(day) {
   const game = games[day - 1]; // Corrige l'index du jour
   if (!game) {
@@ -253,13 +259,13 @@ function openPopup(day) {
     0
   );
 
-  // Appelle la logique du jeu
-  popup.style.display = "block"; // Affiche la pop-up
+  // Affiche la pop-up
+  popup.style.display = "flex"; 
   gameContainer.innerHTML = `<h2>Jour ${day}</h2>`; // Titre dynamique
 
   if (debugMode || now >= targetTime) {
+    // Affiche le jeu si déverrouillé
     game.game(() => {
-      // Appelle la fonction de jeu et montre le contenu final
       showEndContent(game.endContent, () => {
         popup.style.display = "none";
         gameContainer.innerHTML = ""; // Nettoie après fermeture
@@ -271,19 +277,52 @@ function openPopup(day) {
       });
     });
   } else {
-    const timerDiv = document.createElement("div");
-    timerDiv.id = "timer";
-    popupContent.appendChild(timerDiv);
+    // Vérifie si un timer existe déjà
+    let timerDiv = document.getElementById("timer");
+    if (!timerDiv) {
+      // Crée un nouveau timer uniquement si absent
+      timerDiv = document.createElement("div");
+      timerDiv.id = "timer";
+      popupContent.appendChild(timerDiv);
 
+      // Démarre le timer
+      const interval = setInterval(() => {
+        const remaining = updateTimer(timerDiv, targetTime);
+        if (remaining <= 0) {
+          clearInterval(interval);
+          openPopup(day); // Relance automatiquement l'ouverture
+        }
+      }, 1000);
+
+      // Stocke l'interval pour le nettoyage ultérieur
+      popup.dataset.timer = interval;
+    }
+
+    // Met à jour immédiatement le timer
     updateTimer(timerDiv, targetTime);
+  }
+}
 
-    const interval = setInterval(() => {
-      const remaining = updateTimer(timerDiv, targetTime);
-      if (remaining <= 0) {
-        clearInterval(interval);
-        openPopup(day);
-      }
-    }, 1000);
+function closeCurrentGame() {
+  popup.style.display = "none";
+  gameContainer.innerHTML = ""; // Réinitialise le contenu
+
+  // Supprime le timer actif s'il existe
+  if (popup.dataset.timer) {
+    clearInterval(popup.dataset.timer);
+    delete popup.dataset.timer;
+  }
+
+  // Réinitialisation du jeu actif
+  if (activeGame && activeGame.reset) {
+    activeGame.reset();
+  }
+  activeGame = null;
+
+  // Nettoie le contenu de la pop-up (y compris le timer)
+  const timerDiv = document.getElementById("timer");
+  if (timerDiv) {
+    timerDiv.remove();
   }
 }
 
@@ -308,6 +347,7 @@ function updateTimer(timerDiv, targetTime) {
 
   return timeDifference;
 }
+
 
 // Fonction pour afficher le contenu final
 function showEndContent(content, callback) {
