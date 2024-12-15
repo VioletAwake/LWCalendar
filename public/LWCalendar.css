@@ -950,6 +950,34 @@
     mix-blend-mode: multiply;
     animation: scanlines 0.2s linear infinite;
   }
+
+  .psychology-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+  }
+
+  .psychology-game-container input {
+    width: 20%;
+    font-size: 20px;
+    text-align: center;
+    padding: 5px;
+  }
+
+  .psychology-game-container p {
+    font-size: 25px;
+    text-align: center;
+  }
+
+  .psycho-message p {
+    display: flex;
+    font-size: 25px;
+    text-align: center;
+    margin: 0;
+  }
 }
 
 /* VERSION DESKTOP */
@@ -2241,6 +2269,35 @@
     mix-blend-mode: multiply;
     animation: scanlines 0.2s linear infinite;
   }
+
+  .psychology-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+  }
+
+  .psychology-game-container input {
+    width: 40%;
+    font-size: 15px;
+    text-align: center;
+    padding: 5px;
+  }
+
+  .psychology-game-container p {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .psycho-message p {
+    display: flex;
+    font-size: 15px;
+    text-align: center;
+    margin: 0;
+  }
+
 
   .ending {
     display: flex;

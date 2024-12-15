@@ -184,7 +184,12 @@ Le festival comprend également une cérémonie au sommet de Black Peaks, où le
   {
     game: hangedGame,
     reset: () => {},
-    endContent: `<em>Tu t'es vaillament battu, mais ça ne sera jamais assez pour eux. Ne regrette pas la délivrance que je t'offre, ce n'est pas quelque chose de mal, bien au contraire. Tu seras apaisé, libéré de toutes tes souffrances, tes craintes, tes angoisses, n'aie pas honte de ça. En mettant un terme, tu te libéreras de toutes ses chaines, tu seras enfin sauvé, par toi-même. Les autres ne comprendront pas, mais c'est parce qu'ils ne connaissent pas ce que tu as vécu. Ils ne vivront jamais le malheur puisqu'ils sont très souvent de l'autre côté du miroir. Bénis ta délivrance, mets un terme à tes souffrances, appuie sur la détente, saute dans le vide.</em><br/><br/> - La Délivrance -` ,
+    endContent: `<em>Tu t'es vaillament battu, mais ça ne sera jamais assez pour eux. Ne regrette pas la délivrance que je t'offre, ce n'est pas quelque chose de mal, bien au contraire. Tu seras apaisé, libéré de toutes tes souffrances, tes craintes, tes angoisses, n'aie pas honte de ça. En mettant un terme, tu te libéreras de toutes ses chaines, tu seras enfin sauvé, par toi-même. Les autres ne comprendront pas, mais c'est parce qu'ils ne connaissent pas ce que tu as vécu. Ils ne vivront jamais le malheur puisqu'ils sont très souvent de l'autre côté du miroir. Bénis ta délivrance, mets un terme à tes souffrances, appuie sur la détente, saute dans le vide.</em><br/><br/> - La Délivrance -`,
+  },
+  {
+    game: psychologyGame,
+    reset: () => {},
+    endContent: `<em>Bien le bonjour ! <br/> Je suis le docteur Vincent Crowe, psychologue et co-animateur de votre émission préférée "Bonne soirée avec le Misanthrope". Laissez-moi vous parler de mon domaine qui est la psychologie. <br/> La psychologie, c’est la clé pour déchiffrer les mystères de l’esprit humain. Chaque trouble ou syndrome est une pièce du puzzle complexe qui constitue notre perception du monde et de nous-mêmes. L’effet de Halo, par exemple, montre combien nos jugements peuvent être biaisés par une seule caractéristique. Le syndrome du sauveur reflète le besoin insatiable de réparer les autres, souvent au détriment de soi-même. Le syndrome de persécution, lui, nourrit une méfiance profonde envers autrui, transformant chaque interaction en un terrain de suspicion. <br/> Les troubles anxieux enchaînent l'esprit à un futur imaginaire, tandis que le syndrome de l’imposteur emprisonne l’individu dans un doute constant sur sa légitimité. Quant à la dépression, elle avale la lumière, laissant place à un vide qui semble inébranlable. Chaque trouble, chaque syndrome, n’est pas une simple anomalie : c’est un cri, une tentative de l’esprit de s’adapter à un monde qu’il peine à comprendre.</em> <br/><br/> - Dr. Vincent Crowe - <br/><br/> - Psychologue et co-animateur de l'émission "Bonne Soirée avec le Misanthrope" - `,
   },
   // Ajoutez d'autres jeux ici...
 ];
@@ -192,7 +197,7 @@ Le festival comprend également une cérémonie au sommet de Black Peaks, où le
 // Initialisation du calendrier
 const calendar = document.getElementById("calendar");
 
-const unlockLimit = 15;
+// const unlockLimit = 31;
 
 for (let day = 1; day <= 31; day++) {
   const cell = document.createElement("div");
@@ -260,7 +265,7 @@ function openPopup(day) {
   );
 
   // Affiche la pop-up
-  popup.style.display = "flex"; 
+  popup.style.display = "flex";
   gameContainer.innerHTML = `<h2>Jour ${day}</h2>`; // Titre dynamique
 
   if (debugMode || now >= targetTime) {
@@ -347,7 +352,6 @@ function updateTimer(timerDiv, targetTime) {
 
   return timeDifference;
 }
-
 
 // Fonction pour afficher le contenu final
 function showEndContent(content, callback) {
@@ -2078,7 +2082,9 @@ function hangedGame(callback) {
       }
     }
 
-    maskedWord = Array.from(letterSpans).map(span => span.textContent).join("");
+    maskedWord = Array.from(letterSpans)
+      .map((span) => span.textContent)
+      .join("");
 
     if (!isCorrect) {
       remainingGuesses--;
@@ -2102,7 +2108,7 @@ function hangedGame(callback) {
 
   function endGame() {
     const buttons = keyboardContainer.querySelectorAll("button");
-    buttons.forEach(button => button.disabled = true);
+    buttons.forEach((button) => (button.disabled = true));
     setTimeout(() => {
       showEndContent(games[13].endContent, callback);
     }, 1500);
@@ -2126,6 +2132,149 @@ function hangedGame(callback) {
   }
 }
 
+function psychologyGame(callback) {
+  const psychologyGameContainer = document.getElementById("game-container");
+  psychologyGameContainer.className = "psychology-game-container";
+  psychologyGameContainer.innerHTML = "";
+
+  const psychoQuestions = [
+    {
+      question:
+        "Les humains jugent un livre par sa couverture. Si une qualité physique brille chez quelqu'un, ils oublient tout de suite ses défauts. Leurs esprits sont dupés par cet effet. Mais quel est donc cet effet ?",
+      answer: "Effet de Halo",
+      description: "L’effet de Halo est un biais cognitif où une impression positive ou négative initiale sur une personne ou un objet influence notre perception de ses autres qualités. Par exemple, si une personne est jugée attrayante, on pourrait automatiquement supposer qu'elle est également compétente ou gentille, même sans preuve. Ce biais peut mener à des jugements erronés dans les relations, au travail ou dans d'autres contextes.",
+    },
+    {
+      question:
+        "Tu souhaites sauver ceux qui ne peuvent pas être sauvés. Tu te vois être la solution, l'espoir, mais à leurs yeux, tu peux être leur défouloir, leur bouche-trou. Tu penses aux besoins des autres, mais jamais les tiens. Quel est ce syndrôme ?",
+      answer: "Syndrome du sauveur",
+      description: "Le syndrome du sauveur est une tendance à vouloir sauver les autres, souvent au détriment de soi-même. La personne ressent un besoin compulsif d’aider, même lorsque ce n’est ni demandé ni approprié. Ce comportement peut naître d’un désir de donner un sens à sa propre vie ou d’un besoin de validation, et il peut aboutir à l’épuisement ou à des relations déséquilibrées.",
+    },
+    {
+      question:
+        "Tout le monde est contre toi, selon toi. Ainsi, tu deviens méfiant, voire paranoïaque. Je te suis, tel une ombre menaçante, qui suis-je, quel syndrome suis-je ?",
+      answer: "Syndrome de persécution",
+      description: "Le syndrome de persécution est une croyance irrationnelle selon laquelle on est la cible de malveillance, de complots ou d’attaques injustifiées. Souvent associé à la paranoïa, il peut pousser une personne à interpréter des événements anodins comme des menaces. Cela crée un état constant de méfiance et peut entraîner des conflits relationnels et un isolement social.",
+    },
+    {
+      question:
+        "Ton esprit est une tempête sans fin. Ton coeur bat trop vite et tes pensées sont embrouillées. Ton avenir est effrayant et ton présent insupportable à cause des expériences de ton passé. Quelle trouble suis-je ?",
+      answer: "Troubles de l'anxiété",
+      description: "Les troubles de l'anxiété regroupent une série de conditions où l'anxiété devient excessive, chronique ou incontrôlable, interférant avec la vie quotidienne. Les symptômes incluent des inquiétudes constantes, des crises de panique, une agitation physique (comme un rythme cardiaque accéléré), et des comportements d'évitement. Les types courants incluent l’anxiété généralisée, les phobies, et les troubles obsessionnels compulsifs (TOC).",
+    },
+    {
+      question:
+        "Tu as réussi, tu as fais du bon travail, mais pour toi, ce n'est pas grand chose. Tu ne peux être reconnaissant de ton travail, de ton avancé, de tes progrès. Quel syndrôme suis-je ?",
+      answer: "Syndrome de l'imposteur",
+      description: "Le syndrome de l’imposteur est un état psychologique dans lequel une personne doute de ses compétences ou de ses réussites, se sentant constamment comme une fraude. Bien que souvent qualifiée et compétente, elle attribue ses succès à des facteurs extérieurs, comme la chance, plutôt qu’à son propre mérite. Ce syndrome peut conduire à un perfectionnisme excessif et à une peur de l’échec paralysante.",
+    },
+    {
+      question:
+        "C'est un poids immense et invisible, ton sourire est d'extérieur, mais on ne peut pas en dire autant de l'intérieur. Même les petites choses qui font ta joie, ton réconfort, et ton bonheur, ne font plus effet à cause de la...",
+      answer: "Dépression",
+      description: "La dépression est un trouble de l’humeur caractérisé par une tristesse persistante, une perte d’intérêt ou de plaisir dans les activités, et une fatigue constante. Elle peut être accompagnée de troubles du sommeil, de changements d’appétit, de pensées suicidaires, et d’une diminution de l’estime de soi. La dépression n'est pas simplement une mauvaise passe, mais une condition médicale nécessitant souvent un soutien psychologique ou médical.",
+    },
+  ];
+
+  let currentQuestion = 0;
+  let currentQuestionIndex = psychoQuestions[currentQuestion];
+
+  const questionElement = document.createElement("p");
+  questionElement.textContent = currentQuestionIndex.question;
+  psychologyGameContainer.appendChild(questionElement);
+
+  const answerInput = document.createElement("input");
+  psychologyGameContainer.appendChild(answerInput);
+
+  const answerBtn = document.createElement("button");
+  answerBtn.textContent = "Valider";
+  answerBtn.addEventListener("click", checkAnswer);
+  psychologyGameContainer.appendChild(answerBtn);
+
+  const psychoCorrect = new Audio("PsychoCorrect.ogg");
+  const psychoWrong = new Audio("PsychoWrong.ogg");
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      checkAnswer();
+    }
+  })
+
+  function loadPsychoQuestion() {
+    questionElement.textContent = currentQuestionIndex.question;
+    answerInput.value = "";
+
+    answerInput.addEventListener("input", function (event) {
+      if (event.key === "Enter") {
+        checkAnswer();
+      }
+    });
+
+  }
+
+  loadPsychoQuestion();
+
+  function checkAnswer() {
+    const psychoMessage = document.createElement("p");
+    psychoMessage.className= "psycho-message";
+    psychologyGameContainer.appendChild(psychoMessage);
+    const userAnswer = answerInput.value.toLowerCase();
+  
+    if (userAnswer === currentQuestionIndex.answer.toLowerCase()) {
+      psychoMessage.textContent = "Bravo !";
+      psychoCorrect.play();
+      psychoCorrect.currentTime = 0;
+  
+      // Afficher la description après une réponse correcte
+      setTimeout(() => {
+        psychologyGameContainer.innerHTML = ""; // Vider le conteneur
+        const descriptionElement = document.createElement("p");
+        descriptionElement.textContent = currentQuestionIndex.description;
+        psychologyGameContainer.appendChild(descriptionElement);
+  
+        if (currentQuestion < psychoQuestions.length - 1) {
+          // Ajouter le bouton "Suivant" pour passer à la question suivante
+          const nextBtn = document.createElement("button");
+          nextBtn.textContent = "Suivant !";
+          nextBtn.addEventListener("click", nextQuestion);
+          psychologyGameContainer.appendChild(nextBtn);
+        } else {
+          // Ajouter le bouton "Terminer" pour finir après la dernière description
+          const endBtn = document.createElement("button");
+          endBtn.textContent = "Terminer";
+          endBtn.addEventListener("click", () => {
+            showEndContent(games[14].endContent, callback);
+          });
+          psychologyGameContainer.appendChild(endBtn);
+        }
+      }, 2000);
+    } else {
+      psychoMessage.textContent = "Ce n'est pas ça !";
+      answerInput.value = "";
+      psychoWrong.play();
+      psychoWrong.currentTime = 0;
+      setTimeout(() => {
+        psychoMessage.textContent = "";
+      }, 1500);
+    }
+  }
+  
+  function nextQuestion() {
+    currentQuestion++; // Passer à la question suivante
+    if (currentQuestion < psychoQuestions.length) {
+      currentQuestionIndex = psychoQuestions[currentQuestion]; // Met à jour l'index de la question actuelle
+  
+      // Recharger le conteneur avec la nouvelle question
+      psychologyGameContainer.innerHTML = ""; // Vider le conteneur
+      questionElement.textContent = currentQuestionIndex.question;
+      psychologyGameContainer.appendChild(questionElement);
+      psychologyGameContainer.appendChild(answerInput);
+      psychologyGameContainer.appendChild(answerBtn);
+      answerInput.value = ""; // Réinitialiser l'input
+    }
+  }  
+  
+}
 
 function showEndContent(content, callback) {
   const ending = document.getElementById("game-container");
