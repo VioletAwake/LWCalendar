@@ -234,6 +234,7 @@ const debugMode = false;
 function closeCurrentGame() {
   popup.style.display = "none";
   gameContainer.innerHTML = ""; // Réinitialise le contenu
+  gameContainer.className = "";
 
   if (popup.dataset.timer) {
     clearInterval(popup.dataset.timer);
