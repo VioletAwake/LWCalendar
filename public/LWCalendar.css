@@ -2924,7 +2924,7 @@
   }
 
   .psychology-game-container input {
-    width: 40%;
+    width: 70%;
     font-size: 15px;
     text-align: center;
     padding: 5px;
@@ -3958,11 +3958,10 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
-    padding: 10px;
   }
 
   .psychology-game-container input {
-    width: 40%;
+    width: 70%;
     font-size: 15px;
     text-align: center;
     padding: 5px;

@@ -2219,7 +2219,7 @@ function psychologyGame(callback) {
     const psychoMessage = document.createElement("p");
     psychoMessage.className= "psycho-message";
     psychologyGameContainer.appendChild(psychoMessage);
-    const userAnswer = answerInput.value.toLowerCase();
+    const userAnswer = answerInput.value.trim().toLowerCase();
   
     if (userAnswer === currentQuestionIndex.answer.toLowerCase()) {
       psychoMessage.textContent = "Bravo !";
