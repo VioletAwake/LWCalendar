@@ -2295,7 +2295,6 @@ function snakeLoveHate(callback) {
   const snakeGameContainer = document.getElementById("game-container");
   snakeGameContainer.className = "snake-game-container";
   snakeGameContainer.innerHTML = ""; // Nettoie le conteneur
-
   let snakeScore = 0;
   const snakeSoundOne = new Audio("./snakeGame/snakeSound1.mp3");
   const snakeSoundTwo = new Audio("./snakeGame/snakeSound2.ogg");
@@ -2331,8 +2330,20 @@ function snakeLoveHate(callback) {
   let gameStarted = false;
   let isAutonomous = false; // Indique si le serpent est autonome
 
-  // Appelle la fonction addMobileControls pour ajouter les contrôles sur mobile
+  // Appel des contrôles mobiles pour les petits écrans
   addMobileControls();
+
+  // Démarre le jeu si non démarré
+  function startGame() {
+    if (!gameStarted) {
+      gameStarted = true;
+      snakeSoundOne.play();
+      gameLoop();
+    }
+  }
+
+  // Appelle startGame quand l'utilisateur clique pour commencer le jeu
+  document.addEventListener("click", startGame);
 
   // Dessine le serpent
   function drawSnake() {
@@ -2356,7 +2367,6 @@ function snakeLoveHate(callback) {
   // Met à jour la position du serpent
   function updateSnake() {
     if (isAutonomous) {
-      // Calcul automatique sécurisé de la direction
       const nextDirection = calculateSafeDirection();
       if (nextDirection) {
         direction = nextDirection; // Applique une direction sûre
@@ -2393,11 +2403,10 @@ function snakeLoveHate(callback) {
     }
   }
 
-  // Calcule une direction sûre
+  // Calcule une direction sûre pour le serpent
   function calculateSafeDirection() {
     const head = snake[0];
 
-    // Directions possibles
     const directions = [
       { x: 1, y: 0 }, // Droite
       { x: -1, y: 0 }, // Gauche
@@ -2405,7 +2414,6 @@ function snakeLoveHate(callback) {
       { x: 0, y: -1 }, // Haut
     ];
 
-    // Classe les directions par proximité avec la nourriture
     directions.sort((a, b) => {
       const distA =
         Math.abs(food.x - (head.x + a.x)) + Math.abs(food.y - (head.y + a.y));
@@ -2414,7 +2422,6 @@ function snakeLoveHate(callback) {
       return distA - distB;
     });
 
-    // Trouve une direction valide
     for (const dir of directions) {
       const nextHeadPosition = {
         x: head.x + dir.x,
@@ -2422,14 +2429,13 @@ function snakeLoveHate(callback) {
       };
 
       if (isSafePosition(nextHeadPosition)) {
-        return dir; // Retourne la première direction sûre trouvée
+        return dir;
       }
     }
 
-    return null; // Aucun mouvement sûr trouvé
+    return null;
   }
 
-  // Vérifie si une position est sûre (pas de collision avec murs ou corps)
   function isSafePosition(position) {
     return (
       position.x >= 0 &&
@@ -2442,21 +2448,17 @@ function snakeLoveHate(callback) {
     );
   }
 
-  // Gère les actions en fonction du score
   function handleScoreActions() {
     if (snakeScore === 5) {
       snakeMessage.textContent =
         "Tu as rencontré ce bel homme, gentil et attentionné.";
     }
-
     if (snakeScore === 10) {
       snakeMessage.textContent = "Vous vous aimez, vous formez un beau couple.";
     }
-
     if (snakeScore === 15) {
       snakeMessage.textContent = "Tu es tellement heureuse avec lui.";
     }
-
     if (snakeScore === 20) {
       snakeMessage.textContent = "Il t'a mal parlé, devant tout le monde !";
       snakeMessage.style.color = "red";
@@ -2465,23 +2467,19 @@ function snakeLoveHate(callback) {
       snakeSoundOne.currentTime = 0;
       snakeDrawScore.style.color = "red";
     }
-
     if (snakeScore === 25) {
       snakeMessage.textContent = "Il t'engueule sans cesse, te juge sans cesse";
       snakeSoundTwo.play();
       snakeSoundTwo.currentTime = 0;
     }
-
     if (snakeScore === 30) {
       snakeMessage.textContent =
         "Il t'a imposé de faire des choses. Il t'a même forcé...";
     }
-
     if (snakeScore === 35) {
       snakeMessage.textContent =
         "Il t'isole de tout le monde, tu es à lui désormais.";
     }
-
     if (snakeScore === 40) {
       snakeMessage.textContent = "Il t'enferme, il a réduit ta liberté.";
       canvas.width -= 200;
@@ -2503,17 +2501,14 @@ function snakeLoveHate(callback) {
       isAutonomous = true;
       snakeMessage.textContent = "Tu es à ses ordres, il te manipule.";
     }
-
     if (snakeScore === 50) {
       snakeMessage.textContent = "Le serpent t'a mordu...";
     }
-
     if (snakeScore === 55) {
       snakeBlackOut();
     }
   }
 
-  // Fonction de blackout
   function snakeBlackOut() {
     const blackOut = document.createElement("div");
     blackOut.className = "blackout";
@@ -2570,33 +2565,7 @@ function snakeLoveHate(callback) {
     }, 7000);
   }
 
-  // Gère les entrées clavier pour changer la direction
-  document.addEventListener("keydown", (event) => {
-    if (!gameStarted) {
-      gameStarted = true;
-      snakeSoundOne.play();
-      gameLoop();
-    }
-
-    if (isAutonomous) return; // Ignore les entrées si le serpent est autonome
-
-    switch (event.key) {
-      case "ArrowUp":
-        if (direction.y === 0) direction = { x: 0, y: -1 };
-        break;
-      case "ArrowDown":
-        if (direction.y === 0) direction = { x: 0, y: 1 };
-        break;
-      case "ArrowLeft":
-        if (direction.x === 0) direction = { x: -1, y: 0 };
-        break;
-      case "ArrowRight":
-        if (direction.x === 0) direction = { x: 1, y: 0 };
-        break;
-    }
-  });
-
-  // Fonction principale du jeu
+  // Fonction de boucle du jeu
   function gameLoop() {
     if (gameOver) {
       snakeMessage.textContent = "Game Over, tu n'as encore pas tout vu !";
@@ -2615,42 +2584,53 @@ function snakeLoveHate(callback) {
     drawSnake();
     drawFood();
 
-    if (!gameOver) {
-      setTimeout(gameLoop, 100);
-    }
+    setTimeout(gameLoop, 100);
   }
 
-  // Initialise la boucle de jeu
-  gameLoop();
+  // Fonction pour ajouter des contrôles mobiles
+  function addMobileControls() {
+    if (window.innerWidth <= 600) {
+      // Vérifie si l'écran est bien de petite taille
+      const controlsContainer = document.createElement("div");
+      controlsContainer.className = "mobile-controls";
+      controlsContainer.innerHTML = `
+        <div class="controls-row">
+          <button class="control-button" data-direction="up">↑</button>
+        </div>
+        <div class="controls-row">
+          <button class="control-button" data-direction="left">←</button>
+          <button class="control-button" data-direction="down">↓</button>
+          <button class="control-button" data-direction="right">→</button>
+        </div>
+      `;
+      document.body.appendChild(controlsContainer);
+  
+      // Gérer les clics sur les boutons
+      document.querySelectorAll(".control-button").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          const directionPressed = event.target.getAttribute("data-direction");
+          
+          switch (directionPressed) {
+            case "up":
+              if (direction.y === 0) direction = { x: 0, y: -1 };
+              break;
+            case "down":
+              if (direction.y === 0) direction = { x: 0, y: 1 };
+              break;
+            case "left":
+              if (direction.x === 0) direction = { x: -1, y: 0 };
+              break;
+            case "right":
+              if (direction.x === 0) direction = { x: 1, y: 0 };
+              break;
+          }
+        });
+      });
+    }
+  }
 }
 
-function addMobileControls() {
-  const mobileControls = document.createElement("div");
-  mobileControls.className = "mobile-controls";
-  mobileControls.innerHTML = `
-    <button id="up" class="control-button">Up</button>
-    <button id="down" class="control-button">Down</button>
-    <button id="left" class="control-button">Left</button>
-    <button id="right" class="control-button">Right</button>
-  `;
-  document.body.appendChild(mobileControls);
 
-  document.getElementById("up").addEventListener("click", () => {
-    if (direction.y === 0) direction = { x: 0, y: -1 };
-  });
-
-  document.getElementById("down").addEventListener("click", () => {
-    if (direction.y === 0) direction = { x: 0, y: 1 };
-  });
-
-  document.getElementById("left").addEventListener("click", () => {
-    if (direction.x === 0) direction = { x: -1, y: 0 };
-  });
-
-  document.getElementById("right").addEventListener("click", () => {
-    if (direction.x === 0) direction = { x: 1, y: 0 };
-  });
-}
 
 
 function showEndContent(content, callback) {
