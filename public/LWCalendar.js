@@ -191,6 +191,16 @@ Le festival comprend également une cérémonie au sommet de Black Peaks, où le
     reset: () => {},
     endContent: `<em>Bien le bonjour ! <br/> Je suis le docteur Vincent Crowe, psychologue et co-animateur de votre émission préférée "Bonne soirée avec le Misanthrope". Laissez-moi vous parler de mon domaine qui est la psychologie. <br/> La psychologie, c’est la clé pour déchiffrer les mystères de l’esprit humain. Chaque trouble ou syndrome est une pièce du puzzle complexe qui constitue notre perception du monde et de nous-mêmes. L’effet de Halo, par exemple, montre combien nos jugements peuvent être biaisés par une seule caractéristique. Le syndrome du sauveur reflète le besoin insatiable de réparer les autres, souvent au détriment de soi-même. Le syndrome de persécution, lui, nourrit une méfiance profonde envers autrui, transformant chaque interaction en un terrain de suspicion. <br/> Les troubles anxieux enchaînent l'esprit à un futur imaginaire, tandis que le syndrome de l’imposteur emprisonne l’individu dans un doute constant sur sa légitimité. Quant à la dépression, elle avale la lumière, laissant place à un vide qui semble inébranlable. Chaque trouble, chaque syndrome, n’est pas une simple anomalie : c’est un cri, une tentative de l’esprit de s’adapter à un monde qu’il peine à comprendre.</em> <br/><br/> - Dr. Vincent Crowe - <br/><br/> - Psychologue et co-animateur de l'émission "Bonne Soirée avec le Misanthrope" - `,
   },
+  {
+    game: snakeLoveHate,
+    reset: () => {},
+    endContent: `<em>Jodie,<br/>
+
+Tu croyais que l’Amour te sauverait, que tout se réparerait dans ses bras. Mais l’Amour, c’est un mirage, un piège. Chaque geste, chaque mot, n’était qu’un leurre, nourrissant la Haine sous une façade séduisante. Comme un serpent, il t’a attirée, mais tu ne voyais pas qu’il te dévorait lentement.<br/>
+La Haine, elle, est plus honnête. Elle ne cache pas ses griffes. Tu l’as nourrie en croyant que c’était de l’Amour, et tu l’as laissée croître sans le savoir. Maintenant, tu es prisonnière de cette boucle sans fin, d’un jeu où il n’y a pas de victoire. Le serpent t’a engloutie, et ce n’est pas la première fois. Le cycle se répétera, et chaque fois, tu croiras encore que c’était l’Amour.<br/>
+
+Ce n’était jamais l’Amour, Jodie. C’était juste un poison déguisé.<em/><br/><br/> - Le Misanthrope -`,
+  },
   // Ajoutez d'autres jeux ici...
 ];
 
@@ -206,7 +216,7 @@ for (let day = 1; day <= 31; day++) {
 
   if (currentMonth === 11) {
     // if (day > unlockLimit) {
-      if (day > currentDay) {
+    if (day > currentDay) {
       cell.style.color = "red";
       cell.style.border = "3px solid red";
       cell.style.pointerEvents = "none";
@@ -2143,37 +2153,43 @@ function psychologyGame(callback) {
       question:
         "Les humains jugent un livre par sa couverture. Si une qualité physique brille chez quelqu'un, ils oublient tout de suite ses défauts. Leurs esprits sont dupés par cet effet. Mais quel est donc cet effet ?",
       answer: "Effet de Halo",
-      description: "L’effet de Halo est un biais cognitif où une impression positive ou négative initiale sur une personne ou un objet influence notre perception de ses autres qualités. Par exemple, si une personne est jugée attrayante, on pourrait automatiquement supposer qu'elle est également compétente ou gentille, même sans preuve. Ce biais peut mener à des jugements erronés dans les relations, au travail ou dans d'autres contextes.",
+      description:
+        "L’effet de Halo est un biais cognitif où une impression positive ou négative initiale sur une personne ou un objet influence notre perception de ses autres qualités. Par exemple, si une personne est jugée attrayante, on pourrait automatiquement supposer qu'elle est également compétente ou gentille, même sans preuve. Ce biais peut mener à des jugements erronés dans les relations, au travail ou dans d'autres contextes.",
     },
     {
       question:
         "Tu souhaites sauver ceux qui ne peuvent pas être sauvés. Tu te vois être la solution, l'espoir, mais à leurs yeux, tu peux être leur défouloir, leur bouche-trou. Tu penses aux besoins des autres, mais jamais les tiens. Quel est ce syndrôme ?",
       answer: "Syndrome du sauveur",
-      description: "Le syndrome du sauveur est une tendance à vouloir sauver les autres, souvent au détriment de soi-même. La personne ressent un besoin compulsif d’aider, même lorsque ce n’est ni demandé ni approprié. Ce comportement peut naître d’un désir de donner un sens à sa propre vie ou d’un besoin de validation, et il peut aboutir à l’épuisement ou à des relations déséquilibrées.",
+      description:
+        "Le syndrome du sauveur est une tendance à vouloir sauver les autres, souvent au détriment de soi-même. La personne ressent un besoin compulsif d’aider, même lorsque ce n’est ni demandé ni approprié. Ce comportement peut naître d’un désir de donner un sens à sa propre vie ou d’un besoin de validation, et il peut aboutir à l’épuisement ou à des relations déséquilibrées.",
     },
     {
       question:
         "Tout le monde est contre toi, selon toi. Ainsi, tu deviens méfiant, voire paranoïaque. Je te suis, tel une ombre menaçante, qui suis-je, quel syndrome suis-je ?",
       answer: "Syndrome de persécution",
-      description: "Le syndrome de persécution est une croyance irrationnelle selon laquelle on est la cible de malveillance, de complots ou d’attaques injustifiées. Souvent associé à la paranoïa, il peut pousser une personne à interpréter des événements anodins comme des menaces. Cela crée un état constant de méfiance et peut entraîner des conflits relationnels et un isolement social.",
+      description:
+        "Le syndrome de persécution est une croyance irrationnelle selon laquelle on est la cible de malveillance, de complots ou d’attaques injustifiées. Souvent associé à la paranoïa, il peut pousser une personne à interpréter des événements anodins comme des menaces. Cela crée un état constant de méfiance et peut entraîner des conflits relationnels et un isolement social.",
     },
     {
       question:
         "Ton esprit est une tempête sans fin. Ton coeur bat trop vite et tes pensées sont embrouillées. Ton avenir est effrayant et ton présent insupportable à cause des expériences de ton passé. Quelle trouble suis-je ?",
       answer: "Troubles de l'anxiété",
-      description: "Les troubles de l'anxiété regroupent une série de conditions où l'anxiété devient excessive, chronique ou incontrôlable, interférant avec la vie quotidienne. Les symptômes incluent des inquiétudes constantes, des crises de panique, une agitation physique (comme un rythme cardiaque accéléré), et des comportements d'évitement. Les types courants incluent l’anxiété généralisée, les phobies, et les troubles obsessionnels compulsifs (TOC).",
+      description:
+        "Les troubles de l'anxiété regroupent une série de conditions où l'anxiété devient excessive, chronique ou incontrôlable, interférant avec la vie quotidienne. Les symptômes incluent des inquiétudes constantes, des crises de panique, une agitation physique (comme un rythme cardiaque accéléré), et des comportements d'évitement. Les types courants incluent l’anxiété généralisée, les phobies, et les troubles obsessionnels compulsifs (TOC).",
     },
     {
       question:
         "Tu as réussi, tu as fais du bon travail, mais pour toi, ce n'est pas grand chose. Tu ne peux être reconnaissant de ton travail, de ton avancé, de tes progrès. Quel syndrôme suis-je ?",
       answer: "Syndrome de l'imposteur",
-      description: "Le syndrome de l’imposteur est un état psychologique dans lequel une personne doute de ses compétences ou de ses réussites, se sentant constamment comme une fraude. Bien que souvent qualifiée et compétente, elle attribue ses succès à des facteurs extérieurs, comme la chance, plutôt qu’à son propre mérite. Ce syndrome peut conduire à un perfectionnisme excessif et à une peur de l’échec paralysante.",
+      description:
+        "Le syndrome de l’imposteur est un état psychologique dans lequel une personne doute de ses compétences ou de ses réussites, se sentant constamment comme une fraude. Bien que souvent qualifiée et compétente, elle attribue ses succès à des facteurs extérieurs, comme la chance, plutôt qu’à son propre mérite. Ce syndrome peut conduire à un perfectionnisme excessif et à une peur de l’échec paralysante.",
     },
     {
       question:
         "C'est un poids immense et invisible, ton sourire est d'extérieur, mais on ne peut pas en dire autant de l'intérieur. Même les petites choses qui font ta joie, ton réconfort, et ton bonheur, ne font plus effet à cause de la...",
       answer: "Dépression",
-      description: "La dépression est un trouble de l’humeur caractérisé par une tristesse persistante, une perte d’intérêt ou de plaisir dans les activités, et une fatigue constante. Elle peut être accompagnée de troubles du sommeil, de changements d’appétit, de pensées suicidaires, et d’une diminution de l’estime de soi. La dépression n'est pas simplement une mauvaise passe, mais une condition médicale nécessitant souvent un soutien psychologique ou médical.",
+      description:
+        "La dépression est un trouble de l’humeur caractérisé par une tristesse persistante, une perte d’intérêt ou de plaisir dans les activités, et une fatigue constante. Elle peut être accompagnée de troubles du sommeil, de changements d’appétit, de pensées suicidaires, et d’une diminution de l’estime de soi. La dépression n'est pas simplement une mauvaise passe, mais une condition médicale nécessitant souvent un soutien psychologique ou médical.",
     },
   ];
 
@@ -2199,7 +2215,7 @@ function psychologyGame(callback) {
     if (event.key === "Enter") {
       checkAnswer();
     }
-  })
+  });
 
   function loadPsychoQuestion() {
     questionElement.textContent = currentQuestionIndex.question;
@@ -2210,29 +2226,28 @@ function psychologyGame(callback) {
         checkAnswer();
       }
     });
-
   }
 
   loadPsychoQuestion();
 
   function checkAnswer() {
     const psychoMessage = document.createElement("p");
-    psychoMessage.className= "psycho-message";
+    psychoMessage.className = "psycho-message";
     psychologyGameContainer.appendChild(psychoMessage);
     const userAnswer = answerInput.value.trim().toLowerCase();
-  
+
     if (userAnswer === currentQuestionIndex.answer.toLowerCase()) {
       psychoMessage.textContent = "Bravo !";
       psychoCorrect.play();
       psychoCorrect.currentTime = 0;
-  
+
       // Afficher la description après une réponse correcte
       setTimeout(() => {
         psychologyGameContainer.innerHTML = ""; // Vider le conteneur
         const descriptionElement = document.createElement("p");
         descriptionElement.textContent = currentQuestionIndex.description;
         psychologyGameContainer.appendChild(descriptionElement);
-  
+
         if (currentQuestion < psychoQuestions.length - 1) {
           // Ajouter le bouton "Suivant" pour passer à la question suivante
           const nextBtn = document.createElement("button");
@@ -2259,12 +2274,12 @@ function psychologyGame(callback) {
       }, 1500);
     }
   }
-  
+
   function nextQuestion() {
     currentQuestion++; // Passer à la question suivante
     if (currentQuestion < psychoQuestions.length) {
       currentQuestionIndex = psychoQuestions[currentQuestion]; // Met à jour l'index de la question actuelle
-  
+
       // Recharger le conteneur avec la nouvelle question
       psychologyGameContainer.innerHTML = ""; // Vider le conteneur
       questionElement.textContent = currentQuestionIndex.question;
@@ -2273,8 +2288,379 @@ function psychologyGame(callback) {
       psychologyGameContainer.appendChild(answerBtn);
       answerInput.value = ""; // Réinitialiser l'input
     }
-  }  
-  
+  }
+}
+
+function snakeLoveHate(callback) {
+  const snakeGameContainer = document.getElementById("game-container");
+  snakeGameContainer.className = "snake-game-container";
+  snakeGameContainer.innerHTML = ""; // Nettoie le conteneur
+  let snakeScore = 0;
+  const snakeSoundOne = new Audio("./snakeGame/snakeSound1.mp3");
+  const snakeSoundTwo = new Audio("./snakeGame/snakeSound2.ogg");
+
+  const snakeDrawScore = document.createElement("p");
+  snakeDrawScore.className = "snake-score";
+  snakeDrawScore.innerHTML = `Score = 0`;
+  snakeGameContainer.appendChild(snakeDrawScore);
+
+  const canvas = document.createElement("canvas");
+  canvas.width = 1000;
+  canvas.height = 600;
+  canvas.style.border = "4px solid purple";
+  snakeGameContainer.appendChild(canvas);
+
+  const snakeMessage = document.createElement("p");
+  snakeMessage.className = "snake-message";
+  snakeGameContainer.appendChild(snakeMessage);
+
+  const ctx = canvas.getContext("2d");
+
+  const gridSize = 20; // Taille d'une cellule
+  let rows = canvas.height / gridSize;
+  let cols = canvas.width / gridSize;
+
+  let snake = [{ x: 10, y: 10 }]; // Départ du serpent
+  let direction = { x: 1, y: 0 }; // Direction initiale (droite)
+  let food = {
+    x: Math.floor(Math.random() * cols),
+    y: Math.floor(Math.random() * rows),
+  };
+  let gameOver = false;
+  let gameStarted = false;
+  let isAutonomous = false; // Indique si le serpent est autonome
+
+  // Appelle la fonction addMobileControls pour ajouter les contrôles sur mobile
+  addMobileControls();
+
+  // Dessine le serpent
+  function drawSnake() {
+    ctx.fillStyle = "green";
+    snake.forEach((segment) => {
+      ctx.fillRect(
+        segment.x * gridSize,
+        segment.y * gridSize,
+        gridSize,
+        gridSize
+      );
+    });
+  }
+
+  // Dessine la nourriture
+  function drawFood() {
+    ctx.fillStyle = "red";
+    ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize, gridSize);
+  }
+
+  // Met à jour la position du serpent
+  function updateSnake() {
+    if (isAutonomous) {
+      // Calcul automatique sécurisé de la direction
+      const nextDirection = calculateSafeDirection();
+      if (nextDirection) {
+        direction = nextDirection; // Applique une direction sûre
+      }
+    }
+
+    const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+
+    // Vérifie les collisions avec les murs ou le corps du serpent
+    if (
+      head.x < 0 ||
+      head.x >= cols ||
+      head.y < 0 ||
+      head.y >= rows ||
+      snake.some((segment) => segment.x === head.x && segment.y === head.y)
+    ) {
+      gameOver = true;
+      return;
+    }
+
+    snake.unshift(head);
+
+    // Vérifie si le serpent mange la nourriture
+    if (head.x === food.x && head.y === food.y) {
+      food = {
+        x: Math.floor(Math.random() * cols),
+        y: Math.floor(Math.random() * rows),
+      };
+      snakeScore++;
+      snakeDrawScore.innerHTML = `Score = ${snakeScore}`;
+      handleScoreActions();
+    } else {
+      snake.pop(); // Supprime la queue si aucune nourriture n'est mangée
+    }
+  }
+
+  // Calcule une direction sûre
+  function calculateSafeDirection() {
+    const head = snake[0];
+
+    // Directions possibles
+    const directions = [
+      { x: 1, y: 0 }, // Droite
+      { x: -1, y: 0 }, // Gauche
+      { x: 0, y: 1 }, // Bas
+      { x: 0, y: -1 }, // Haut
+    ];
+
+    // Classe les directions par proximité avec la nourriture
+    directions.sort((a, b) => {
+      const distA =
+        Math.abs(food.x - (head.x + a.x)) + Math.abs(food.y - (head.y + a.y));
+      const distB =
+        Math.abs(food.x - (head.x + b.x)) + Math.abs(food.y - (head.y + b.y));
+      return distA - distB;
+    });
+
+    // Trouve une direction valide
+    for (const dir of directions) {
+      const nextHeadPosition = {
+        x: head.x + dir.x,
+        y: head.y + dir.y,
+      };
+
+      if (isSafePosition(nextHeadPosition)) {
+        return dir; // Retourne la première direction sûre trouvée
+      }
+    }
+
+    return null; // Aucun mouvement sûr trouvé
+  }
+
+  // Vérifie si une position est sûre (pas de collision avec murs ou corps)
+  function isSafePosition(position) {
+    return (
+      position.x >= 0 &&
+      position.x < cols &&
+      position.y >= 0 &&
+      position.y < rows &&
+      !snake.some(
+        (segment) => segment.x === position.x && segment.y === position.y
+      )
+    );
+  }
+
+  // Gère les actions en fonction du score
+  function handleScoreActions() {
+    if (snakeScore === 5) {
+      snakeMessage.textContent =
+        "Tu as rencontré ce bel homme, gentil et attentionné.";
+    }
+
+    if (snakeScore === 10) {
+      snakeMessage.textContent = "Vous vous aimez, vous formez un beau couple.";
+    }
+
+    if (snakeScore === 15) {
+      snakeMessage.textContent = "Tu es tellement heureuse avec lui.";
+    }
+
+    if (snakeScore === 20) {
+      snakeMessage.textContent = "Il t'a mal parlé, devant tout le monde !";
+      snakeMessage.style.color = "red";
+      canvas.style.border = "4px solid red";
+      snakeSoundOne.pause();
+      snakeSoundOne.currentTime = 0;
+      snakeDrawScore.style.color = "red";
+    }
+
+    if (snakeScore === 25) {
+      snakeMessage.textContent = "Il t'engueule sans cesse, te juge sans cesse";
+      snakeSoundTwo.play();
+      snakeSoundTwo.currentTime = 0;
+    }
+
+    if (snakeScore === 30) {
+      snakeMessage.textContent =
+        "Il t'a imposé de faire des choses. Il t'a même forcé...";
+    }
+
+    if (snakeScore === 35) {
+      snakeMessage.textContent =
+        "Il t'isole de tout le monde, tu es à lui désormais.";
+    }
+
+    if (snakeScore === 40) {
+      snakeMessage.textContent = "Il t'enferme, il a réduit ta liberté.";
+      canvas.width -= 200;
+      canvas.height -= 100;
+      rows = canvas.height / gridSize;
+      cols = canvas.width / gridSize;
+
+      food = { x: Math.min(food.x, cols - 1), y: Math.min(food.y, rows - 1) };
+
+      snake = snake.map((segment) => ({
+        x: Math.min(segment.x, cols - 1),
+        y: Math.min(segment.y, rows - 1),
+      }));
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    if (snakeScore === 45) {
+      isAutonomous = true;
+      snakeMessage.textContent = "Tu es à ses ordres, il te manipule.";
+    }
+
+    if (snakeScore === 50) {
+      snakeMessage.textContent = "Le serpent t'a mordu...";
+    }
+
+    if (snakeScore === 55) {
+      snakeBlackOut();
+    }
+  }
+
+  // Fonction de blackout
+  function snakeBlackOut() {
+    const blackOut = document.createElement("div");
+    blackOut.className = "blackout";
+    blackOut.style.position = "absolute";
+    blackOut.style.top = 0;
+    blackOut.style.left = 0;
+    blackOut.style.width = "100%";
+    blackOut.style.height = "100%";
+    blackOut.style.backgroundColor = "black";
+    blackOut.style.zIndex = "9998";
+    blackOut.style.display = "flex";
+    blackOut.style.justifyContent = "center";
+    blackOut.style.alignItems = "center";
+    snakeSoundTwo.pause();
+    snakeSoundTwo.currentTime = 0;
+    document.body.appendChild(blackOut);
+
+    setTimeout(() => {
+      const blackOutMessage = document.createElement("div");
+      blackOutMessage.className = "blackout-message";
+      blackOutMessage.style.color = "red";
+      blackOutMessage.style.display = "flex";
+      blackOutMessage.style.justifyContent = "center";
+      blackOutMessage.style.alignItems = "center";
+      blackOutMessage.style.fontSize = "40px";
+      blackOutMessage.textContent = "L'Amour est devenu la Haine.";
+      blackOut.appendChild(blackOutMessage);
+    }, 4000);
+
+    setTimeout(() => {
+      const blackOutJumpscare = document.createElement("img");
+      blackOutJumpscare.src = "./snakeGame/jumpscareSnakeImg.jpeg";
+      blackOutJumpscare.className = "blackout-jumpscare";
+      blackOutJumpscare.style.position = "absolute";
+      blackOutJumpscare.style.top = 0;
+      blackOutJumpscare.style.left = 0;
+      blackOutJumpscare.style.width = "100%";
+      blackOutJumpscare.style.height = "100%";
+      blackOutJumpscare.style.backgroundColor = "black";
+      blackOutJumpscare.style.zIndex = "9999";
+      blackOutJumpscare.style.display = "flex";
+      blackOutJumpscare.style.justifyContent = "center";
+      blackOutJumpscare.style.alignItems = "center";
+      document.body.appendChild(blackOutJumpscare);
+
+      const jumpscareBlackOut = new Audio("./snakeGame/jumpscareSnake.mp3");
+      jumpscareBlackOut.play();
+      jumpscareBlackOut.addEventListener("ended", () => {
+        document.body.removeChild(blackOut);
+        document.body.removeChild(blackOutJumpscare);
+        gameOver = true;
+        showEndContent(games[15]?.endContent, callback);
+      });
+    }, 7000);
+  }
+
+  // Gère les entrées clavier pour changer la direction
+  document.addEventListener("keydown", (event) => {
+    if (!gameStarted) {
+      gameStarted = true;
+      snakeSoundOne.play();
+      gameLoop();
+    }
+
+    if (isAutonomous) return; // Ignore les entrées si le serpent est autonome
+
+    switch (event.key) {
+      case "ArrowUp":
+        if (direction.y === 0) direction = { x: 0, y: -1 };
+        break;
+      case "ArrowDown":
+        if (direction.y === 0) direction = { x: 0, y: 1 };
+        break;
+      case "ArrowLeft":
+        if (direction.x === 0) direction = { x: -1, y: 0 };
+        break;
+      case "ArrowRight":
+        if (direction.x === 0) direction = { x: 1, y: 0 };
+        break;
+    }
+  });
+
+  // Fonction principale du jeu
+  function gameLoop() {
+    if (gameOver) {
+      snakeMessage.textContent = "Game Over, tu n'as encore pas tout vu !";
+      snakeSoundOne.pause();
+      snakeSoundOne.currentTime = 0;
+      snakeSoundTwo.pause();
+      snakeSoundTwo.currentTime = 0;
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 1500);
+      return;
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    updateSnake();
+    drawSnake();
+    drawFood();
+
+    setTimeout(gameLoop, 100);
+  }
+
+  drawSnake();
+  drawFood();
+
+  // Fonction pour ajouter des contrôles mobiles
+  function addMobileControls() {
+    console.log(window.innerWidth); // Pour vérifier la largeur de l'écran
+
+    if (window.innerWidth <= 600) {
+      const controlsContainer = document.createElement("div");
+      controlsContainer.className = "mobile-controls";
+      controlsContainer.innerHTML = `
+        <div class="controls-row">
+          <button class="control-button" data-direction="up">↑</button>
+        </div>
+        <div class="controls-row">
+          <button class="control-button" data-direction="left">←</button>
+          <button class="control-button" data-direction="down">↓</button>
+          <button class="control-button" data-direction="right">→</button>
+        </div>
+      `;
+      snakeGameContainer.appendChild(controlsContainer);
+
+      // Gérer les clics sur les boutons
+      document.querySelectorAll(".control-button").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          const direction = event.target.getAttribute("data-direction");
+          switch (direction) {
+            case "up":
+              if (direction.y === 0) direction = { x: 0, y: -1 };
+              break;
+            case "down":
+              if (direction.y === 0) direction = { x: 0, y: 1 };
+              break;
+            case "left":
+              if (direction.x === 0) direction = { x: -1, y: 0 };
+              break;
+            case "right":
+              if (direction.x === 0) direction = { x: 1, y: 0 };
+              break;
+          }
+        });
+      });
+    }
+  }
 }
 
 function showEndContent(content, callback) {

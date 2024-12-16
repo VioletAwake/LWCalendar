@@ -19,5 +19,28 @@
     </div>
     <audio id="wyattSong" src="./WyattLogos/Wyatt.ogg" type="audio/ogg"></audio>
     <script src="LWCalendar.js"></script>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyDYbuRFH1fzOMKJvDAdqU0aO7v4CBvFtfs",
+        authDomain: "lwcalendar-7b661.firebaseapp.com",
+        projectId: "lwcalendar-7b661",
+        storageBucket: "lwcalendar-7b661.firebasestorage.app",
+        messagingSenderId: "351060500875",
+        appId: "1:351060500875:web:b987bfe6a3f6df278e8f8e",
+        measurementId: "G-5ZF5MNLHQP"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
   </body>
 </html>
