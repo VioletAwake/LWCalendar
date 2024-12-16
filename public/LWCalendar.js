@@ -2295,6 +2295,7 @@ function snakeLoveHate(callback) {
   const snakeGameContainer = document.getElementById("game-container");
   snakeGameContainer.className = "snake-game-container";
   snakeGameContainer.innerHTML = ""; // Nettoie le conteneur
+
   let snakeScore = 0;
   const snakeSoundOne = new Audio("./snakeGame/snakeSound1.mp3");
   const snakeSoundTwo = new Audio("./snakeGame/snakeSound2.ogg");
@@ -2614,54 +2615,43 @@ function snakeLoveHate(callback) {
     drawSnake();
     drawFood();
 
-    setTimeout(gameLoop, 100);
-  }
-
-  drawSnake();
-  drawFood();
-
-  // Fonction pour ajouter des contrôles mobiles
-  function addMobileControls() {
-    console.log(window.innerWidth); // Pour vérifier la largeur de l'écran
-
-    if (window.innerWidth <= 600) {
-      const controlsContainer = document.createElement("div");
-      controlsContainer.className = "mobile-controls";
-      controlsContainer.innerHTML = `
-        <div class="controls-row">
-          <button class="control-button" data-direction="up">↑</button>
-        </div>
-        <div class="controls-row">
-          <button class="control-button" data-direction="left">←</button>
-          <button class="control-button" data-direction="down">↓</button>
-          <button class="control-button" data-direction="right">→</button>
-        </div>
-      `;
-      snakeGameContainer.appendChild(controlsContainer);
-
-      // Gérer les clics sur les boutons
-      document.querySelectorAll(".control-button").forEach((button) => {
-        button.addEventListener("click", (event) => {
-          const direction = event.target.getAttribute("data-direction");
-          switch (direction) {
-            case "up":
-              if (direction.y === 0) direction = { x: 0, y: -1 };
-              break;
-            case "down":
-              if (direction.y === 0) direction = { x: 0, y: 1 };
-              break;
-            case "left":
-              if (direction.x === 0) direction = { x: -1, y: 0 };
-              break;
-            case "right":
-              if (direction.x === 0) direction = { x: 1, y: 0 };
-              break;
-          }
-        });
-      });
+    if (!gameOver) {
+      setTimeout(gameLoop, 100);
     }
   }
+
+  // Initialise la boucle de jeu
+  gameLoop();
 }
+
+function addMobileControls() {
+  const mobileControls = document.createElement("div");
+  mobileControls.className = "mobile-controls";
+  mobileControls.innerHTML = `
+    <button id="up" class="control-button">Up</button>
+    <button id="down" class="control-button">Down</button>
+    <button id="left" class="control-button">Left</button>
+    <button id="right" class="control-button">Right</button>
+  `;
+  document.body.appendChild(mobileControls);
+
+  document.getElementById("up").addEventListener("click", () => {
+    if (direction.y === 0) direction = { x: 0, y: -1 };
+  });
+
+  document.getElementById("down").addEventListener("click", () => {
+    if (direction.y === 0) direction = { x: 0, y: 1 };
+  });
+
+  document.getElementById("left").addEventListener("click", () => {
+    if (direction.x === 0) direction = { x: -1, y: 0 };
+  });
+
+  document.getElementById("right").addEventListener("click", () => {
+    if (direction.x === 0) direction = { x: 1, y: 0 };
+  });
+}
+
 
 function showEndContent(content, callback) {
   const ending = document.getElementById("game-container");
