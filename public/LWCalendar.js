@@ -201,6 +201,12 @@ La Haine, elle, est plus honnête. Elle ne cache pas ses griffes. Tu l’as nour
 
 Ce n’était jamais l’Amour, Jodie. C’était juste un poison déguisé.<em/><br/><br/> - Le Misanthrope -`,
   },
+  {
+    game: blindTest,
+    reset: () => {},
+    endContent: `<em>Dante Violet a croisé la route de Balsek lors de sa première mission, un homme qui se révélerait être une leçon vivante. Balsek lui avait enseigné une règle essentielle : ne jamais faire confiance à personne. Dante comprit brutalement cette leçon lorsque Balsek l’abandonna au milieu d’une guerre de gangs. Seul face à une armée, Dante n’était qu’un homme, mais il survécut. Pas sans séquelles : côtes brisées, épaule droite disloquée, commotion cérébrale.
+<br/>À peine réveillé à l’hôpital, il trouva la force de se lever, poussé par une rage inébranlable, et traqua Balsek. Lorsqu’il le retrouva, son corps affaibli semblait un désavantage évident, mais Dante dépassa ses limites. Dans un affrontement féroce, il finit par prendre le dessus, à un souffle d’asséner le coup fatal. Mais il s’arrêta. Dans cet instant suspendu, il vit le visage de sa mère adoptive, celle qui avait été son seul rayon de lumière dans les ténèbres. Cette pensée le ramena à une vérité plus grande que sa vengeance : honorer cette lumière était son seul moyen de ne pas sombrer complètement. La haine n’aurait pas le dernier mot, pas cette fois, et peut-être jamais.</em>`,
+  },
   // Ajoutez d'autres jeux ici...
 ];
 
@@ -319,28 +325,28 @@ function openPopup(day) {
   }
 }
 
-function closeCurrentGame() {
-  popup.style.display = "none";
-  gameContainer.innerHTML = ""; // Réinitialise le contenu
+// function closeCurrentGame() {
+//   popup.style.display = "none";
+//   popupContent.innerHTML = "";
 
-  // Supprime le timer actif s'il existe
-  if (popup.dataset.timer) {
-    clearInterval(popup.dataset.timer);
-    delete popup.dataset.timer;
-  }
+//   // Supprime le timer actif s'il existe
+//   if (popup.dataset.timer) {
+//     clearInterval(popup.dataset.timer);
+//     delete popup.dataset.timer;
+//   }
 
-  // Réinitialisation du jeu actif
-  if (activeGame && activeGame.reset) {
-    activeGame.reset();
-  }
-  activeGame = null;
+//   // Réinitialisation du jeu actif
+//   if (activeGame && activeGame.reset) {
+//     activeGame.reset();
+//   }
+//   activeGame = null;
 
-  // Nettoie le contenu de la pop-up (y compris le timer)
-  const timerDiv = document.getElementById("timer");
-  if (timerDiv) {
-    timerDiv.remove();
-  }
-}
+//   // Nettoie le contenu de la pop-up (y compris le timer)
+//   const timerDiv = document.getElementById("timer");
+//   if (timerDiv) {
+//     timerDiv.remove();
+//   }
+// }
 
 function updateTimer(timerDiv, targetTime) {
   const now = new Date();
@@ -2331,7 +2337,7 @@ function snakeLoveHate(callback) {
   let isAutonomous = false; // Indique si le serpent est autonome
 
   // Appel des contrôles mobiles pour les petits écrans
-  addMobileControls();
+  initializeControls();
 
   // Démarre le jeu si non démarré
   function startGame() {
@@ -2559,7 +2565,7 @@ function snakeLoveHate(callback) {
       jumpscareBlackOut.addEventListener("ended", () => {
         document.body.removeChild(blackOut);
         document.body.removeChild(blackOutJumpscare);
-        gameOver = true;
+        canvas.style.display = "none";
         showEndContent(games[15]?.endContent, callback);
       });
     }, 7000);
@@ -2574,7 +2580,7 @@ function snakeLoveHate(callback) {
       snakeSoundTwo.pause();
       snakeSoundTwo.currentTime = 0;
       setTimeout(() => {
-        popup.style.display = "none";
+        snakeGameContainer.textContent = "";
       }, 1500);
       return;
     }
@@ -2585,6 +2591,70 @@ function snakeLoveHate(callback) {
     drawFood();
 
     setTimeout(gameLoop, 100);
+  }
+
+  function initializeControls() {
+    if (window.innerWidth <= 600) {
+      createMobileControls();
+    } else {
+      document.addEventListener("keydown", (event) => {
+        const { key } = event;
+        if (!gameStarted) startGame();
+
+        switch (key) {
+          case "ArrowUp":
+            if (direction.y === 0) direction = { x: 0, y: -1 };
+            break;
+          case "ArrowDown":
+            if (direction.y === 0) direction = { x: 0, y: 1 };
+            break;
+          case "ArrowLeft":
+            if (direction.x === 0) direction = { x: -1, y: 0 };
+            break;
+          case "ArrowRight":
+            if (direction.x === 0) direction = { x: 1, y: 0 };
+            break;
+        }
+      });
+    }
+  }
+
+  function createMobileControls() {
+    const controlsContainer = document.createElement("div");
+    controlsContainer.className = "mobile-controls";
+    controlsContainer.innerHTML = `
+      <div class="controls-row">
+        <button class="control-button" data-direction="up">↑</button>
+      </div>
+      <div class="controls-row">
+        <button class="control-button" data-direction="left">←</button>
+        <button class="control-button" data-direction="down">↓</button>
+        <button class="control-button" data-direction="right">→</button>
+      </div>
+    `;
+    snakeGameContainer.appendChild(controlsContainer);
+
+    document.querySelectorAll(".control-button").forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const directionPressed = event.target.getAttribute("data-direction");
+        if (!gameStarted) startGame();
+
+        switch (directionPressed) {
+          case "up":
+            if (direction.y === 0) direction = { x: 0, y: -1 };
+            break;
+          case "down":
+            if (direction.y === 0) direction = { x: 0, y: 1 };
+            break;
+          case "left":
+            if (direction.x === 0) direction = { x: -1, y: 0 };
+            break;
+          case "right":
+            if (direction.x === 0) direction = { x: 1, y: 0 };
+            break;
+        }
+      });
+    });
   }
 
   // Fonction pour ajouter des contrôles mobiles
@@ -2604,12 +2674,12 @@ function snakeLoveHate(callback) {
         </div>
       `;
       document.body.appendChild(controlsContainer);
-  
+
       // Gérer les clics sur les boutons
       document.querySelectorAll(".control-button").forEach((button) => {
         button.addEventListener("click", (event) => {
           const directionPressed = event.target.getAttribute("data-direction");
-          
+
           switch (directionPressed) {
             case "up":
               if (direction.y === 0) direction = { x: 0, y: -1 };
@@ -2630,7 +2700,134 @@ function snakeLoveHate(callback) {
   }
 }
 
+function blindTest(callback) {
+  const blindTestContainer = document.getElementById("game-container");
+  blindTestContainer.className = "blind-test-container";
 
+  const blindsongs = [
+    {
+      blindTestQuestion: "De quel anime vient ce son ?",
+      blindTestsong: "./blindTestSongs/blindTestSong01.ogg",
+      blindTestanswers: ["Berserk", "Cowboy Bebop", "GTO"],
+      blindTestCorrect: "Cowboy Bebop",
+      blindTestVideo: "./blindTestVideos/blindTestVideo01.mp4",
+    },
+    {
+      blindTestQuestion: "De quel film vient ce son ?",
+      blindTestsong: "./blindTestSongs/blindTestSong02.ogg",
+      blindTestanswers: ["L'été de Kikujiro", "Sonatine", "Violent Cop"],
+      blindTestCorrect: "L'été de Kikujiro",
+      blindTestVideo: "./blindTestVideos/blindTestVideo02.mp4",
+    },
+    {
+      blindTestQuestion: "De quel jeu vidéo vient ce son ?",
+      blindTestsong: "./blindTestSongs/blindTestSong03.ogg",
+      blindTestanswers: ["Final Fantasy VII", "Tekken 3", "Crash Bandicoot"],
+      blindTestCorrect: "Tekken 3",
+      blindTestVideo: "./blindTestVideos/blindTestVideo03.mp4",
+    },
+    {
+      blindTestQuestion: "De quel anime vient ce son ?",
+      blindTestsong: "./blindTestSongs/blindTestSong04.ogg",
+      blindTestanswers: ["Serial Experiment Lain", "Golden Boy", "Yu-Gi-Oh !"],
+      blindTestCorrect: "Yu-Gi-Oh !",
+      blindTestVideo: "./blindTestVideos/blindTestVideo04.mp4",
+    },
+    {
+      blindTestQuestion: "Quel est le son et son auteur ?",
+      blindTestsong: "./blindTestSongs/blindTestSong05.mp3",
+      blindTestanswers: [
+        "Sheena Ringo - Tsumi to Batsu",
+        "B'Z - Bad Communication",
+        "Olivia Lufkin - Dear Angel",
+      ],
+      blindTestCorrect: "Sheena Ringo - Tsumi to Batsu",
+      blindTestVideo: "./blindTestVideos/blindTestVideo05.mp4",
+    },
+  ];
+
+  let currentBlindTest = 0;
+
+  function blindTestStart() {
+    blindTestContainer.innerHTML = ""; // Nettoie l'écran
+
+    const currentBlindTestIndex = blindsongs[currentBlindTest];
+
+    // Question
+    const blindTestElement = document.createElement("p");
+    blindTestElement.className = "blind-test-element";
+    blindTestElement.textContent = currentBlindTestIndex.blindTestQuestion;
+    blindTestContainer.appendChild(blindTestElement);
+
+    // Audio
+    const blindTestAudio = document.createElement("audio");
+    blindTestAudio.src = currentBlindTestIndex.blindTestsong;
+    blindTestAudio.controls = true;
+    blindTestAudio.play();
+    blindTestContainer.appendChild(blindTestAudio);
+
+    // Choix de réponses
+    const blindTestChoices = document.createElement("div");
+    blindTestChoices.classList.add("blind-test-choices");
+
+    currentBlindTestIndex.blindTestanswers.forEach((choice) => {
+      const blindTestButton = document.createElement("button");
+      blindTestButton.textContent = choice;
+      blindTestButton.addEventListener("click", function() { 
+        handleAnswer(choice), blindTestAudio.pause(); })
+      blindTestChoices.appendChild(blindTestButton);
+    });
+
+    blindTestContainer.appendChild(blindTestChoices);
+  }
+
+  function handleAnswer(choice) {
+    const currentBlindTestIndex = blindsongs[currentBlindTest];
+    const message = document.createElement("p");
+  
+    if (choice === currentBlindTestIndex.blindTestCorrect) {
+      message.textContent = "Bonne réponse !";
+      blindTestContainer.appendChild(message);
+  
+      // Attendre avant d'afficher la vidéo
+      setTimeout(() => {
+        const blindVideo = document.createElement("video");
+        blindVideo.className = "blind-test-video";
+        blindVideo.src = currentBlindTestIndex.blindTestVideo;
+        blindVideo.controls = false;
+        blindVideo.autoplay = true;
+        blindTestContainer.appendChild(blindVideo);
+  
+        // Écouteur pour cacher la vidéo et passer à la question suivante
+        blindVideo.addEventListener("ended", () => {
+          blindTestContainer.innerHTML = ""; // Nettoyer l'écran
+          currentBlindTest++;
+  
+          if (currentBlindTest < blindsongs.length) {
+            blindTestStart(); // Passer à la question suivante
+          } else {
+            // Fin du blind test
+            const endMessage = document.createElement("p");
+            endMessage.textContent = "おめでとうございます！";
+            blindTestContainer.appendChild(endMessage);
+            setTimeout(() => {
+              showEndContent(games[16].endContent, callback);
+            })
+          }
+        });
+      }, 3000); // Attente avant d'afficher la vidéo (3 secondes)
+    } else {
+      message.textContent = "Dommage !";
+      blindTestContainer.appendChild(message);
+      setTimeout(() => {
+        message.textContent = "";
+        popup.style.display = "none";
+      }, 1500);
+    }
+  }  
+
+  blindTestStart();
+}
 
 
 function showEndContent(content, callback) {
