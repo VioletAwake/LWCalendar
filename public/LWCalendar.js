@@ -1,3 +1,4 @@
+
 const today = new Date();
 const currentDay = today.getDate();
 const currentMonth = today.getMonth(); // Janvier est 0, Décembre est 11
@@ -207,15 +208,41 @@ Ce n’était jamais l’Amour, Jodie. C’était juste un poison déguisé.<em/
     endContent: `<em>Dante Violet a croisé la route de Balsek lors de sa première mission, un homme qui se révélerait être une leçon vivante. Balsek lui avait enseigné une règle essentielle : ne jamais faire confiance à personne. Dante comprit brutalement cette leçon lorsque Balsek l’abandonna au milieu d’une guerre de gangs. Seul face à une armée, Dante n’était qu’un homme, mais il survécut. Pas sans séquelles : côtes brisées, épaule droite disloquée, commotion cérébrale.
 <br/>À peine réveillé à l’hôpital, il trouva la force de se lever, poussé par une rage inébranlable, et traqua Balsek. Lorsqu’il le retrouva, son corps affaibli semblait un désavantage évident, mais Dante dépassa ses limites. Dans un affrontement féroce, il finit par prendre le dessus, à un souffle d’asséner le coup fatal. Mais il s’arrêta. Dans cet instant suspendu, il vit le visage de sa mère adoptive, celle qui avait été son seul rayon de lumière dans les ténèbres. Cette pensée le ramena à une vérité plus grande que sa vengeance : honorer cette lumière était son seul moyen de ne pas sombrer complètement. La haine n’aurait pas le dernier mot, pas cette fois, et peut-être jamais.</em>`,
   },
+  {
+    game: HorrorSurvivalGame,
+    reset: () => {},
+    endContent: `<em>Avant de le rencontrer, ma vie était un enfer. Je vivais une vie d'addiction à l'alcool et aux substances illicites. L'homme que j'ai aimé m'a tout pris, mon coeur, mon âme, mon esprit, le peu d'espoir que j'avais. J'étais sur le point de rejoindre la Délivrance, je n'avais plus aucune envie de vivre, plus envie de me battre, jusqu'à ce jour. Je l'ai rencontré, lors de mon séjour en hôpital psychiatrique. Tout comme moi, il avait vécu une vie horrible, mais il avait toujours ce sourire qu'il arborde tous les jours. Cette rencontre avec le Misanthrope a changé ma vie, pendant que lui, me sauvait la vie. <br/>Nous avons crée une pièce de théâtre à jouer un vendredi soir, c'était marrant au début, je me sentais revivre, je me sentais vivante, jamais aussi vivante de ma vie. Le lendemain, j'ai pris toutes mes forces, pour lui demander de recommencer. Et sans hésiter, il m'a fait un grand sourire et il a pris dans mes bras, et il a dit : "C'est exactement ce que je voulais te demander !". C'est ainsi qu'est né en partie, notre émission. <br/> Si mon nom vous fait penser à quelque chose, et bien vous avez raison. Ce nom vient de la célèbre poupée tueuse de ce célèbre film qui est un de mes favoris. J'adore énormément les films d'horreur, et Chucky me correspond bien, je n'ai pas l'intention de tuer qui que ce soit, mais plus je revis, plus je redeviens forte, comme Chucky.</em><br/><br/> - Chucky -`,
+  },
+  {
+    game: PoeticLabyrinthGame,
+    reset: () => {},
+    endContent: `<em>Quelque part dans la nuit<br/>
+Quelque part dans la nuit, lorsque je ferme les yeux,<br/>
+Une lueur danse, douce, mystérieuse.<br/>
+Un souffle fragile murmure un adieu,<br/>
+Mais aussi une promesse, silencieuse et précieuse.<br/><br/>
+
+Je tends la main, je fais un vœu secret,<br/>
+Un instant figé, suspendu dans l'éternité.<br/>
+L'écho d'un rêve caresse mon âme,<br/>
+Comme une étoile filante apaisant mes flammes.<br/><br/>
+
+Mais l'alarme hurle, déchirant l'illusion,<br/>
+Le soleil m'éblouit, cruel trahison.<br/>
+Et pourtant, dans l'ombre d’un jour nouveau,<br/>
+Ce rêve persiste, gravé dans ma peau.</em><br/><br/>
+
+- Jonas LEVEIL -`,
+  },
   // Ajoutez d'autres jeux ici...
 ];
 
 // Initialisation du calendrier
 const calendar = document.getElementById("calendar");
 
-// const unlockLimit = 31;
+// const unlockLimit = 24;
 
-for (let day = 1; day <= 31; day++) {
+for (let day = 1; day <= 24; day++) {
   const cell = document.createElement("div");
   cell.classList.add("case");
   cell.textContent = `${day}`;
@@ -2828,6 +2855,211 @@ function blindTest(callback) {
 
   blindTestStart();
 }
+
+function HorrorSurvivalGame(callback) {
+  const horrorSurvivorContainer = document.getElementById("game-container");
+  horrorSurvivorContainer.className = "horror-game-container";
+  horrorSurvivorContainer.innerHTML = "";
+
+  // Situations du jeu
+  const scenarios = [
+      {
+          situation: "Vous êtes seul dans une maison et entendez un bruit étrange venant du grenier. Que faites-vous ?",
+          choices: [
+              "Montez immédiatement voir.",
+              "Prenez une arme avant de monter.",
+              "Sortez de la maison pour appeler de l’aide."
+          ],
+          correct: 1,
+          gameOverMessage: "Vous montez sans précaution et êtes attaqué par une ombre mystérieuse..."
+      },
+      {
+          situation: "Le tueur vous poursuit dans les bois. Une voiture est en vue. Que faites-vous ?",
+          choices: [
+              "Courir directement vers la voiture.",
+              "Se cacher derrière un arbre.",
+              "Lancer un objet pour distraire le tueur et foncer vers la voiture."
+          ],
+          correct: 2,
+          gameOverMessage: "Vous courez sans réfléchir et trébuchez... Le tueur vous attrape."
+      },
+      {
+          situation: "Un téléphone sonne dans une pièce sombre. Que faites-vous ?",
+          choices: [
+              "Répondez immédiatement.",
+              "Ignorez-le et fouillez les lieux.",
+              "Détruisez le téléphone pour éviter un piège."
+          ],
+          correct: 1,
+          gameOverMessage: "Vous détruisez le téléphone, mais c'était votre seule chance d'appeler à l'aide..."
+      },
+      {
+        situation: "Vous êtes avec vos amis, l'un d'eux propose de jouer à la table de Ouïja.",
+        choices: [
+            "Vous acceptez avec joie !",
+            "Vous refusez et vous dites que c'est une mauvaise idée.",
+            "Vous ne voulez pas jouer mais vous voulez quand même voir"
+        ],
+        correct: 1,
+        gameOverMessage: "Les esprits ont été perturbés par votre appel, vous êtes hantés par ces esprits, l'un des esprits vous possède et vous fait trancher la gorge avec un couteau."
+    }
+
+  ];
+
+  let currentScenario = 0;
+
+  function showScenario() {
+      horrorSurvivorContainer.innerHTML = ""; // Nettoie l'écran
+
+      const scenario = scenarios[currentScenario];
+
+      // Affiche la situation
+      const situationElement = document.createElement("p");
+      situationElement.textContent = scenario.situation;
+      horrorSurvivorContainer.appendChild(situationElement);
+
+      const horrorChoicesContainer = document.createElement("div");
+      horrorChoicesContainer.classList.add("horror-choices-container");
+      horrorSurvivorContainer.appendChild(horrorChoicesContainer);
+
+      // Affiche les choix
+      scenario.choices.forEach((choice, index) => {
+          const button = document.createElement("button");
+          button.textContent = choice;
+          button.addEventListener("click", () => handleChoice(index));
+          horrorChoicesContainer.appendChild(button);
+      });
+  }
+
+  function handleChoice(choiceIndex) {
+      const scenario = scenarios[currentScenario];
+      if (choiceIndex === scenario.correct) {
+          currentScenario++;
+          if (currentScenario < scenarios.length) {
+              showScenario();
+          } else {
+              showVictoryScreen();
+          }
+      } else {
+          showGameOver(scenario.gameOverMessage);
+      }
+  }
+
+  function showGameOver(message) {
+      horrorSurvivorContainer.innerHTML = ""; // Nettoie l'écran
+      const gameOverMessage = document.createElement("p");
+      gameOverMessage.innerHTML = `${message}<br/><br/>Game Over !`;
+      horrorSurvivorContainer.appendChild(gameOverMessage);
+
+      setTimeout(() => {
+          closeCurrentGame();
+      }, 2000);
+  }
+
+  function showVictoryScreen() {
+      horrorSurvivorContainer.innerHTML = ""; // Nettoie l'écran
+      showEndContent(games[17].endContent, callback);
+  }
+
+  showScenario();
+}
+
+function PoeticLabyrinthGame(callback) {
+  const labyrinthContainer = document.getElementById("game-container");
+  labyrinthContainer.className = "poetic-labyrinth-container";
+  labyrinthContainer.innerHTML = "";
+
+  // Étapes du labyrinthe
+  const labyrinthSteps = [
+      {
+          description: "Vous entrez dans une clairière baignée de lumière lunaire. Trois chemins s’offrent à vous. Une inscription dit : *'Choisis le vers qui rime avec \"voyage\".'*",
+          choices: [
+              "Courage",
+              "Image",
+              "Mirage"
+          ],
+          correct: 0,
+          failMessage: "Une brume épaisse vous fait revenir à la clairière initiale..."
+      },
+      {
+          description: "Vous marchez dans un tunnel obscur. Une voix murmure : *'Quel est le poème funèbre qui célèbre les morts ?'*",
+          choices: [
+              "Élégie",
+              "Ode",
+              "Épopée"
+          ],
+          correct: 0,
+          failMessage: "Un vent glacé souffle, vous perdez votre chemin et revenez à l’entrée du tunnel..."
+      },
+      {
+          description: "Vous atteignez un pont suspendu. Une stèle indique : *'Quel poème japonais compte 3 vers avec 17 syllabes ?'*",
+          choices: [
+              "Tanka",
+              "Haïku",
+              "Renga"
+          ],
+          correct: 1,
+          failMessage: "Le pont tremble et disparaît. Vous devez rebrousser chemin."
+      }
+  ];
+
+  let currentStep = 0;
+
+  function showStep() {
+      labyrinthContainer.innerHTML = ""; // Nettoie l'écran
+
+      const step = labyrinthSteps[currentStep];
+
+      // Affiche la description
+      const descriptionElement = document.createElement("p");
+      descriptionElement.textContent = step.description;
+      labyrinthContainer.appendChild(descriptionElement);
+
+      const poeticChoicesContainer = document.createElement("div");
+      poeticChoicesContainer.classList.add("poetic-choices-container");
+      labyrinthContainer.appendChild(poeticChoicesContainer);
+
+      // Affiche les choix
+      step.choices.forEach((choice, index) => {
+          const button = document.createElement("button");
+          button.textContent = choice;
+          button.addEventListener("click", () => handleChoice(index));
+          poeticChoicesContainer.appendChild(button);
+      });
+  }
+
+  function handleChoice(choiceIndex) {
+      const step = labyrinthSteps[currentStep];
+      if (choiceIndex === step.correct) {
+          currentStep++;
+          if (currentStep < labyrinthSteps.length) {
+              showStep();
+          } else {
+              showEndContent(games[18].endContent, callback);
+          }
+      } else {
+          showFailureScreen(step.failMessage);
+      }
+  }
+
+  function showFailureScreen(message) {
+      labyrinthContainer.innerHTML = ""; // Nettoie l'écran
+      const failureMessage = document.createElement("p");
+      failureMessage.textContent = message;
+      labyrinthContainer.appendChild(failureMessage);
+
+      const retryButton = document.createElement("button");
+      retryButton.textContent = "Revenir au début";
+      retryButton.addEventListener("click", () => {
+          currentStep = 0;
+          showStep();
+      });
+      labyrinthContainer.appendChild(retryButton);
+  }
+
+  showStep();
+}
+
 
 
 function showEndContent(content, callback) {

@@ -1019,6 +1019,42 @@
     top: 0;
     left: 0;
   }
+
+  .horror-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    font-size: 25px;
+  }
+
+  .horror-choices-container {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  .horror-choices-container button {
+    font-size: 20px;
+  }
+
+  .poetic-labyrinth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    font-size: 25px;
+  }
+
+  .poetic-choices-container {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+  }
 }
 
 /* VERSION DESKTOP */
@@ -4113,6 +4149,44 @@
     top: 0;
     left: 0;
   }
+
+  .horror-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    font-size: 20px;
+  }
+
+  .horror-choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .horror-choices-container button {
+    font-size: 15px;
+  }
+
+  .poetic-labyrinth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    font-size: 20px;
+  }
+
+  .poetic-choices-container {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+  }
+
+
   
   .ending {
     display: flex;
