@@ -1,4 +1,6 @@
 
+
+
 const today = new Date();
 const currentDay = today.getDate();
 const currentMonth = today.getMonth(); // Janvier est 0, Décembre est 11
@@ -234,13 +236,22 @@ Ce rêve persiste, gravé dans ma peau.</em><br/><br/>
 
 - Jonas LEVEIL -`,
   },
+  {
+    game: honestQuestionnaire,
+    reset: () => {},
+    endContent: `<em>Bonne soirée avec le Misanthrope est bien plus qu'une simple émission. C'est une invitation à explorer l'âme humaine dans ses moindres recoins. Chaque épisode est une pièce de théâtre où s'entrelacent des récits, des réflexions, et une pointe d'ironie. Le Misanthrope y joue son rôle de guide : brutalement honnête, souvent taquin, mais toujours juste dans son analyse.
+
+Nous y abordons les paradoxes de la société, les travers humains, et les luttes psychologiques de chacun, tout en brisant les tabous avec humour et profondeur. L'équipe, aussi hétéroclite qu'intrigante, offre une diversité de voix et de perspectives, que ce soit par mes analyses, la présence de notre animateur, notre série vedette <strong>"La Porte Oblique"</strong>, dont les épisodes sont écris par la plume de notre auteur, Elias Fuineyson, avec la participation du Misanthrope. Sans oublier, bien sûr, les éclats inattendus de Chucky et de sa soeur Christine, le génie de la programmation de Monsieur Freddy, sous la protection de Jason et le charme fatal de Ripley, et les conseils de moi-même, Dr.Vincent Crowe.
+
+C'est un espace où la vérité n'est pas forcément agréable, mais elle est nécessaire. Et si, au fil des soirées, une pensée germe, une prise de conscience éclot, alors nous avons accompli notre mission.</em>`,
+  },
   // Ajoutez d'autres jeux ici...
 ];
 
 // Initialisation du calendrier
 const calendar = document.getElementById("calendar");
 
-// const unlockLimit = 24;
+const unlockLimit = 24;
 
 for (let day = 1; day <= 24; day++) {
   const cell = document.createElement("div");
@@ -248,8 +259,8 @@ for (let day = 1; day <= 24; day++) {
   cell.textContent = `${day}`;
 
   if (currentMonth === 11) {
-    // if (day > unlockLimit) {
-    if (day > currentDay) {
+    if (day > unlockLimit) {
+    // if (day > currentDay) {
       cell.style.color = "red";
       cell.style.border = "3px solid red";
       cell.style.pointerEvents = "none";
@@ -271,7 +282,7 @@ closePopup.addEventListener("click", closeCurrentGame);
 popup.appendChild(closePopup);
 
 let activeGame = null; // Suivi du jeu actif
-const debugMode = false;
+const debugMode = true;
 
 // Fonction pour fermer le jeu actuel et réinitialiser l'état
 function closeCurrentGame() {
@@ -3058,6 +3069,41 @@ function PoeticLabyrinthGame(callback) {
   }
 
   showStep();
+}
+
+function honestQuestionnaire(callback) {
+  const honestQuestionnaireContainer = document.getElementById("game-container");
+  honestQuestionnaireContainer.className = "honest-questionnaire-container";
+  honestQuestionnaireContainer.innerHTML = "";
+
+  const formQuestions = document.createElement("div");
+  formQuestions.classList.add("form-questions");
+  formQuestions.innerHTML = `
+    
+    <iframe
+      id="JotFormIFrame-243543599069369"
+      title="Questionnaire du Docteur Vincent Crowe"
+      onload="window.parent.scrollTo(0,0)"
+      allowtransparency="true"
+      allow="geolocation; microphone; camera; fullscreen"
+      src="https://form.jotform.com/243543599069369"
+      frameborder="0"
+      scrolling="yes"
+    >
+    </iframe>
+    <script src='https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js'></script>
+    <script>window.jotformEmbedHandler("iframe[id='JotFormIFrame-243543599069369']", "https://form.jotform.com/")</script>
+    `;
+
+  const finishButton = document.createElement("button");
+  finishButton.textContent = "Quelle est notre émission ?";
+  finishButton.addEventListener("click", function () {
+    honestQuestionnaireContainer.innerHTML = "";
+    showEndContent(games[19].endContent, callback);
+  });
+  formQuestions.appendChild(finishButton);
+  
+  honestQuestionnaireContainer.appendChild(formQuestions);
 }
 
 
