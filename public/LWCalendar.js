@@ -1,6 +1,3 @@
-
-
-
 const today = new Date();
 const currentDay = today.getDate();
 const currentMonth = today.getMonth(); // Janvier est 0, Décembre est 11
@@ -245,13 +242,18 @@ Nous y abordons les paradoxes de la société, les travers humains, et les lutte
 
 C'est un espace où la vérité n'est pas forcément agréable, mais elle est nécessaire. Et si, au fil des soirées, une pensée germe, une prise de conscience éclot, alors nous avons accompli notre mission.</em>`,
   },
+  {
+    game: quizGeek,
+    reset: () => {},
+    endContent: `Hello There...`,
+  },
   // Ajoutez d'autres jeux ici...
 ];
 
 // Initialisation du calendrier
 const calendar = document.getElementById("calendar");
 
-// const unlockLimit = 24;
+const unlockLimit = 24;
 
 for (let day = 1; day <= 24; day++) {
   const cell = document.createElement("div");
@@ -2811,8 +2813,9 @@ function blindTest(callback) {
     currentBlindTestIndex.blindTestanswers.forEach((choice) => {
       const blindTestButton = document.createElement("button");
       blindTestButton.textContent = choice;
-      blindTestButton.addEventListener("click", function() { 
-        handleAnswer(choice), blindTestAudio.pause(); })
+      blindTestButton.addEventListener("click", function () {
+        handleAnswer(choice), blindTestAudio.pause();
+      });
       blindTestChoices.appendChild(blindTestButton);
     });
 
@@ -2822,11 +2825,11 @@ function blindTest(callback) {
   function handleAnswer(choice) {
     const currentBlindTestIndex = blindsongs[currentBlindTest];
     const message = document.createElement("p");
-  
+
     if (choice === currentBlindTestIndex.blindTestCorrect) {
       message.textContent = "Bonne réponse !";
       blindTestContainer.appendChild(message);
-  
+
       // Attendre avant d'afficher la vidéo
       setTimeout(() => {
         const blindVideo = document.createElement("video");
@@ -2835,12 +2838,12 @@ function blindTest(callback) {
         blindVideo.controls = false;
         blindVideo.autoplay = true;
         blindTestContainer.appendChild(blindVideo);
-  
+
         // Écouteur pour cacher la vidéo et passer à la question suivante
         blindVideo.addEventListener("ended", () => {
           blindTestContainer.innerHTML = ""; // Nettoyer l'écran
           currentBlindTest++;
-  
+
           if (currentBlindTest < blindsongs.length) {
             blindTestStart(); // Passer à la question suivante
           } else {
@@ -2850,7 +2853,7 @@ function blindTest(callback) {
             blindTestContainer.appendChild(endMessage);
             setTimeout(() => {
               showEndContent(games[16].endContent, callback);
-            })
+            });
           }
         });
       }, 3000); // Attente avant d'afficher la vidéo (3 secondes)
@@ -2862,7 +2865,7 @@ function blindTest(callback) {
         popup.style.display = "none";
       }, 1500);
     }
-  }  
+  }
 
   blindTestStart();
 }
@@ -2874,102 +2877,108 @@ function HorrorSurvivalGame(callback) {
 
   // Situations du jeu
   const scenarios = [
-      {
-          situation: "Vous êtes seul dans une maison et entendez un bruit étrange venant du grenier. Que faites-vous ?",
-          choices: [
-              "Montez immédiatement voir.",
-              "Prenez une arme avant de monter.",
-              "Sortez de la maison pour appeler de l’aide."
-          ],
-          correct: 1,
-          gameOverMessage: "Vous montez sans précaution et êtes attaqué par une ombre mystérieuse..."
-      },
-      {
-          situation: "Le tueur vous poursuit dans les bois. Une voiture est en vue. Que faites-vous ?",
-          choices: [
-              "Courir directement vers la voiture.",
-              "Se cacher derrière un arbre.",
-              "Lancer un objet pour distraire le tueur et foncer vers la voiture."
-          ],
-          correct: 2,
-          gameOverMessage: "Vous courez sans réfléchir et trébuchez... Le tueur vous attrape."
-      },
-      {
-          situation: "Un téléphone sonne dans une pièce sombre. Que faites-vous ?",
-          choices: [
-              "Répondez immédiatement.",
-              "Ignorez-le et fouillez les lieux.",
-              "Détruisez le téléphone pour éviter un piège."
-          ],
-          correct: 1,
-          gameOverMessage: "Vous détruisez le téléphone, mais c'était votre seule chance d'appeler à l'aide..."
-      },
-      {
-        situation: "Vous êtes avec vos amis, l'un d'eux propose de jouer à la table de Ouïja.",
-        choices: [
-            "Vous acceptez avec joie !",
-            "Vous refusez et vous dites que c'est une mauvaise idée.",
-            "Vous ne voulez pas jouer mais vous voulez quand même voir"
-        ],
-        correct: 1,
-        gameOverMessage: "Les esprits ont été perturbés par votre appel, vous êtes hantés par ces esprits, l'un des esprits vous possède et vous fait trancher la gorge avec un couteau."
-    }
-
+    {
+      situation:
+        "Vous êtes seul dans une maison et entendez un bruit étrange venant du grenier. Que faites-vous ?",
+      choices: [
+        "Montez immédiatement voir.",
+        "Prenez une arme avant de monter.",
+        "Sortez de la maison pour appeler de l’aide.",
+      ],
+      correct: 1,
+      gameOverMessage:
+        "Vous montez sans précaution et êtes attaqué par une ombre mystérieuse...",
+    },
+    {
+      situation:
+        "Le tueur vous poursuit dans les bois. Une voiture est en vue. Que faites-vous ?",
+      choices: [
+        "Courir directement vers la voiture.",
+        "Se cacher derrière un arbre.",
+        "Lancer un objet pour distraire le tueur et foncer vers la voiture.",
+      ],
+      correct: 2,
+      gameOverMessage:
+        "Vous courez sans réfléchir et trébuchez... Le tueur vous attrape.",
+    },
+    {
+      situation: "Un téléphone sonne dans une pièce sombre. Que faites-vous ?",
+      choices: [
+        "Répondez immédiatement.",
+        "Ignorez-le et fouillez les lieux.",
+        "Détruisez le téléphone pour éviter un piège.",
+      ],
+      correct: 1,
+      gameOverMessage:
+        "Vous détruisez le téléphone, mais c'était votre seule chance d'appeler à l'aide...",
+    },
+    {
+      situation:
+        "Vous êtes avec vos amis, l'un d'eux propose de jouer à la table de Ouïja.",
+      choices: [
+        "Vous acceptez avec joie !",
+        "Vous refusez et vous dites que c'est une mauvaise idée.",
+        "Vous ne voulez pas jouer mais vous voulez quand même voir",
+      ],
+      correct: 1,
+      gameOverMessage:
+        "Les esprits ont été perturbés par votre appel, vous êtes hantés par ces esprits, l'un des esprits vous possède et vous fait trancher la gorge avec un couteau.",
+    },
   ];
 
   let currentScenario = 0;
 
   function showScenario() {
-      horrorSurvivorContainer.innerHTML = ""; // Nettoie l'écran
+    horrorSurvivorContainer.innerHTML = ""; // Nettoie l'écran
 
-      const scenario = scenarios[currentScenario];
+    const scenario = scenarios[currentScenario];
 
-      // Affiche la situation
-      const situationElement = document.createElement("p");
-      situationElement.textContent = scenario.situation;
-      horrorSurvivorContainer.appendChild(situationElement);
+    // Affiche la situation
+    const situationElement = document.createElement("p");
+    situationElement.textContent = scenario.situation;
+    horrorSurvivorContainer.appendChild(situationElement);
 
-      const horrorChoicesContainer = document.createElement("div");
-      horrorChoicesContainer.classList.add("horror-choices-container");
-      horrorSurvivorContainer.appendChild(horrorChoicesContainer);
+    const horrorChoicesContainer = document.createElement("div");
+    horrorChoicesContainer.classList.add("horror-choices-container");
+    horrorSurvivorContainer.appendChild(horrorChoicesContainer);
 
-      // Affiche les choix
-      scenario.choices.forEach((choice, index) => {
-          const button = document.createElement("button");
-          button.textContent = choice;
-          button.addEventListener("click", () => handleChoice(index));
-          horrorChoicesContainer.appendChild(button);
-      });
+    // Affiche les choix
+    scenario.choices.forEach((choice, index) => {
+      const button = document.createElement("button");
+      button.textContent = choice;
+      button.addEventListener("click", () => handleChoice(index));
+      horrorChoicesContainer.appendChild(button);
+    });
   }
 
   function handleChoice(choiceIndex) {
-      const scenario = scenarios[currentScenario];
-      if (choiceIndex === scenario.correct) {
-          currentScenario++;
-          if (currentScenario < scenarios.length) {
-              showScenario();
-          } else {
-              showVictoryScreen();
-          }
+    const scenario = scenarios[currentScenario];
+    if (choiceIndex === scenario.correct) {
+      currentScenario++;
+      if (currentScenario < scenarios.length) {
+        showScenario();
       } else {
-          showGameOver(scenario.gameOverMessage);
+        showVictoryScreen();
       }
+    } else {
+      showGameOver(scenario.gameOverMessage);
+    }
   }
 
   function showGameOver(message) {
-      horrorSurvivorContainer.innerHTML = ""; // Nettoie l'écran
-      const gameOverMessage = document.createElement("p");
-      gameOverMessage.innerHTML = `${message}<br/><br/>Game Over !`;
-      horrorSurvivorContainer.appendChild(gameOverMessage);
+    horrorSurvivorContainer.innerHTML = ""; // Nettoie l'écran
+    const gameOverMessage = document.createElement("p");
+    gameOverMessage.innerHTML = `${message}<br/><br/>Game Over !`;
+    horrorSurvivorContainer.appendChild(gameOverMessage);
 
-      setTimeout(() => {
-          closeCurrentGame();
-      }, 2000);
+    setTimeout(() => {
+      closeCurrentGame();
+    }, 2000);
   }
 
   function showVictoryScreen() {
-      horrorSurvivorContainer.innerHTML = ""; // Nettoie l'écran
-      showEndContent(games[17].endContent, callback);
+    horrorSurvivorContainer.innerHTML = ""; // Nettoie l'écran
+    showEndContent(games[17].endContent, callback);
   }
 
   showScenario();
@@ -2982,97 +2991,92 @@ function PoeticLabyrinthGame(callback) {
 
   // Étapes du labyrinthe
   const labyrinthSteps = [
-      {
-          description: "Vous entrez dans une clairière baignée de lumière lunaire. Trois chemins s’offrent à vous. Une inscription dit : *'Choisis le vers qui rime avec \"voyage\".'*",
-          choices: [
-              "Courage",
-              "Image",
-              "Mirage"
-          ],
-          correct: 0,
-          failMessage: "Une brume épaisse vous fait revenir à la clairière initiale..."
-      },
-      {
-          description: "Vous marchez dans un tunnel obscur. Une voix murmure : *'Quel est le poème funèbre qui célèbre les morts ?'*",
-          choices: [
-              "Élégie",
-              "Ode",
-              "Épopée"
-          ],
-          correct: 0,
-          failMessage: "Un vent glacé souffle, vous perdez votre chemin et revenez à l’entrée du tunnel..."
-      },
-      {
-          description: "Vous atteignez un pont suspendu. Une stèle indique : *'Quel poème japonais compte 3 vers avec 17 syllabes ?'*",
-          choices: [
-              "Tanka",
-              "Haïku",
-              "Renga"
-          ],
-          correct: 1,
-          failMessage: "Le pont tremble et disparaît. Vous devez rebrousser chemin."
-      }
+    {
+      description:
+        "Vous entrez dans une clairière baignée de lumière lunaire. Trois chemins s’offrent à vous. Une inscription dit : *'Choisis le vers qui rime avec \"voyage\".'*",
+      choices: ["Courage", "Image", "Mirage"],
+      correct: 0,
+      failMessage:
+        "Une brume épaisse vous fait revenir à la clairière initiale...",
+    },
+    {
+      description:
+        "Vous marchez dans un tunnel obscur. Une voix murmure : *'Quel est le poème funèbre qui célèbre les morts ?'*",
+      choices: ["Élégie", "Ode", "Épopée"],
+      correct: 0,
+      failMessage:
+        "Un vent glacé souffle, vous perdez votre chemin et revenez à l’entrée du tunnel...",
+    },
+    {
+      description:
+        "Vous atteignez un pont suspendu. Une stèle indique : *'Quel poème japonais compte 3 vers avec 17 syllabes ?'*",
+      choices: ["Tanka", "Haïku", "Renga"],
+      correct: 1,
+      failMessage:
+        "Le pont tremble et disparaît. Vous devez rebrousser chemin.",
+    },
   ];
 
   let currentStep = 0;
 
   function showStep() {
-      labyrinthContainer.innerHTML = ""; // Nettoie l'écran
+    labyrinthContainer.innerHTML = ""; // Nettoie l'écran
 
-      const step = labyrinthSteps[currentStep];
+    const step = labyrinthSteps[currentStep];
 
-      // Affiche la description
-      const descriptionElement = document.createElement("p");
-      descriptionElement.textContent = step.description;
-      labyrinthContainer.appendChild(descriptionElement);
+    // Affiche la description
+    const descriptionElement = document.createElement("p");
+    descriptionElement.textContent = step.description;
+    labyrinthContainer.appendChild(descriptionElement);
 
-      const poeticChoicesContainer = document.createElement("div");
-      poeticChoicesContainer.classList.add("poetic-choices-container");
-      labyrinthContainer.appendChild(poeticChoicesContainer);
+    const poeticChoicesContainer = document.createElement("div");
+    poeticChoicesContainer.classList.add("poetic-choices-container");
+    labyrinthContainer.appendChild(poeticChoicesContainer);
 
-      // Affiche les choix
-      step.choices.forEach((choice, index) => {
-          const button = document.createElement("button");
-          button.textContent = choice;
-          button.addEventListener("click", () => handleChoice(index));
-          poeticChoicesContainer.appendChild(button);
-      });
+    // Affiche les choix
+    step.choices.forEach((choice, index) => {
+      const button = document.createElement("button");
+      button.textContent = choice;
+      button.addEventListener("click", () => handleChoice(index));
+      poeticChoicesContainer.appendChild(button);
+    });
   }
 
   function handleChoice(choiceIndex) {
-      const step = labyrinthSteps[currentStep];
-      if (choiceIndex === step.correct) {
-          currentStep++;
-          if (currentStep < labyrinthSteps.length) {
-              showStep();
-          } else {
-              showEndContent(games[18].endContent, callback);
-          }
+    const step = labyrinthSteps[currentStep];
+    if (choiceIndex === step.correct) {
+      currentStep++;
+      if (currentStep < labyrinthSteps.length) {
+        showStep();
       } else {
-          showFailureScreen(step.failMessage);
+        showEndContent(games[18].endContent, callback);
       }
+    } else {
+      showFailureScreen(step.failMessage);
+    }
   }
 
   function showFailureScreen(message) {
-      labyrinthContainer.innerHTML = ""; // Nettoie l'écran
-      const failureMessage = document.createElement("p");
-      failureMessage.textContent = message;
-      labyrinthContainer.appendChild(failureMessage);
+    labyrinthContainer.innerHTML = ""; // Nettoie l'écran
+    const failureMessage = document.createElement("p");
+    failureMessage.textContent = message;
+    labyrinthContainer.appendChild(failureMessage);
 
-      const retryButton = document.createElement("button");
-      retryButton.textContent = "Revenir au début";
-      retryButton.addEventListener("click", () => {
-          currentStep = 0;
-          showStep();
-      });
-      labyrinthContainer.appendChild(retryButton);
+    const retryButton = document.createElement("button");
+    retryButton.textContent = "Revenir au début";
+    retryButton.addEventListener("click", () => {
+      currentStep = 0;
+      showStep();
+    });
+    labyrinthContainer.appendChild(retryButton);
   }
 
   showStep();
 }
 
 function honestQuestionnaire(callback) {
-  const honestQuestionnaireContainer = document.getElementById("game-container");
+  const honestQuestionnaireContainer =
+    document.getElementById("game-container");
   honestQuestionnaireContainer.className = "honest-questionnaire-container";
   honestQuestionnaireContainer.innerHTML = "";
 
@@ -3102,11 +3106,101 @@ function honestQuestionnaire(callback) {
     showEndContent(games[19].endContent, callback);
   });
   formQuestions.appendChild(finishButton);
-  
+
   honestQuestionnaireContainer.appendChild(formQuestions);
 }
 
+function quizGeek(callback) {
+  const quizGeekContainer = document.getElementById("game-container");
+  quizGeekContainer.className = "quiz-geek-container";
+  quizGeekContainer.innerHTML = "";
 
+  const geekQuestions = [
+    {
+      question: "Quel est le vrai nom de Lord Voldemort ?",
+      choices: ["Rumeus Lupin", "Tom Elvis Jedusor", "Alastor Maugrey"],
+      correctAnswer: 1,
+    },
+    {
+      question:
+        "Comment se nomme la planète où Luke Skywalker doit rencontrer Yoda et apprendre à devenir un Jedi ?",
+      choices: ["Dagobah", "Tatooine", "Mustafar"],
+      correctAnswer: 0,
+    },
+    {
+      question:
+        "Qui est l'acteur qui apparait dans les trois films Spider-Man ?",
+      choices: ["Randy Savage", "Lucy Lawless", "Bruce Campbell"],
+      correctAnswer: 2,
+    },
+    {
+      question:
+        "Que fait Superman pour sauver la vie de Loïs Lane dans le film Superman ?",
+      choices: [
+        "Il remonte dans le temps",
+        "Il l'emmène dans la forteresse de Solitude",
+        "Il transfère ses pouvoirs à Loïs Lane",
+      ],
+      correctAnswer: 0,
+    },
+    {
+      question:
+        "Quelle est la créature qui poursuit le prince dans le jeu vidéo Prince of Persia : L'âme du guerrier ?",
+      choices: ["Le Vizir", "Le Golem", "Le Dahaka"],
+      correctAnswer: 2,
+    },
+  ];
+
+  let currentQuestionIndex = 0;
+
+  function showQuestion() {
+    quizGeekContainer.innerHTML = "";
+    const question = geekQuestions[currentQuestionIndex];
+    const questionElement = document.createElement("p");
+    questionElement.textContent = question.question;
+    quizGeekContainer.appendChild(questionElement);
+
+    const choiceContainer = document.createElement("div");
+    choiceContainer.className = "choice-container";
+    quizGeekContainer.appendChild(choiceContainer);
+
+    question.choices.forEach((choice, index) => {
+      const geekAnswerBtn = document.createElement("button");
+      geekAnswerBtn.textContent = choice;
+      geekAnswerBtn.addEventListener("click", () => {
+        checkGeekAnswer(index);
+      });
+      choiceContainer.appendChild(geekAnswerBtn);
+    });
+
+  }
+
+  function checkGeekAnswer(selectedGeekAnswer) {
+    const question = geekQuestions[currentQuestionIndex];
+    const geekMessage = document.createElement("p");
+    geekMessage.className = "geek-message";
+    quizGeekContainer.appendChild(geekMessage);
+
+    if (selectedGeekAnswer === question.correctAnswer) {
+      currentQuestionIndex++;
+      geekMessage.textContent = "Bravo !";
+      setTimeout(() => {
+        geekMessage.textContent = "";
+        if (currentQuestionIndex < geekQuestions.length) {
+          showQuestion();
+        } else {
+          showEndContent(games[20].endContent, callback);
+        }
+      }, 1000); // Attends un peu avant d'afficher la prochaine question
+    } else {
+      geekMessage.textContent = "Dommage !";
+      setTimeout(() => {
+        geekMessage.textContent = "";
+      }, 1500);
+    }
+  }
+  showQuestion();
+}
 
 function showEndContent(content, callback) {
   const ending = document.getElementById("game-container");
