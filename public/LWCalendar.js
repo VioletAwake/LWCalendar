@@ -251,7 +251,7 @@ C'est un espace où la vérité n'est pas forcément agréable, mais elle est n�
 // Initialisation du calendrier
 const calendar = document.getElementById("calendar");
 
-const unlockLimit = 24;
+// const unlockLimit = 24;
 
 for (let day = 1; day <= 24; day++) {
   const cell = document.createElement("div");
@@ -259,8 +259,8 @@ for (let day = 1; day <= 24; day++) {
   cell.textContent = `${day}`;
 
   if (currentMonth === 11) {
-    if (day > unlockLimit) {
-    // if (day > currentDay) {
+    // if (day > unlockLimit) {
+    if (day > currentDay) {
       cell.style.color = "red";
       cell.style.border = "3px solid red";
       cell.style.pointerEvents = "none";
@@ -282,7 +282,7 @@ closePopup.addEventListener("click", closeCurrentGame);
 popup.appendChild(closePopup);
 
 let activeGame = null; // Suivi du jeu actif
-const debugMode = true;
+const debugMode = false;
 
 // Fonction pour fermer le jeu actuel et réinitialiser l'état
 function closeCurrentGame() {
